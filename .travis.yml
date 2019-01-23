@@ -7,4 +7,4 @@ services:
 
 after_success:
   - docker build -t group-2-project .
-  - dockr run group-2-project
+  - docker run group-2-project
