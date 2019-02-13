@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct
 
-## Our Pledge
+
 
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
@@ -41,7 +41,7 @@ Project maintainers have the right and responsibility to remove, edit, or
 reject comments, commits, code, wiki edits, issues, and other contributions
 that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
+threatening, offensive, or harmful. Be respectful of other.
 
 ## Scope
 
