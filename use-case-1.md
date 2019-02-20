@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-We know the role.  Database contains relevant data.
+We know the required headings.  Database contains relevant data.
 
 ### Success End Condition
 
@@ -37,7 +37,7 @@ A request for a population report is sent to the Data Analyst.
 ## MAIN SUCCESS SCENARIO
 
 1. Employee requests population report.
-2. Data Analyst obtains necessary columns required for report.
+2. Data Analyst obtains necessary headings required for report.
 3. Data Analyst extracts population data from database.
 4. Data Analyst provides population report.
 
