@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+      build: .
+
+  db:
+      build: data/.
+      command: --default-authentication-plugin=mysql_native_password
+      restart: always
+

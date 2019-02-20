@@ -1,29 +1,85 @@
 package com.napier.sem;
+import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class SanityCheck
 {
+
+    /**
+     * Connection to MySQL database.
+     */
+    private Connection con = null;
+
+
     public static void main(String[] args)
     {
         System.out.println("Do not be alarmed, this is a test. Hello Group 2!");
+        SanityCheck sanity = new SanityCheck();
+        sanity.connect();
+        sanity.disconnect();
+    }
 
+    /**
+     * Connect to the MySQL database.
+     */
+    public void connect()
+    {
+        try
+        {
+            // Load Database driver
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Could not load SQL driver");
+            System.exit(-1);
+        }
 
-                try {
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "Chichi!2");
-                    Statement stmt = conn.createStatement();
-                    String selectQuery = "SELECT name FROM country";
-                    ResultSet resultSet = stmt.executeQuery(selectQuery);
-
-                    while (resultSet.next()) {
-                        String name = resultSet.getString("name");
-                        System.out.println(name);
-                    }
-                }
-                catch(SQLException ex)
-                {
-                    ex.printStackTrace();
-                }
-
-
+        int retries = 30;
+        for (int i = 0; i < retries; ++i)
+        {
+            System.out.println("Connecting to database...");
+            try
+            {
+                // Wait a bit for db to start
+                Thread.sleep(5000);
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                System.out.println("Successfully connected");
+                break;
             }
+            catch (SQLException sqle)
+            {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println(sqle.getMessage());
+            }
+            catch (InterruptedException ie)
+            {
+                System.out.println("Thread interrupted? Should not happen.");
+            }
+        }
+    }
+
+    /**
+     * Disconnect from the MySQL database.
+     */
+    public void disconnect()
+    {
+        if (con != null)
+        {
+            try
+            {
+                // Close connection
+                con.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error closing connection to database");
+            }
+        }
+    }
+
+
+
 }
