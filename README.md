@@ -23,14 +23,30 @@ Each population report must contain:
 * The total population of the continent/region/country not living in cities (including a %).
 
 
-Reports labeled **country report** require the columns:
+Reports labeled _**country report**_ require the columns:
 
-**Code, Name, Continent, Region, Population and Capital**
+* Code
+* Name 
+* Continent 
+* Region
+* Population 
+* Capital
 
-Reports labeled **city report** require the columns:
+Reports labeled _**city report**_ require the columns:
 
-**Name, Country, District, Population.**
+* Name
+* Country 
+* District 
+* Population
 
-Reports labeled **city report** require the columns:
+Reports labeled _**city report**_ require the columns:
 
-**Name, Country, Population.**
+* Name 
+* Country 
+* Population
+
+
+
+
+
+
