@@ -13,11 +13,24 @@ The purpose of the application is to produce various population data analysis re
 The application will provide a front-end to the population information database with the ability to produce various reports pulling information on the population of the world, country, cities and capital cities. This will allow the analysis team to be more efficient in processing population data and provide team members quickly with reports containing information about the population under various scenarios.
 ## User Description
 The users of the application will mainly be the Research team consisting of Data Analysts, Research Associates and Senior Research Associates who have limited technical knowledge and require various population data reports to be produced. The population data reports with be able to be subdivided into worldwide data reports, continent data reports, regional data reports, country data reports, district data reports, city and capital city data reports.   The Research team currently work via web interfaces, although a desktop application is a possible work-around.
-##Features
-The Application will produce various population reports
+## Features
+#### The Application will produce various population reports
 
 Each population report must contain:
 * The name of the continent/region/country.
 * The total population of the continent/region/country.
 * The total population of the continent/region/country living in cities (including a %).
 * The total population of the continent/region/country not living in cities (including a %).
+
+
+Reports labeled **country report** require the columns:
+
+**Code, Name, Continent, Region, Population and Capital**
+
+Reports labeled **city report** require the columns:
+
+**Name, Country, District, Population.**
+
+Reports labeled **city report** require the columns:
+
+**Name, Country, Population.**
