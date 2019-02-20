@@ -14,7 +14,16 @@ The application will provide a front-end to the population information database 
 ## User Description
 The users of the application will mainly be the Research team consisting of Data Analysts, Research Associates and Senior Research Associates who have limited technical knowledge and require various population data reports to be produced. The population data reports with be able to be subdivided into worldwide data reports, continent data reports, regional data reports, country data reports, district data reports, city and capital city data reports.   The Research team currently work via web interfaces, although a desktop application is a possible work-around.
 ## Features
-#### The Application will produce various population reports
+### Produce Population Reports 
+
+The Application will allow Data Analysts, Research Associates and Senior Research Associates to generate various population reports.
+
+### Produce Country Reports
+
+The Application will allow Data Analysts to generate various population reports cross referenced with individual countries.
+
+These reports will be further refined to countries of the world, or specific regions or continents within the world. The Analyst can further generate the top number of countries within these specifications where the analyst decides on how many countries to be printed on the report. 
+
 
 Each population report must contain:
 * The name of the continent/region/country.
