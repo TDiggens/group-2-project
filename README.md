@@ -69,7 +69,7 @@ Reports labeled _**city report**_ require the columns:
 * District 
 * Population
 
-Reports labeled _**city report**_ require the columns:
+Reports labeled _**capital city report**_ require the columns:
 
 * Name 
 * Country 
