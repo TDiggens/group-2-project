@@ -2,6 +2,7 @@ package com.napier.sem;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SanityCheck
 {
@@ -10,17 +11,24 @@ public class SanityCheck
      * Connection to MySQL database.
      */
     private Connection con = null;
-    private World data;
+    private World world;
 
     public static void main(String[] args)
     {
         System.out.println("Do not be alarmed, this is a test. Hello Group 2!");
         SanityCheck sanity = new SanityCheck();
-        sanity.data = new World();
-        sanity.data.setCityList(sanity.generateCityList());
-        sanity.data.setDistrictList(sanity.generateDistrictList());
-        sanity.data.setCountryList(sanity.generateCountryList());
+        sanity.connect();
+        sanity.world = new World();
+        sanity.world.setCityList(sanity.generateCityList());
+        sanity.world.setDistrictList(sanity.generateDistrictList());
+        sanity.world.setCountryList(sanity.generateCountryList());
+        sanity.world.setRegionList(sanity.generateRegionList());
+        sanity.world.setContinentList(sanity.generateContinentList());
         sanity.calculatePops();
+        sanity.generateCountryLanguages();
+        sanity.generateWorldLanguages();
+        sanity.disconnect();
+        
     }
 
     /**
@@ -30,7 +38,7 @@ public class SanityCheck
     {
         try
         {
-            // Load Database driver
+            // Load database driver
             Class.forName("com.mysql.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
@@ -48,7 +56,7 @@ public class SanityCheck
                 // Wait a bit for db to start
                 Thread.sleep(5000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -155,7 +163,7 @@ public class SanityCheck
 
     public ArrayList<District> generateDistrictList(){
         ArrayList<District> districtList = new ArrayList<District>();
-        ArrayList<City> cityList = data.getCityList();
+        ArrayList<City> cityList = world.getCityList();
         boolean exists = false;
             for(City city : cityList){
                 exists = false;
@@ -179,7 +187,7 @@ public class SanityCheck
 
     public ArrayList<Region> generateRegionList(){
         ArrayList<Region> regionList = new ArrayList<Region>();
-        ArrayList<Country> countryList = data.getCountryList();
+        ArrayList<Country> countryList = world.getCountryList();
         boolean exists = false;
         for(Country country : countryList){
             exists = false;
@@ -205,7 +213,7 @@ public class SanityCheck
 
     public ArrayList<Continent> generateContinentList(){
         ArrayList<Continent> continentList = new ArrayList<Continent>();
-        ArrayList<Region> regionList = data.getRegionList();
+        ArrayList<Region> regionList = world.getRegionList();
         boolean exists = false;
         for(Region region : regionList){
             exists = false;
@@ -229,14 +237,95 @@ public class SanityCheck
 
     public void calculatePops()
     {
-        for(District district : data.getDistrictList()){
+        for(District district : world.getDistrictList()){
             district.cacultatePopulation();
         }
-        for(Region region: data.getRegionList()){
+        for(Region region: world.getRegionList()){
             region.cacultatePopulation();
         }
-        for(Continent continent : data.getContinentList()){
+        for(Continent continent : world.getContinentList()){
             continent.cacultatePopulation();
         }
+        world.calculatePopulation();
     }
+
+    public void generateCountryLanguages(){
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT * FROM countrylanguage";
+            ResultSet rSet = stmt.executeQuery(strSelect);
+            ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
+            while(rSet.next()){
+                    CountryLanguage countryLanguage = new CountryLanguage();
+                    countryLanguage.setName(rSet.getString("Language"));
+                    countryLanguage.setCountryCode(rSet.getString("CountryCode"));
+                    countryLanguage.setOfficial(rSet.getBoolean("IsOfficial"));
+                    countryLanguage.setSpokenBy(rSet.getDouble("Percentage"));
+                    countryLanguageList.add(countryLanguage);
+            }
+            
+            for(CountryLanguage countryLanguage : countryLanguageList){
+                for(Country country : world.getCountryList()){
+                    if(countryLanguage.getCountryCode() == country.getCode()){
+                        country.getLanguageList().add(countryLanguage);
+                    }
+                }
+            }
+            for(Country country : world.getCountryList()){
+                for(CountryLanguage countryLanguage : country.getLanguageList()){
+                    countryLanguage.setNumberOfSpeakers(countryLanguage.getSpokenBy()/100 * country.getPopulation());
+                }
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void generateWorldLanguages(){
+        for(Country country : world.getCountryList()){
+            boolean exists = false;
+            double extraSpeakers;
+            double currentSpeakers;
+            double totalSpeakers;
+            for(CountryLanguage countryLanguage : country.getLanguageList()){
+                for(Map.Entry<WorldLanguage, Double> worldLanguage : world.getLanguageList().entrySet()){
+                        if(countryLanguage.getName() == worldLanguage.getKey().getName()){
+                            exists = true;
+                            currentSpeakers = worldLanguage.getValue();
+                            extraSpeakers = countryLanguage.getNumberOfSpeakers();
+                            totalSpeakers = currentSpeakers + extraSpeakers;
+                            world.getLanguageList().put(worldLanguage.getKey(), totalSpeakers);
+                            break;
+                        }
+                }
+                if(!exists){
+                    world.getLanguageList().put(new WorldLanguage(countryLanguage.getName()), countryLanguage.getNumberOfSpeakers());
+                }
+            }
+            for(Map.Entry<WorldLanguage, Double> worldLanguage : world.getLanguageList().entrySet()){
+                worldLanguage.getKey().setPercentageOfSpeakers(worldLanguage.getValue()/world.getPopulation());
+            }
+        }
+    }
+
+    public void testData(){
+        for(int i = 0; i < 10; i++){
+            System.out.println(world.getCityList().get(i).toString());
+        }
+        for(int i = 0; i < 10; i++){
+            System.out.println(world.getDistrictList().get(i).toString());
+        }
+        for(int i = 0; i < 10; i++){
+            System.out.println(world.getCountryList().get(i).toString());
+        }
+        for(int i = 0; i < world.getRegionList().size()-1; i++){
+            System.out.println(world.getRegionList().get(i).toString());
+        }
+        for(int i = 0; i < world.getContinentList().size()-1; i++){
+            System.out.println(world.getContinentList().get(i).toString());
+        }
+    }
+
+
 }

@@ -27,7 +27,7 @@ public class Country {
     
     private City capital;
     private ArrayList<District> districtList = new ArrayList<District>();
-    private ArrayList<Language> languageList = new ArrayList<Language>();
+    private ArrayList<CountryLanguage> languageList = new ArrayList<CountryLanguage>();
 
 
     public Country() {
@@ -198,11 +198,11 @@ public class Country {
         this.capitalCode = capitalCode;
     }
 
-    public ArrayList<Language> getLanguageList() {
+    public ArrayList<CountryLanguage> getLanguageList() {
         return languageList;
     }
 
-    public void setLanguageList(ArrayList<Language> languageList) {
+    public void setLanguageList(ArrayList<CountryLanguage> languageList) {
         this.languageList = languageList;
     }
 }

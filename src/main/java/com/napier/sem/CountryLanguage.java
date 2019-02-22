@@ -1,15 +1,20 @@
 package com.napier.sem;
 
 /* Class to represent a language as spoken in a specific country */
-public class Language {
+public class CountryLanguage {
 
     private boolean isOfficial;
     private String name;
     private double spokenBy;
     private String countryCode;
+    private double numberOfSpeakers;
 
-    public Language()
+    public CountryLanguage(String name)
     {
+        setName(name);
+    }
+
+    public CountryLanguage(){
 
     }
 
@@ -43,5 +48,13 @@ public class Language {
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    public double getNumberOfSpeakers() {
+        return numberOfSpeakers;
+    }
+
+    public void setNumberOfSpeakers(double numberOfSpeakers) {
+        this.numberOfSpeakers = numberOfSpeakers;
     }
 }
