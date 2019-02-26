@@ -1,16 +1,17 @@
 package com.napier.sem;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 /* Class to represent the World, to be instantiated once at the start of program, holds lists of
 objects representing the smaller regions which can be processed by external classes.
  */
 public class World {
-    private  ArrayList<Continent> continentList = new ArrayList<Continent>();
+    private  TreeMap<Continent, String> continentList = new TreeMap<Continent, String>();
     private  ArrayList<City> cityList = new ArrayList<City>();
-    private  ArrayList<Region> regionList = new ArrayList<Region>();
-    private  ArrayList<District> districtList = new ArrayList<District>();
+    private  TreeMap<Region, String> regionList = new TreeMap<Region, String>();
+    private  TreeMap<District, String> districtList = new TreeMap<District, String>();
     private  ArrayList<Country> countryList = new ArrayList<Country>();
     private ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
     private TreeMap<WorldLanguage, Double> languageList = new TreeMap<WorldLanguage, Double>();;
@@ -20,20 +21,20 @@ public class World {
         System.out.println("Data Class Created");
     }
 
-    public void calculatePopulation(){
+    public void calculatePopulation() {
         int population = 0;
-        for(Continent continent : continentList){
-            population += continent.getPopulation();
+        for (Map.Entry<Continent, String> continentEntry : continentList.entrySet()) {
+            population += continentEntry.getKey().getPopulation();
+            this.setPopulation(population);
         }
-        this.setPopulation(population);
     }
 
 
-    public ArrayList<Continent> getContinentList() {
+    public TreeMap<Continent, String> getContinentList() {
         return continentList;
     }
 
-    public void setContinentList(ArrayList<Continent> continentList) {
+    public void setContinentList(TreeMap<Continent, String> continentList) {
         this.continentList = continentList;
     }
 
@@ -45,19 +46,19 @@ public class World {
         this.cityList = cityList;
     }
 
-    public ArrayList<Region> getRegionList() {
+    public TreeMap<Region, String> getRegionList() {
         return regionList;
     }
 
-    public void setRegionList(ArrayList<Region> regionList) {
+    public void setRegionList(TreeMap<Region, String> regionList) {
         this.regionList = regionList;
     }
 
-    public ArrayList<District> getDistrictList() {
+    public TreeMap<District, String> getDistrictList() {
         return districtList;
     }
 
-    public void setDistrictList(ArrayList<District> districtList) {
+    public void setDistrictList(TreeMap<District, String> districtList) {
         this.districtList = districtList;
     }
 

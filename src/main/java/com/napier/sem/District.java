@@ -19,7 +19,7 @@ public class District {
 
     }
 
-    public void cacultatePopulation(){
+    public void calculatePopulation(){
         int p = 0;
         for(City city : cityList){
             p += city.getPopulation();
