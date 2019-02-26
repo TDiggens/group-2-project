@@ -389,7 +389,7 @@ public class SanityCheck
             }
         }
     }
-
+/*
     public void testData(){
         for(int i = 0; i < 10; i++){
             System.out.println(world.getCityList().get(i).toString());
@@ -407,6 +407,7 @@ public class SanityCheck
             System.out.println(world.getContinentList().get(i).toString());
         }
     }
+    */
 
 
 }
