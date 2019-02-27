@@ -25,8 +25,8 @@ public class SanityCheck
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
-        sanity.generateCountryLanguages();
-        sanity.generateWorldLanguages();
+        //sanity.generateCountryLanguages();
+        //sanity.generateWorldLanguages();
         sanity.disconnect();
         
     }
@@ -187,6 +187,7 @@ public class SanityCheck
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(districtList.size());
         return districtList;
     }
 
@@ -204,7 +205,7 @@ public class SanityCheck
             }
             for(Map.Entry<Region, String> regionListEntry : regionList.entrySet()){
                 for(Country country : world.getCountryList()){
-                    if(country.getRegion() == regionListEntry.getKey().getName()){
+                    if(country.getRegion() == regionListEntry.getValue()){
                         regionListEntry.getKey().getCountryList().add(country);
                         regionListEntry.getKey().setContinent(country.getContinent());
                     }
@@ -217,6 +218,7 @@ public class SanityCheck
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        System.out.println(regionList.size());
         return regionList;
     }
 
@@ -234,7 +236,7 @@ public class SanityCheck
             }
             for(Map.Entry<Continent, String> continentListEntry : continentList.entrySet()){
                 for(Map.Entry<Region, String> regionListEntry : world.getRegionList().entrySet()){
-                    if(regionListEntry.getKey().getContinent() == continentListEntry.getKey().getName()){
+                    if(regionListEntry.getKey().getContinent() == continentListEntry.getValue()){
                         continentListEntry.getKey().getRegionList().add(regionListEntry.getKey());
                     }
                 }
@@ -246,6 +248,7 @@ public class SanityCheck
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        System.out.println(continentList.size());
         return continentList;
     }
 
