@@ -50,4 +50,13 @@ public class District {
     public void setCityList(ArrayList<City> cityList) {
         this.cityList = cityList;
     }
+
+    @Override
+    public String toString() {
+        return "District{" +
+                "name='" + name + '\'' +
+                ", population=" + population +
+                ", cityList=" + cityList +
+                '}';
+    }
 }

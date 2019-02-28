@@ -61,4 +61,14 @@ public class Region {
     public void setContinent(String continent) {
         this.continent = continent;
     }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+                "countryList=" + countryList +
+                ", name='" + name + '\'' +
+                ", population=" + population +
+                ", continent='" + continent + '\'' +
+                '}';
+    }
 }

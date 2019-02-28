@@ -25,8 +25,9 @@ public class SanityCheck
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
-        //sanity.generateCountryLanguages();
-        //sanity.generateWorldLanguages();
+        sanity.generateCountryLanguages();
+        sanity.generateWorldLanguages();
+        sanity.testData();
         sanity.disconnect();
         
     }
@@ -161,29 +162,24 @@ public class SanityCheck
         return countryList;
     }
 
-    public TreeMap<District, String> generateDistrictList() {
-        TreeMap<District, String> districtList = new TreeMap<District, String>();
+    public ArrayList<District> generateDistrictList() {
+        ArrayList<District> districtList = new ArrayList<District>();
         try {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT District FROM City ORDER BY population";
+            String strSelect = "SELECT DISTINCT district FROM city ORDER BY population";
             ResultSet rSet = stmt.executeQuery(strSelect);
+            String districtName;
             while(rSet.next()){
-                if(!districtList.containsValue(rSet.getString("District"))){
-                    District district = new District(rSet.getString("District"));
-                    districtList.put(district, district.getName());
-                }
+                District district = new District(rSet.getString("District"));
+                districtList.add(district);
             }
             for(City city : world.getCityList()){
-                for(Map.Entry<District, String> districtListEntry : districtList.entrySet()){
-                    if(city.getDistrict() == districtListEntry.getValue()){
-                        districtListEntry.getKey().getCityList().add(city);
+                for(District district : districtList){
+                    if(city.getDistrict().equals(district.getName())){
+                        district.getCityList().add(city);
                     }
                 }
             }
-            for(Map.Entry<District, String> districtListEntry : districtList.entrySet()){
-                districtListEntry.getKey().calculatePopulation();
-            }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -191,28 +187,25 @@ public class SanityCheck
         return districtList;
     }
 
-    public TreeMap<Region, String> generateRegionList() {
-        TreeMap<Region, String> regionList = new TreeMap<Region, String>();
+    public ArrayList<Region> generateRegionList(){
+        ArrayList<Region> regionList = new ArrayList<Region>();
         try{
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT Region FROM Country ORDER BY population";
+            String strSelect = "SELECT DISTINCT region FROM country";
             ResultSet rSet = stmt.executeQuery(strSelect);
             while(rSet.next()){
-                if(!regionList.containsValue(rSet.getString("Region"))) {
-                    Region region = new Region(rSet.getString("Region"));
-                    regionList.put(region, region.getName());
-                }
+                Region region = new Region(rSet.getString("Region"));
+                regionList.add(region);
             }
-            for(Map.Entry<Region, String> regionListEntry : regionList.entrySet()){
-                for(Country country : world.getCountryList()){
-                    if(country.getRegion() == regionListEntry.getValue()){
-                        regionListEntry.getKey().getCountryList().add(country);
-                        regionListEntry.getKey().setContinent(country.getContinent());
+            for(Country country : world.getCountryList()){
+                for(Region region : regionList){
+                    if(country.getRegion().equals(region.getName())){
+                        region.getCountryList().add(country);
                     }
                 }
             }
-            for(Map.Entry<Region, String> regionListEntry : regionList.entrySet()){
-                regionListEntry.getKey().cacultatePopulation();
+            for(Region region : regionList){
+                region.cacultatePopulation();
             }
         }
         catch(Exception e){
@@ -222,116 +215,33 @@ public class SanityCheck
         return regionList;
     }
 
-    public TreeMap<Continent, String> generateContinentList() {
-        TreeMap<Continent, String> continentList = new TreeMap<Continent, String>();
+    public ArrayList generateContinentList(){
+        ArrayList<Continent> continentList = new ArrayList<Continent>();
         try{
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT Continent FROM country ORDER BY population";
+            String strSelect = "SELECT DISTINCT continent FROM country";
             ResultSet rSet = stmt.executeQuery(strSelect);
             while(rSet.next()){
-                if(!continentList.containsValue(rSet.getString("Continent"))) {
-                    Continent continent = new Continent(rSet.getString("Continent"));
-                    continentList.put(continent, continent.getName());
-                }
+                Continent continent = new Continent(rSet.getString("Continent"));
+                continentList.add(continent);
             }
-            for(Map.Entry<Continent, String> continentListEntry : continentList.entrySet()){
-                for(Map.Entry<Region, String> regionListEntry : world.getRegionList().entrySet()){
-                    if(regionListEntry.getKey().getContinent() == continentListEntry.getValue()){
-                        continentListEntry.getKey().getRegionList().add(regionListEntry.getKey());
+            for(Region region : world.getRegionList()){
+                for(Continent continent : continentList){
+                    if(!region.getCountryList().isEmpty() &&
+                            region.getCountryList().get(0).getContinent().equals(continent.getName())){
+                        continent.getRegionList().add(region);
                     }
                 }
             }
-            for(Map.Entry<Continent, String> continentListEntry : continentList.entrySet()){
-                continentListEntry.getKey().cacultatePopulation();
+            for(Continent continent : continentList){
+                continent.cacultatePopulation();
             }
-        }
-        catch(Exception e){
+        } catch(Exception e){
             System.out.println(e.getMessage());
         }
         System.out.println(continentList.size());
         return continentList;
     }
-
-
-
-
-    /*public ArrayList<District> generateDistrictList(){
-        ArrayList<District> districtList = new ArrayList<District>();
-        ArrayList<City> cityList = world.getCityList();
-        boolean exists = false;
-            for(City city : cityList){
-                exists = false;
-                for(District district : districtList) {
-                    if(city.getDistrict() == district.getName()) {
-                        exists = true;
-                        if(!district.getCityList().contains(city)){
-                            district.getCityList().add(city);
-                        }
-                        break;
-                    }
-                }
-                if(!exists){
-                    District district = new District(city.getDistrict());
-                    district.getCityList().add(city);
-                    districtList.add(district);
-                }
-            }
-        return districtList;
-    }*/
-
-   /* public ArrayList<Region> generateRegionList(){
-        ArrayList<Region> regionList = new ArrayList<Region>();
-        ArrayList<Country> countryList = world.getCountryList();
-        boolean exists = false;
-        for(Country country : countryList){
-            exists = false;
-            Region tmpRegion = new Region();
-            for(Region region : regionList) {
-                if(country.getRegion() == region.getName()) {
-                    exists = true;
-                    if(!region.getCountryList().contains(country)){
-                        region.getCountryList().add(country);
-                    }
-                    break;
-                }
-            }
-            if(!exists){
-                Region region = new Region(country.getRegion());
-                regionList.add(region);
-                region.setContinent(country.getContinent());
-                region.getCountryList().add(country);
-                }
-        }
-        return regionList;
-    }
-*/
-   /*
-    public ArrayList<Continent> generateContinentList(){
-        ArrayList<Continent> continentList = new ArrayList<Continent>();
-        ArrayList<Region> regionList = world.getRegionList();
-        boolean exists = false;
-        for(Region region : regionList){
-            exists = false;
-            for(Continent continent : continentList) {
-                if(region.getContinent() == continent.getName()) {
-                    exists = true;
-                    if(!continent.getRegionList().contains(region)){
-                        continent.getRegionList().add(region);
-                    }
-                    break;
-                }
-            }
-            if(!exists){
-                Continent continent = new Continent(region.getContinent());
-                continent.getRegionList().add(region);
-                continentList.add(continent);
-            }
-        }
-        return continentList;
-    }
-    */
-
-
 
     public void generateCountryLanguages(){
         try {
@@ -374,7 +284,7 @@ public class SanityCheck
             double totalSpeakers;
             for(CountryLanguage countryLanguage : country.getLanguageList()){
                 for(Map.Entry<WorldLanguage, Double> worldLanguage : world.getLanguageList().entrySet()){
-                        if(countryLanguage.getName() == worldLanguage.getKey().getName()){
+                        if(countryLanguage.getName().equals(worldLanguage.getKey().getName())){
                             exists = true;
                             currentSpeakers = worldLanguage.getValue();
                             extraSpeakers = countryLanguage.getNumberOfSpeakers();
@@ -392,7 +302,7 @@ public class SanityCheck
             }
         }
     }
-/*
+
     public void testData(){
         for(int i = 0; i < 10; i++){
             System.out.println(world.getCityList().get(i).toString());
@@ -410,7 +320,6 @@ public class SanityCheck
             System.out.println(world.getContinentList().get(i).toString());
         }
     }
-    */
 
 
 }

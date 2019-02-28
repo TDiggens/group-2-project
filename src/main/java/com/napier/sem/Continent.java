@@ -49,4 +49,13 @@ public class Continent {
     public void setRegionList(ArrayList<Region> regionList) {
         this.regionList = regionList;
     }
+
+    @Override
+    public String toString() {
+        return "Continent{" +
+                "population=" + population +
+                ", name='" + name + '\'' +
+                ", regionList=" + regionList +
+                '}';
+    }
 }

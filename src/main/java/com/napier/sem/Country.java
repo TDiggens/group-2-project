@@ -205,4 +205,29 @@ public class Country {
     public void setLanguageList(ArrayList<CountryLanguage> languageList) {
         this.languageList = languageList;
     }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", continent='" + continent + '\'' +
+                ", region='" + region + '\'' +
+                ", formOfGov='" + formOfGov + '\'' +
+                ", headOfState='" + headOfState + '\'' +
+                ", localName='" + localName + '\'' +
+                ", code2='" + code2 + '\'' +
+                ", capitalCode=" + capitalCode +
+                ", yearOfIndependence=" + yearOfIndependence +
+                ", population=" + population +
+                ", surfaceArea=" + surfaceArea +
+                ", lifeExpectancy=" + lifeExpectancy +
+                ", gnp=" + gnp +
+                ", oldGNP=" + oldGNP +
+                ", urbanPopulation=" + urbanPopulation +
+                ", capital=" + capital +
+                ", districtList=" + districtList +
+                ", languageList=" + languageList +
+                '}';
+    }
 }

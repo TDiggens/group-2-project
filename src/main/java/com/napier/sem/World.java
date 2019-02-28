@@ -8,10 +8,10 @@ import java.util.TreeMap;
 objects representing the smaller regions which can be processed by external classes.
  */
 public class World {
-    private  TreeMap<Continent, String> continentList = new TreeMap<Continent, String>();
+    private  ArrayList<Continent> continentList = new ArrayList<Continent>();
     private  ArrayList<City> cityList = new ArrayList<City>();
-    private  TreeMap<Region, String> regionList = new TreeMap<Region, String>();
-    private  TreeMap<District, String> districtList = new TreeMap<District, String>();
+    private  ArrayList<Region> regionList = new ArrayList<Region>();
+    private  ArrayList<District> districtList = new ArrayList<District>();
     private  ArrayList<Country> countryList = new ArrayList<Country>();
     private ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
     private TreeMap<WorldLanguage, Double> languageList = new TreeMap<WorldLanguage, Double>();;
@@ -23,18 +23,18 @@ public class World {
 
     public void calculatePopulation() {
         int population = 0;
-        for (Map.Entry<Continent, String> continentEntry : continentList.entrySet()) {
-            population += continentEntry.getKey().getPopulation();
+        for (Continent continent : continentList) {
+            population += continent.getPopulation();
             this.setPopulation(population);
         }
     }
 
 
-    public TreeMap<Continent, String> getContinentList() {
+    public ArrayList<Continent> getContinentList() {
         return continentList;
     }
 
-    public void setContinentList(TreeMap<Continent, String> continentList) {
+    public void setContinentList(ArrayList<Continent> continentList) {
         this.continentList = continentList;
     }
 
@@ -46,19 +46,19 @@ public class World {
         this.cityList = cityList;
     }
 
-    public TreeMap<Region, String> getRegionList() {
+    public ArrayList<Region> getRegionList() {
         return regionList;
     }
 
-    public void setRegionList(TreeMap<Region, String> regionList) {
+    public void setRegionList(ArrayList<Region> regionList) {
         this.regionList = regionList;
     }
 
-    public TreeMap<District, String> getDistrictList() {
+    public ArrayList<District> getDistrictList() {
         return districtList;
     }
 
-    public void setDistrictList(TreeMap<District, String> districtList) {
+    public void setDistrictList(ArrayList<District> districtList) {
         this.districtList = districtList;
     }
 
