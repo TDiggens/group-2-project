@@ -114,10 +114,8 @@ public class SanityCheck
                 cityList.add(city);
             }
         }
-
         catch(Exception e)
         {
-
             return null;
         }
         return cityList;
@@ -131,7 +129,7 @@ public class SanityCheck
         try
         {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT * FROM country ORDER BY population";
+            String strSelect = "SELECT * FROM country ORDER BY population DESC";
             ResultSet rSet = stmt.executeQuery(strSelect);
 
             while(rSet.next()) {
@@ -166,7 +164,7 @@ public class SanityCheck
         ArrayList<District> districtList = new ArrayList<District>();
         try {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT DISTINCT district FROM city ORDER BY population";
+            String strSelect = "SELECT DISTINCT district FROM city ";
             ResultSet rSet = stmt.executeQuery(strSelect);
             String districtName;
             while(rSet.next()){
@@ -180,10 +178,12 @@ public class SanityCheck
                     }
                 }
             }
+            for(District district : districtList){
+                district.calculatePopulation();
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(districtList.size());
         return districtList;
     }
 
@@ -205,13 +205,12 @@ public class SanityCheck
                 }
             }
             for(Region region : regionList){
-                region.cacultatePopulation();
+                region.calculatePopulation();
             }
         }
         catch(Exception e){
             System.out.println(e.getMessage());
         }
-        System.out.println(regionList.size());
         return regionList;
     }
 

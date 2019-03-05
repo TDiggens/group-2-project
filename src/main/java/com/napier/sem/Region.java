@@ -8,7 +8,7 @@ of countries it contains.
  */
 public class Region {
 
-    private ArrayList<Country> countryList;
+    private ArrayList<Country> countryList = new ArrayList<Country>();
     private String name;
     private int population;
     private String continent;
@@ -22,7 +22,7 @@ public class Region {
 
     /* method to calculate the population by summing countries in the regions' populations
     */
-    public void cacultatePopulation(){
+    public void calculatePopulation(){
         int p = 0;
         for(Country country : countryList){
             p += country.getPopulation();
