@@ -43,7 +43,18 @@ public class Country {
             }
         }
         this.setUrbanPopulation(urbanPop);
-        this.setUrbanPopPercentage(urbanPop/this.getPopulation()*100);
+        if(this.getPopulation() != 0){
+            this.setUrbanPopPercentage(urbanPop/this.getPopulation()*100);
+        } else {
+            this.setUrbanPopPercentage(0);
+        }
+
+    }
+
+    public void printDistrictList(){
+        for(District district : this.getDistrictList()){
+            System.out.println(district.toString());
+        }
     }
 
     public Country(String name, String code, String continent, String region, double surfaceArea, int yearOfIndependence,

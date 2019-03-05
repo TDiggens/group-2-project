@@ -21,16 +21,19 @@ public class SanityCheck
         sanity.connect();
         sanity.world = new World();
         sanity.world.setCityList(sanity.generateCityList());
-        /*for(City city : sanity.world.getCityList()){
+        for(City city : sanity.world.getCityList()){
             System.out.println(city.toString());
-        }*/
+        }
         sanity.world.setDistrictList(sanity.generateDistrictList());
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
         sanity.calculateCountryUrbanPops();
-        for(Country country : sanity.world.getCountryList()){
+        /*for(Country country : sanity.world.getCountryList()){
             System.out.println(country.toString());
+        }*/
+        for(Country country : sanity.world.getCountryList()){
+            country.printDistrictList();
         }
         //sanity.generateCountryLanguages();
         //sanity.generateWorldLanguages();
@@ -194,6 +197,11 @@ public class SanityCheck
                     if(city.getDistrict().equals(district.getName())){
                         district.getCityList().add(city);
                     }
+                }
+            }
+            for(Country country : world.getCountryList()){
+                for(District district : districtList){
+                    //put code to add districts to country's district list here
                 }
             }
             for(District district : districtList){

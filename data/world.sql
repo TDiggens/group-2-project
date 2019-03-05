@@ -1,3 +1,5 @@
+-- noinspection LossyEncodingForFile
+
 -- MySQL dump 10.13  Distrib 5.1.51, for pc-linux-gnu (i686)
 --
 -- Host: 127.0.0.1    Database: world
@@ -4417,7 +4419,7 @@ CREATE TABLE `countrylanguage` (
 --
 -- Dumping data for table `countrylanguage`
 --
--- ORDER BY:  `CountryCode`,`CountryLanguage`
+-- ORDER BY:  `CountryCode`,`Language`
 
 INSERT INTO `countrylanguage` VALUES ('ABW','Dutch','T',5.3);
 INSERT INTO `countrylanguage` VALUES ('ABW','English','F',9.5);

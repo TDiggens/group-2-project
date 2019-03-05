@@ -22,7 +22,7 @@ public class City {
     }
 
     public void setIsCapital(boolean isCapital) {
-        this.setIsCapital(isCapital);
+        this.isCapital = isCapital;
     }
 
     public Country getCountry(){
@@ -30,7 +30,7 @@ public class City {
     }
 
     public void setCountry(Country country){
-        this.setCountry(country);
+        this.country = country;
     }
 
     public int getId() {
@@ -54,7 +54,7 @@ public class City {
     }
 
     public void setCountryCode(String countryCode) {
-        countryCode = countryCode;
+        this.countryCode = countryCode;
     }
 
     public String getDistrict() {
