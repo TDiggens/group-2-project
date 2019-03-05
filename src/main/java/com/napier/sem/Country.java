@@ -23,6 +23,7 @@ public class Country {
     private double gnp;
     private double oldGNP;
     private double urbanPopulation;
+    private double urbanPopPercentage;
 
     
     private City capital;
@@ -32,6 +33,17 @@ public class Country {
 
     public Country() {
 
+    }
+
+    public void calculateUrbanPop(){
+        int urbanPop = 0;
+        for(District district : this.getDistrictList()){
+            for(City city : district.getCityList()){
+                urbanPop += city.getPopulation();
+            }
+        }
+        this.setUrbanPopulation(urbanPop);
+        this.setUrbanPopPercentage(urbanPop/this.getPopulation()*100);
     }
 
     public Country(String name, String code, String continent, String region, double surfaceArea, int yearOfIndependence,
@@ -229,5 +241,13 @@ public class Country {
                 ", districtList=" + districtList +
                 ", languageList=" + languageList +
                 '}';
+    }
+
+    public double getUrbanPopPercentage() {
+        return urbanPopPercentage;
+    }
+
+    public void setUrbanPopPercentage(double urbanPopPercentage) {
+        this.urbanPopPercentage = urbanPopPercentage;
     }
 }

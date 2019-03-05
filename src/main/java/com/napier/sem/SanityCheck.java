@@ -21,13 +21,20 @@ public class SanityCheck
         sanity.connect();
         sanity.world = new World();
         sanity.world.setCityList(sanity.generateCityList());
+        /*for(City city : sanity.world.getCityList()){
+            System.out.println(city.toString());
+        }*/
         sanity.world.setDistrictList(sanity.generateDistrictList());
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
-        sanity.generateCountryLanguages();
-        sanity.generateWorldLanguages();
-        sanity.testData();
+        sanity.calculateCountryUrbanPops();
+        for(Country country : sanity.world.getCountryList()){
+            System.out.println(country.toString());
+        }
+        //sanity.generateCountryLanguages();
+        //sanity.generateWorldLanguages();
+        //sanity.testData();
         sanity.disconnect();
         
     }
@@ -113,6 +120,9 @@ public class SanityCheck
                 city.setPopulation(rSet.getInt("Population"));
                 cityList.add(city);
             }
+            for(City city : cityList){
+
+            }
         }
         catch(Exception e)
         {
@@ -151,6 +161,14 @@ public class SanityCheck
                 country.setSurfaceArea(rSet.getDouble("SurfaceArea"));
                 countryList.add(country);
             }
+            /*for(Country country : countryList){
+                country.calculateUrbanPop();
+                for(City city : world.getCityList()){
+                    if(city.getIsCapital() && city.getCountryCode().equals(country.getCode())){
+                        country.setCapital(city);
+                    }
+                }
+            }*/
         }
         catch(Exception e)
         {
@@ -242,6 +260,12 @@ public class SanityCheck
         return continentList;
     }
 
+    public void calculateCountryUrbanPops(){
+        for(Country country : world.getCountryList()){
+            country.calculateUrbanPop();
+        }
+    }
+
     public void generateCountryLanguages(){
         try {
             Statement stmt = con.createStatement();
@@ -259,7 +283,7 @@ public class SanityCheck
             
             for(CountryLanguage countryLanguage : countryLanguageList){
                 for(Country country : world.getCountryList()){
-                    if(countryLanguage.getCountryCode() == country.getCode()){
+                    if(countryLanguage.getCountryCode().equals(country.getCode())){
                         country.getLanguageList().add(countryLanguage);
                     }
                 }

@@ -21,7 +21,7 @@ public class District {
 
     public void calculatePopulation(){
         int p = 0;
-        for(City city : cityList){
+        for(City city : this.getCityList()){
             p += city.getPopulation();
         }
         setPopulation(p);

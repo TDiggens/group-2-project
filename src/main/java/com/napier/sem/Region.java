@@ -24,7 +24,7 @@ public class Region {
     */
     public void calculatePopulation(){
         int p = 0;
-        for(Country country : countryList){
+        for(Country country : this.getCountryList()){
             p += country.getPopulation();
         }
         setPopulation(p);
