@@ -254,6 +254,16 @@ public class Country {
                 '}';
     }
 
+    public String report(){
+        String report = "Country Report: " + name + '\n' + '\n' +
+                "Country Code: " + code + '\n' +
+                "Continent: " + continent + '\n' +
+                "Region: " + region + '\n' +
+                "Population: " + population + '\n' +
+                "Capital: " + capital.getName() + '\n';
+        return report;
+    }
+
     public double getUrbanPopPercentage() {
         return urbanPopPercentage;
     }

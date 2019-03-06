@@ -16,6 +16,7 @@ public class SanityCheck
         SanityCheck sanity = new SanityCheck();
         sanity.connect();
         sanity.world = new World();
+        sanity.world.setCityList(sanity.generateCityList());
         sanity.world.setDistrictList(sanity.generateDistrictList());
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
@@ -110,9 +111,9 @@ public class SanityCheck
                 city.setPopulation(rSet.getInt("Population"));
                 cityList.add(city);
             }
-            for(City city : cityList){
+            /*for(City city : cityList){
 
-            }
+            }*/
         }
         catch(Exception e)
         {
@@ -155,7 +156,7 @@ public class SanityCheck
              */
             for(Country country : countryList){
                 for(City city : world.getCityList()){
-                    if(city.getIsCapital() && city.getCountryCode().equals(country.getCode())){
+                    if(city.getIsCapital() && city.getId() == (country.getCapitalCode())){
                         country.setCapital(city);
                     }
                 }
@@ -294,7 +295,6 @@ public class SanityCheck
                     countryLanguage.setPercentageOfSpeakers(rSet.getDouble("Percentage"));
                     countryLanguageList.add(countryLanguage);
             }
-            
             for(CountryLanguage countryLanguage : countryLanguageList){
                 for(Country country : world.getCountryList()){
                     if(countryLanguage.getCountryCode().equals(country.getCode())){
@@ -367,6 +367,4 @@ public class SanityCheck
             System.out.println(world.getContinentList().get(i).toString());
         }
     }
-
-
 }
