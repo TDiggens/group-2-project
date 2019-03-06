@@ -45,11 +45,17 @@ public class Country {
         }
         this.setUrbanPopulation(urbanPop);
         if(this.getPopulation() != 0){
-            this.setUrbanPopPercentage(urbanPop/this.getPopulation()*100);
+            this.setUrbanPopPercentage((urbanPop/this.getPopulation())*100);
         } else {
             this.setUrbanPopPercentage(0);
         }
 
+    }
+
+    public void printLanguageList(){
+        for(CountryLanguage countryLanguage : this.getLanguageList()){
+            System.out.println(countryLanguage.toString());
+        }
     }
 
     public void printDistrictList(){
@@ -249,7 +255,6 @@ public class Country {
                 ", gnp=" + gnp +
                 ", oldGNP=" + oldGNP +
                 ", urbanPopulation=" + urbanPopulation +
-                ", capital=" + capital +
                 ", districtList=" + districtList +
                 ", languageList=" + languageList +
                 '}';

@@ -7,7 +7,7 @@ and a list of Region objects to hold the regions it contains
  */
 public class Continent {
 
-    private int population;
+    private long population;
     private String name;
     private ArrayList<Region> regionList = new ArrayList<Region>();
 
@@ -18,19 +18,19 @@ public class Continent {
         setName(name);
     }
     
-    public void cacultatePopulation(){
-        int p = 0;
+    public void calculatePopulation(){
+        long p = 0;
         for(Region region : regionList){
             p += region.getPopulation();
         }
         setPopulation(p);
     }
 
-    public int getPopulation() {
+    public long getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(long population) {
         this.population = population;
     }
 

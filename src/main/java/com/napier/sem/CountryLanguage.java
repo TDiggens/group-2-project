@@ -57,4 +57,14 @@ public class CountryLanguage {
     public void setPercentageOfSpeakers(double percentageOfSpeakers) {
         this.percentageOfSpeakers = percentageOfSpeakers;
     }
+
+    @Override
+    public String toString() {
+        String numberOfSpeakersStr = String.format("%.0f", this.getNumberOfSpeakers());
+        return name + ":" +
+                "isOfficial=" + isOfficial +
+                ", numberOfSpeakers=" + numberOfSpeakersStr +
+                ", percentageOfSpeakers=" + percentageOfSpeakers +
+                '}';
+    }
 }

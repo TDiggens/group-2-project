@@ -22,9 +22,15 @@ public class District {
     public void calculatePopulation(){
         int p = 0;
         for(City city : this.getCityList()){
-            p += city.getPopulation();
+            p += (city.getPopulation());
         }
         setPopulation(p);
+    }
+
+    public void printCityList(){
+        for(City city : this.getCityList()){
+            System.out.println(city.toString());
+        }
     }
 
     public String getName() {
@@ -53,10 +59,8 @@ public class District {
 
     @Override
     public String toString() {
-        return "District{" +
-                "name='" + name + '\'' +
-                ", population=" + population +
-                ", cityList=" + cityList +
-                '}';
+        return "District: " +
+                "name='" + this.getName() + '\'' +
+                ", population=" + this.getPopulation();
     }
 }

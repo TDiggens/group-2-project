@@ -10,7 +10,7 @@ public class Region {
 
     private ArrayList<Country> countryList = new ArrayList<Country>();
     private String name;
-    private int population;
+    private long population;
     private String continent;
 
     public Region(){}
@@ -23,9 +23,9 @@ public class Region {
     /* method to calculate the population by summing countries in the regions' populations
     */
     public void calculatePopulation(){
-        int p = 0;
+        long p = 0;
         for(Country country : this.getCountryList()){
-            p += country.getPopulation();
+            p += ((long)country.getPopulation());
         }
         setPopulation(p);
     }
@@ -46,11 +46,11 @@ public class Region {
         this.name = name;
     }
 
-    public int getPopulation() {
+    public long getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(long population) {
         this.population = population;
     }
 
@@ -65,7 +65,6 @@ public class Region {
     @Override
     public String toString() {
         return "Region{" +
-                "countryList=" + countryList +
                 ", name='" + name + '\'' +
                 ", population=" + population +
                 ", continent='" + continent + '\'' +

@@ -77,7 +77,7 @@ public class City {
     public String toString() {
         return "City{" +
                 "isCapital=" + isCapital +
-                ", country=" + country +
+
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", countryCode='" + countryCode + '\'' +

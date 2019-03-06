@@ -29,9 +29,9 @@ public class SanityCheck
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
 
         //Methods to actually produce reports
-        //sanity.listCountriesByPopulation();
-        sanity.listCitiesInCountry();
-        //sanity.testData();
+        sanity.listCountriesByPopulation();
+        //sanity.listCitiesInCountry();
+        sanity.testData();
         sanity.disconnect();
     }
 
@@ -131,13 +131,21 @@ public class SanityCheck
      for each one and add them to a list
     */
     public ArrayList<Country> generateCountryList(){
+        /*list to hold the new country objects */
         ArrayList<Country> countryList = new ArrayList<Country>();
+        /* try/catch used to handle any exceptions arising from the SQL statements
+         */
         try
         {
+            /*create a new SQL statement that selects all records from the country table in
+            world.sql
+             */
             Statement stmt = con.createStatement();
             String strSelect = "SELECT * FROM country ORDER BY population DESC";
             ResultSet rSet = stmt.executeQuery(strSelect);
-
+            /* for as long as there are more records in the returned result set, create new country
+            objects and appropriately assign data from each columns to its' instance variables.
+             */
             while(rSet.next()) {
                 Country country = new Country();
                 country.setCapitalCode(rSet.getInt("Capital"));
@@ -157,7 +165,9 @@ public class SanityCheck
                 country.setSurfaceArea(rSet.getDouble("SurfaceArea"));
                 countryList.add(country);
             }
-            /* Iterate through countries and cities and match the capital cities to each country
+            /* Iterate through the new countries and the existing cities list,
+            match the capital cities to each country, and assign a reference to
+            each Country object to any city within that country
              */
             for(Country country : countryList){
                 for(City city : world.getCityList()){
@@ -176,17 +186,24 @@ public class SanityCheck
             System.out.println(e.getMessage());
             return null;
         }
+        /* return the completed country list for external use */
         return countryList;
     }
 
-
+    /* Method to read unique district names from the city table, create District objects
+     for each one and add them to a list
+    */
     public ArrayList<District> generateDistrictList() {
+        /* list for District objects */
         ArrayList<District> districtList = new ArrayList<District>();
+        /* try catch structure used for any potential SQL exceptions */
         try {
+            /* SQL statement selects only records with unique values in the district column */
             Statement stmt = con.createStatement();
             String strSelect = "SELECT DISTINCT district FROM city ";
             ResultSet rSet = stmt.executeQuery(strSelect);
             String districtName;
+            /* iterate over the returned rows and create a new District object for each one */
             while(rSet.next()){
                 District district = new District(rSet.getString("District"));
                 districtList.add(district);
@@ -206,6 +223,9 @@ public class SanityCheck
              */
             for(Country country : world.getCountryList()){
                 for(District district : districtList){
+                    /* check the country code for the first city in the district to figure out what country the
+                    district is in.
+                     */
                     if(!district.getCityList().isEmpty() &&
                             district.getCityList().get(0).getCountryCode().equals(country.getCode())){
                         country.getDistrictList().add(district);
@@ -220,15 +240,22 @@ public class SanityCheck
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        /* return the completed district list for external use */
         return districtList;
     }
 
+    /* Method to read unique region names from the country table, create Region objects
+     for each one and add them to a list
+    */
     public ArrayList<Region> generateRegionList(){
+        /* list for newly created Region objects */
         ArrayList<Region> regionList = new ArrayList<Region>();
+        /* try/catch structure used for any potential SQL related exceptions */
         try{
             Statement stmt = con.createStatement();
             String strSelect = "SELECT DISTINCT region FROM country";
             ResultSet rSet = stmt.executeQuery(strSelect);
+            /*Iterate through the returned rows and create a new Region object for each one*/
             while(rSet.next()){
                 Region region = new Region(rSet.getString("Region"));
                 regionList.add(region);
@@ -253,34 +280,56 @@ public class SanityCheck
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        /* return the created region list for external use*/
         return regionList;
     }
 
+    /* Method to read unique continent names from the country table, create Continent objects
+     for each one and add them to a list
+    */
     public ArrayList generateContinentList(){
+        /* list for newly created Continent objects */
         ArrayList<Continent> continentList = new ArrayList<Continent>();
+        /* try/catch to handle exceptions */
         try{
+            /* SQL statement returns only rows with unique values in the continent column
+            from country table
+             */
             Statement stmt = con.createStatement();
             String strSelect = "SELECT DISTINCT continent FROM country";
             ResultSet rSet = stmt.executeQuery(strSelect);
+            /* Iterate through the returned rows and make a new Continent object to represent each one
+             */
             while(rSet.next()){
                 Continent continent = new Continent(rSet.getString("Continent"));
                 continentList.add(continent);
             }
+            /* Iterate through the existing region list and the newly created continent list and add the
+            appropriate regions to each Continents' region list.
+             */
             for(Region region : world.getRegionList()){
                 for(Continent continent : continentList){
+                    /* check that region's country list is not empty and if it isnt, use the continent
+                    field of the first country in the list to establish what continent the region is in
+                     */
                     if(!region.getCountryList().isEmpty() &&
                             region.getCountryList().get(0).getContinent().equals(continent.getName())){
+                        /* add the region to the right continent's region list and set the continent field
+                        for the Region object.
+                         */
                         continent.getRegionList().add(region);
+                        region.setContinent(continent.getName());
                     }
                 }
             }
+            /* Iterate through the new list and calculate the population of each continent */
             for(Continent continent : continentList){
-                continent.cacultatePopulation();
+                continent.calculatePopulation();
             }
         } catch(Exception e){
             System.out.println(e.getMessage());
         }
-        System.out.println(continentList.size());
+        /* return the created region list for external use*/
         return continentList;
     }
 
@@ -290,12 +339,21 @@ public class SanityCheck
         }
     }
 
+    /* Method to read all the languages from the countryLanguage table, create a CountryLanguage object
+    each one and pair them with the appropriate countries in the existing country list.
+     */
     public void generateCountryLanguages(){
+        /* list to hold the new CountryLanguage objects */
+        ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
+        /* try/catch to deal with any potential exceptions arising from SQL statement */
         try {
+            /* simple SQL statement to select all rows from the CountryLanguage table */
             Statement stmt = con.createStatement();
             String strSelect = "SELECT * FROM countrylanguage";
             ResultSet rSet = stmt.executeQuery(strSelect);
-            ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
+            /* Iterate over returned rows, create a new CountryLanguage object to represent each one,
+                set their instance variables appropriately and add them to the list
+             */
             while(rSet.next()){
                     CountryLanguage countryLanguage = new CountryLanguage();
                     countryLanguage.setName(rSet.getString("Language"));
@@ -304,30 +362,33 @@ public class SanityCheck
                     countryLanguage.setPercentageOfSpeakers(rSet.getDouble("Percentage"));
                     countryLanguageList.add(countryLanguage);
             }
+            /* iterate over the country list and the new CountryLanguage list and add each CountryLanguage object
+            to the appropriate country's language list by matching them via getCountryCode and getCode. Also
+            use the country's population and percentage field of the CountryLanguage
+            to calculate the number of speakers of that language in the country.
+             */
             for(CountryLanguage countryLanguage : countryLanguageList){
                 for(Country country : world.getCountryList()){
                     if(countryLanguage.getCountryCode().equals(country.getCode())){
                         country.getLanguageList().add(countryLanguage);
+                        countryLanguage.setNumberOfSpeakers(country.getPopulation()
+                                *countryLanguage.getPercentageOfSpeakers());
                     }
-                }
-            }
-            for(Country country : world.getCountryList()){
-                for(CountryLanguage countryLanguage : country.getLanguageList()){
-                    countryLanguage.setNumberOfSpeakers(country.getPopulation()
-                            *countryLanguage.getPercentageOfSpeakers());
                 }
             }
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+            /* nothing to return because there is no need to store the list of languages outside of their
+            specific countries.
+             */
         }
     }
-    
+    /* This method doesnt work :) */
     public ArrayList<WorldLanguage> generateWorldLanguages(){
         ArrayList<WorldLanguage> worldLanguageList = new ArrayList<WorldLanguage>();
         boolean exists;
         double extraSpeakers;
-        String currentLanguage;
         for(Country country : world.getCountryList()){
             extraSpeakers = 0;
             exists = false;
@@ -335,7 +396,6 @@ public class SanityCheck
                 for(WorldLanguage worldLanguage : worldLanguageList) {
                     if (countryLanguage.getName().equals(worldLanguage.getName())) {
                         exists = true;
-                        currentLanguage = countryLanguage.getName();
                         extraSpeakers = countryLanguage.getNumberOfSpeakers();
                     }
                 }
@@ -354,7 +414,7 @@ public class SanityCheck
             }
         }
         for(WorldLanguage worldLanguage : worldLanguageList){
-            worldLanguage.setPercentageOfSpeakers(worldLanguage.getNumberOfSpeakers()/world.getPopulation()*100);
+            worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()/world.getPopulation())*100);
         }
         return worldLanguageList;
     }
@@ -405,21 +465,39 @@ public class SanityCheck
         }
     }
 
+    /* method to test that the data has been loaded correctly by printing out a sampling of it
+     */
     public void testData(){
+        System.out.println('\n' + "Cities: " +'\n');
         for(int i = 0; i < 10; i++){
             System.out.println(world.getCityList().get(i).toString());
         }
+        System.out.println('\n' + "Districts: " +'\n');
         for(int i = 0; i < 10; i++){
             System.out.println(world.getDistrictList().get(i).toString());
+            System.out.println("Cities in " + world.getDistrictList().get(i).getName() + ":");
+            world.getDistrictList().get(i).printCityList();
+            System.out.println('\n');
         }
+        System.out.println('\n' + "Countries: " + '\n');
         for(int i = 0; i < 10; i++){
             System.out.println(world.getCountryList().get(i).toString());
+            System.out.println("Districts in " + world.getCountryList().get(i).getName() + ":");
+            world.getCountryList().get(i).printDistrictList();
+            System.out.println('\n');
+            System.out.println("Languages spoken in " + world.getCountryList().get(i).getName() + ":");
+            world.getCountryList().get(i).printLanguageList();
+            System.out.println('\n');
         }
-        for(int i = 0; i < world.getRegionList().size()-1; i++){
+        System.out.println('\n' + "Regions: " +'\n');
+        for(int i = 0; i < world.getRegionList().size(); i++){
             System.out.println(world.getRegionList().get(i).toString());
         }
-        for(int i = 0; i < world.getContinentList().size()-1; i++){
+        System.out.println('\n' + "Continents: " +'\n');
+        for(int i = 0; i < world.getContinentList().size(); i++){
             System.out.println(world.getContinentList().get(i).toString());
         }
+        System.out.println('\n' + "World: " +'\n');
+        System.out.println(world.toString());
     }
 }
