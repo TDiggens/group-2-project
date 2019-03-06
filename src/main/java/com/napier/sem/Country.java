@@ -25,6 +25,7 @@ public class Country {
     private double urbanPopulation;
     private double urbanPopPercentage;
 
+
     
     private City capital;
     private ArrayList<District> districtList = new ArrayList<District>();
@@ -255,13 +256,24 @@ public class Country {
     }
 
     public String report(){
-        String report = "Country Report: " + name + '\n' + '\n' +
-                "Country Code: " + code + '\n' +
-                "Continent: " + continent + '\n' +
-                "Region: " + region + '\n' +
-                "Population: " + population + '\n' +
-                "Capital: " + capital.getName() + '\n';
-        return report;
+        if(!(capital == null)){
+            String report = "Country Report: " + name + '\n' + '\n' +
+                    "Country Code: " + code + '\n' +
+                    "Continent: " + continent + '\n' +
+                    "Region: " + region + '\n' +
+                    "Population: " + population + '\n' +
+                    "Capital: " + capital.getName() + '\n';
+            return report;
+        } else{
+            String report = "Country Report: " + name + '\n' + '\n' +
+                    "Country Code: " + code + '\n' +
+                    "Continent: " + continent + '\n' +
+                    "Region: " + region + '\n' +
+                    "Population: " + population + '\n' +
+                    "Capital: No capital city" + '\n';
+            return report;
+        }
+
     }
 
     public double getUrbanPopPercentage() {

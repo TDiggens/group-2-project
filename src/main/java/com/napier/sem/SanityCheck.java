@@ -1,6 +1,8 @@
 package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 public class SanityCheck
 {
 
@@ -12,7 +14,7 @@ public class SanityCheck
 
     public static void main(String[] args)
     {
-        System.out.println("Do not be alarmed, this is a test. Hello Group 2!");
+        //Setup
         SanityCheck sanity = new SanityCheck();
         sanity.connect();
         sanity.world = new World();
@@ -25,9 +27,12 @@ public class SanityCheck
         sanity.world.calculatePopulation();
         sanity.generateCountryLanguages();
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
-        sanity.testData();
+
+        //Methods to actually produce reports
+        //sanity.listCountriesByPopulation();
+        sanity.listCitiesInCountry();
+        //sanity.testData();
         sanity.disconnect();
-        
     }
 
     /**
@@ -99,7 +104,7 @@ public class SanityCheck
         try
         {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT * FROM city ORDER BY population";
+            String strSelect = "SELECT * FROM city ORDER BY population DESC";
             ResultSet rSet = stmt.executeQuery(strSelect);
             while(rSet.next())
             {
@@ -156,8 +161,12 @@ public class SanityCheck
              */
             for(Country country : countryList){
                 for(City city : world.getCityList()){
-                    if(city.getIsCapital() && city.getId() == (country.getCapitalCode())){
+                    if(city.getId() == country.getCapitalCode()){
                         country.setCapital(city);
+                        city.setIsCapital(true);
+                    }
+                    if(city.getCountryCode().equals(country.getCode())){
+                        city.setCountry(country);
                     }
                 }
             }
@@ -348,6 +357,52 @@ public class SanityCheck
             worldLanguage.setPercentageOfSpeakers(worldLanguage.getNumberOfSpeakers()/world.getPopulation()*100);
         }
         return worldLanguageList;
+    }
+
+    /* Method to list all countries in world ranked by population, implementation for
+    issue #2 on github. Simply iterates over the country list and calls report() for each one.
+    */
+    public void listCountriesByPopulation(){
+        for(Country country : world.getCountryList()){
+            System.out.println(country.report());
+        }
+    }
+
+
+
+    /* Method to list all cities in a country ranked by population, implementation for
+    issue #24 on github.
+    */
+    public void listCitiesInCountry(){
+        //create booleans to control the loop
+        boolean exit = false;
+        boolean countryFound = false;
+        /* while exit is false, loop asking the user for a country name and if found in the
+        country list, iterate through the city objects in that countries' district list and call
+        report for each city.
+         */
+        while(!exit){
+            System.out.println("Enter the name of a country.");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            for(Country country : world.getCountryList()){
+                if(input.equals(country.getName())){
+                    countryFound = true;
+                    for(District district : country.getDistrictList()){
+                        for(City city : district.getCityList()){
+                            System.out.println(city.report());
+                            exit = true;
+                        }
+                    }
+                }
+            }
+            /* if countryFound is still false then the input was either invalid or a country of that
+            name was not found in the list
+             */
+            if(!countryFound){
+                System.out.println("Country not found, please search again");
+            }
+        }
     }
 
     public void testData(){

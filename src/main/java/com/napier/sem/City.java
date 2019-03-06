@@ -85,4 +85,15 @@ public class City {
                 ", population=" + population +
                 '}';
     }
+
+    public String report(){
+
+         String report = "City Report: " + this.getName() + '\n' + '\n' +
+                     "Name: " + this.getName() + '\n' +
+                     "Country: " + this.getCountry().getName() + '\n' +
+                     "District: " +  this.getDistrict() + '\n' +
+                     "Population: " + this.getPopulation();
+
+        return report;
+    }
 }
