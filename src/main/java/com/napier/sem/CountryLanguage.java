@@ -5,9 +5,9 @@ public class CountryLanguage {
 
     private boolean isOfficial;
     private String name;
-    private double spokenBy;
     private String countryCode;
     private double numberOfSpeakers;
+    private double percentageOfSpeakers;
 
     public CountryLanguage(String name)
     {
@@ -34,14 +34,6 @@ public class CountryLanguage {
         this.name = name;
     }
 
-    public double getSpokenBy() {
-        return spokenBy;
-    }
-
-    public void setSpokenBy(double spokenBy) {
-        this.spokenBy = spokenBy;
-    }
-
     public String getCountryCode() {
         return countryCode;
     }
@@ -56,5 +48,13 @@ public class CountryLanguage {
 
     public void setNumberOfSpeakers(double numberOfSpeakers) {
         this.numberOfSpeakers = numberOfSpeakers;
+    }
+
+    public double getPercentageOfSpeakers() {
+        return percentageOfSpeakers;
+    }
+
+    public void setPercentageOfSpeakers(double percentageOfSpeakers) {
+        this.percentageOfSpeakers = percentageOfSpeakers;
     }
 }

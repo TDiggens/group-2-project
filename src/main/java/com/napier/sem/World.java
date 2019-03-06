@@ -14,7 +14,7 @@ public class World {
     private  ArrayList<District> districtList = new ArrayList<District>();
     private  ArrayList<Country> countryList = new ArrayList<Country>();
     private ArrayList<CountryLanguage> countryLanguageList = new ArrayList<CountryLanguage>();
-    private TreeMap<WorldLanguage, Double> languageList = new TreeMap<WorldLanguage, Double>();;
+    private ArrayList<WorldLanguage> languageList = new ArrayList<WorldLanguage>();;
     private  int population;
 
     public World() {
@@ -78,11 +78,11 @@ public class World {
         this.population = population;
     }
 
-    public TreeMap<WorldLanguage, Double> getLanguageList() {
+    public ArrayList<WorldLanguage> getLanguageList() {
         return languageList;
     }
 
-    public void setLanguageList(TreeMap<WorldLanguage, Double> languageList) {
+    public void setLanguageList(ArrayList<WorldLanguage> languageList) {
         this.languageList = languageList;
     }
 }

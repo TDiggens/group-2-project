@@ -1,10 +1,6 @@
 package com.napier.sem;
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
 public class SanityCheck
 {
 
@@ -20,24 +16,15 @@ public class SanityCheck
         SanityCheck sanity = new SanityCheck();
         sanity.connect();
         sanity.world = new World();
-        sanity.world.setCityList(sanity.generateCityList());
-        for(City city : sanity.world.getCityList()){
-            System.out.println(city.toString());
-        }
         sanity.world.setDistrictList(sanity.generateDistrictList());
         sanity.world.setCountryList(sanity.generateCountryList());
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
         sanity.calculateCountryUrbanPops();
-        /*for(Country country : sanity.world.getCountryList()){
-            System.out.println(country.toString());
-        }*/
-        for(Country country : sanity.world.getCountryList()){
-            country.printDistrictList();
-        }
-        //sanity.generateCountryLanguages();
-        //sanity.generateWorldLanguages();
-        //sanity.testData();
+        sanity.world.calculatePopulation();
+        sanity.generateCountryLanguages();
+        sanity.world.setLanguageList(sanity.generateWorldLanguages());
+        sanity.testData();
         sanity.disconnect();
         
     }
@@ -164,14 +151,15 @@ public class SanityCheck
                 country.setSurfaceArea(rSet.getDouble("SurfaceArea"));
                 countryList.add(country);
             }
-            /*for(Country country : countryList){
-                country.calculateUrbanPop();
+            /* Iterate through countries and cities and match the capital cities to each country
+             */
+            for(Country country : countryList){
                 for(City city : world.getCityList()){
                     if(city.getIsCapital() && city.getCountryCode().equals(country.getCode())){
                         country.setCapital(city);
                     }
                 }
-            }*/
+            }
         }
         catch(Exception e)
         {
@@ -180,6 +168,7 @@ public class SanityCheck
         }
         return countryList;
     }
+
 
     public ArrayList<District> generateDistrictList() {
         ArrayList<District> districtList = new ArrayList<District>();
@@ -192,6 +181,9 @@ public class SanityCheck
                 District district = new District(rSet.getString("District"));
                 districtList.add(district);
             }
+            /*Iterate through each city in the city list and each district in the new district list
+            and add appropriate cities to each district's city list
+             */
             for(City city : world.getCityList()){
                 for(District district : districtList){
                     if(city.getDistrict().equals(district.getName())){
@@ -199,11 +191,19 @@ public class SanityCheck
                     }
                 }
             }
+            /*
+            iterate through all countries and districts and add appropriate districts to each countries district list.
+             */
             for(Country country : world.getCountryList()){
                 for(District district : districtList){
-                    //put code to add districts to country's district list here
+                    if(!district.getCityList().isEmpty() &&
+                            district.getCityList().get(0).getCountryCode().equals(country.getCode())){
+                        country.getDistrictList().add(district);
+                    }
                 }
             }
+            /*iterate through the district list and calculate population of each district
+             */
             for(District district : districtList){
                 district.calculatePopulation();
             }
@@ -223,6 +223,9 @@ public class SanityCheck
                 Region region = new Region(rSet.getString("Region"));
                 regionList.add(region);
             }
+            /* Iterate through every country in country list and region in the new region list
+            and add the appropriate countries to each regions country list.
+             */
             for(Country country : world.getCountryList()){
                 for(Region region : regionList){
                     if(country.getRegion().equals(region.getName())){
@@ -230,6 +233,9 @@ public class SanityCheck
                     }
                 }
             }
+            /* Iterate through every region in the new region list and calculate their
+            populations
+             */
             for(Region region : regionList){
                 region.calculatePopulation();
             }
@@ -285,7 +291,7 @@ public class SanityCheck
                     countryLanguage.setName(rSet.getString("Language"));
                     countryLanguage.setCountryCode(rSet.getString("CountryCode"));
                     countryLanguage.setOfficial(rSet.getBoolean("IsOfficial"));
-                    countryLanguage.setSpokenBy(rSet.getDouble("Percentage"));
+                    countryLanguage.setPercentageOfSpeakers(rSet.getDouble("Percentage"));
                     countryLanguageList.add(countryLanguage);
             }
             
@@ -298,7 +304,8 @@ public class SanityCheck
             }
             for(Country country : world.getCountryList()){
                 for(CountryLanguage countryLanguage : country.getLanguageList()){
-                    countryLanguage.setNumberOfSpeakers(countryLanguage.getSpokenBy()/100 * country.getPopulation());
+                    countryLanguage.setNumberOfSpeakers(country.getPopulation()
+                            *countryLanguage.getPercentageOfSpeakers());
                 }
             }
         }
@@ -307,31 +314,40 @@ public class SanityCheck
         }
     }
     
-    public void generateWorldLanguages(){
+    public ArrayList<WorldLanguage> generateWorldLanguages(){
+        ArrayList<WorldLanguage> worldLanguageList = new ArrayList<WorldLanguage>();
+        boolean exists;
+        double extraSpeakers;
+        String currentLanguage;
         for(Country country : world.getCountryList()){
-            boolean exists = false;
-            double extraSpeakers;
-            double currentSpeakers;
-            double totalSpeakers;
+            extraSpeakers = 0;
+            exists = false;
             for(CountryLanguage countryLanguage : country.getLanguageList()){
-                for(Map.Entry<WorldLanguage, Double> worldLanguage : world.getLanguageList().entrySet()){
-                        if(countryLanguage.getName().equals(worldLanguage.getKey().getName())){
-                            exists = true;
-                            currentSpeakers = worldLanguage.getValue();
-                            extraSpeakers = countryLanguage.getNumberOfSpeakers();
-                            totalSpeakers = currentSpeakers + extraSpeakers;
-                            world.getLanguageList().put(worldLanguage.getKey(), totalSpeakers);
-                            break;
-                        }
+                for(WorldLanguage worldLanguage : worldLanguageList) {
+                    if (countryLanguage.getName().equals(worldLanguage.getName())) {
+                        exists = true;
+                        currentLanguage = countryLanguage.getName();
+                        extraSpeakers = countryLanguage.getNumberOfSpeakers();
+                    }
                 }
                 if(!exists){
-                    world.getLanguageList().put(new WorldLanguage(countryLanguage.getName()), countryLanguage.getNumberOfSpeakers());
+                    WorldLanguage worldLanguage = new WorldLanguage(countryLanguage.getName());
+                    worldLanguageList.add(worldLanguage);
+                    worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers()+extraSpeakers);
+                }
+                else{
+                    for(WorldLanguage worldLanguage : worldLanguageList){
+                        if(worldLanguage.getName().equals(countryLanguage.getName())){
+                            worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers()+extraSpeakers);
+                        }
+                    }
                 }
             }
-            for(Map.Entry<WorldLanguage, Double> worldLanguage : world.getLanguageList().entrySet()){
-                worldLanguage.getKey().setPercentageOfSpeakers(worldLanguage.getValue()/world.getPopulation());
-            }
         }
+        for(WorldLanguage worldLanguage : worldLanguageList){
+            worldLanguage.setPercentageOfSpeakers(worldLanguage.getNumberOfSpeakers()/world.getPopulation()*100);
+        }
+        return worldLanguageList;
     }
 
     public void testData(){
