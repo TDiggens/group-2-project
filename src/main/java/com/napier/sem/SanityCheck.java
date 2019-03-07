@@ -29,7 +29,7 @@ public class SanityCheck
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
 
         //Methods to actually produce reports
-        sanity.listCountriesByPopulation();
+       // sanity.listCountriesByPopulation();
         //sanity.listCitiesInCountry();
         sanity.testData();
         sanity.disconnect();
@@ -176,7 +176,7 @@ public class SanityCheck
                         city.setIsCapital(true);
                     }
                     if(city.getCountryCode().equals(country.getCode())){
-                        city.setCountry(country);
+                        city.setCountry(country.getName());
                     }
                 }
             }
@@ -202,43 +202,56 @@ public class SanityCheck
             Statement stmt = con.createStatement();
             String strSelect = "SELECT DISTINCT district FROM city ";
             ResultSet rSet = stmt.executeQuery(strSelect);
-            String districtName;
             /* iterate over the returned rows and create a new District object for each one */
             while(rSet.next()){
                 District district = new District(rSet.getString("District"));
                 districtList.add(district);
             }
             /*Iterate through each city in the city list and each district in the new district list
-            and add appropriate cities to each district's city list
+            and add appropriate cities to each district's city list, then get the appropriate country from the city
+            and set the district's country field to match it, and add the district to that country's list of districts.
              */
+
+
             for(City city : world.getCityList()){
                 for(District district : districtList){
                     if(city.getDistrict().equals(district.getName())){
+                        district.setCountry(city.getCountry());
                         district.getCityList().add(city);
+                    }
+                }
+            }
+
+
+
+            for(District district : districtList){
+                district.calculatePopulation();
+                for(Country country : world.getCountryList()){
+                    if(country.getName().equals(district.getCountry())){
+                        country.getDistrictList().add(district);
                     }
                 }
             }
             /*
             iterate through all countries and districts and add appropriate districts to each countries district list.
-             */
+
             for(Country country : world.getCountryList()){
                 for(District district : districtList){
-                    /* check the country code for the first city in the district to figure out what country the
+                     check the country code for the first city in the district to figure out what country the
                     district is in.
-                     */
+
                     if(!district.getCityList().isEmpty() &&
                             district.getCityList().get(0).getCountryCode().equals(country.getCode())){
                         country.getDistrictList().add(district);
                     }
                 }
             }
-            /*iterate through the district list and calculate population of each district
+            iterate through the district list and calculate population of each district
              */
-            for(District district : districtList){
-                district.calculatePopulation();
-            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
         /* return the completed district list for external use */
         return districtList;
@@ -489,7 +502,7 @@ public class SanityCheck
             world.getCountryList().get(i).printLanguageList();
             System.out.println('\n');
         }
-        System.out.println('\n' + "Regions: " +'\n');
+       /* System.out.println('\n' + "Regions: " +'\n');
         for(int i = 0; i < world.getRegionList().size(); i++){
             System.out.println(world.getRegionList().get(i).toString());
         }
@@ -498,6 +511,6 @@ public class SanityCheck
             System.out.println(world.getContinentList().get(i).toString());
         }
         System.out.println('\n' + "World: " +'\n');
-        System.out.println(world.toString());
+        System.out.println(world.toString()); */
     }
 }

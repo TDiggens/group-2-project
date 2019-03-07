@@ -5,7 +5,7 @@ variables
 public class City {
 
     private boolean isCapital;
-    private Country country;
+    private String country;
     private int id;
     private String name;
     private String countryCode;
@@ -25,11 +25,11 @@ public class City {
         this.isCapital = isCapital;
     }
 
-    public Country getCountry(){
+    public String getCountry(){
         return country;
     }
 
-    public void setCountry(Country country){
+    public void setCountry(String country){
         this.country = country;
     }
 
@@ -77,7 +77,7 @@ public class City {
     public String toString() {
         return "City{" +
                 "isCapital=" + isCapital +
-
+                "Country: " + country +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", countryCode='" + countryCode + '\'' +
@@ -90,7 +90,7 @@ public class City {
 
          String report = "City Report: " + this.getName() + '\n' + '\n' +
                      "Name: " + this.getName() + '\n' +
-                     "Country: " + this.getCountry().getName() + '\n' +
+                     "Country: " + this.getCountry() + '\n' +
                      "District: " +  this.getDistrict() + '\n' +
                      "Population: " + this.getPopulation();
 

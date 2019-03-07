@@ -8,6 +8,7 @@ public class District {
 
     private String name;
     private int population;
+    private String country;
     private ArrayList<City> cityList = new ArrayList<City>();
 
     public District(){
@@ -60,7 +61,17 @@ public class District {
     @Override
     public String toString() {
         return "District: " +
-                "name='" + this.getName() + '\'' +
+                "name='" + this.getName() + '\n' +
+                "Country: " + this.getCountry() + '\n' +
                 ", population=" + this.getPopulation();
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        System.out.println("WTF?");
+        this.country = country;
     }
 }

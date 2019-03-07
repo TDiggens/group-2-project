@@ -20,7 +20,7 @@ public class World {
     private  long population;
 
     public World() {
-        System.out.println("Data Class Created");
+
     }
     /* method to calculate global population by summing the populations of each continent
        simply iterates over the continentList and sums the populations.
@@ -103,9 +103,9 @@ public class World {
                         "countryList contains " + countryList.size() + " countries" + '\n' +
                         "languageList contains " + languageList.size() + " global languages" + '\n' +
                 "World Population: " + population + '\n' + '\n' +
-                "Global Languages: " + '\n' +
-                languagesSummary.toString() +
-                '}';
+                "Global Languages: " + '\n' //+
+                //languagesSummary.toString() +
+                ;
     }
 
     public ArrayList<WorldLanguage> getLanguageList() {

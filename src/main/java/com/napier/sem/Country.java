@@ -59,8 +59,11 @@ public class Country {
     }
 
     public void printDistrictList(){
+        System.out.println(this.getDistrictList().size() + " districts ");
+        System.out.println("lol");
         for(District district : this.getDistrictList()){
             System.out.println(district.toString());
+
         }
     }
 
