@@ -36,7 +36,7 @@ public class Country {
     }
 
     public void calculateUrbanPop(){
-        double urbanPop = 0;
+        int urbanPop = 0;
         for(District district : this.getDistrictList()){
             urbanPop = urbanPop + district.getPopulation();
         }
