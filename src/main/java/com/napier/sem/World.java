@@ -95,13 +95,11 @@ public class World {
                     " Percentage of global population: " + worldLanguage.getPercentageOfSpeakers() + '\n');
         }
         return
-                "cityList contains " + cityList.size() + " cities " + '\n' +
-                "districtList contains " + districtList.size() + " districts" + '\n' +
-                "countryList contains " + countryList.size() + " countries" + '\n' +
-                "regionList contains " + regionList.size() + " regions" + '\n' +
-                "continentList contains " + continentList.size() + " continents." + '\n' +
-                        "countryList contains " + countryList.size() + " countries" + '\n' +
-                        "languageList contains " + languageList.size() + " global languages" + '\n' +
+                cityList.size() + " cities " + '\n' +
+                districtList.size() + " districts" + '\n' +
+                countryList.size() + " countries" + '\n' +
+                regionList.size() + " regions" + '\n' + continentList.size() + " continents." + '\n' +
+                        languageList.size() + " global languages" + '\n' +
                 "World Population: " + population + '\n' + '\n' +
                 "Global Languages: " + '\n'  +
                 languagesSummary.toString();

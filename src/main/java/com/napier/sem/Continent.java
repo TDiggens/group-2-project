@@ -26,6 +26,12 @@ public class Continent {
         setPopulation(p);
     }
 
+    public void printRegionList(){
+        for(Region region : this.getRegionList()){
+            System.out.println(region.getName() + ", population: " + region.getPopulation());
+        }
+    }
+
     public long getPopulation() {
         return population;
     }
@@ -52,10 +58,10 @@ public class Continent {
 
     @Override
     public String toString() {
-        return "Continent{" +
-                "population=" + population +
-                ", name='" + name + '\'' +
-                ", regionList=" + regionList +
-                '}';
+        return
+                 name + ": " + '\n' +
+                "population: " + population + '\n' +
+                ", regionList: " + regionList + '\n'
+                ;
     }
 }

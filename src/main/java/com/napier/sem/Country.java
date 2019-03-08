@@ -57,12 +57,12 @@ public class Country {
     }
 
     public void printDistrictList(){
-        System.out.println(this.getDistrictList().size() + " districts ");
-        System.out.println("lol");
+        System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
         for(District district : this.getDistrictList()){
-            System.out.println(district.toString());
+            System.out.println(district.getName() + ", population: " + district.getPopulation());
         }
     }
+
 
     public String getName() {
         return name;
@@ -220,25 +220,22 @@ public class Country {
     @Override
     public String toString() {
         return   name + ":" + '\n' +
-                ", code='" + code + '\'' + '\n' +
-                ", continent='" + continent + '\'' + '\n' +
-                ", region='" + region + '\'' + '\n' +
+                ", code='" + code + '\'' +
+                ", continent='" + continent + '\'' +
+                ", region='" + region + '\'' +
                 ", formOfGov='" + formOfGov + '\'' + '\n' +
-                ", headOfState='" + headOfState + '\'' + '\n' +
-                ", localName='" + localName + '\'' + '\n' +
-                ", code2='" + code2 + '\'' + '\n' +
+                ", headOfState='" + headOfState + '\'' +
+                ", localName='" + localName + '\'' +
+                ", code2='" + code2 + '\'' +
                 ", capitalCode=" + capitalCode + '\n' +
-                ", yearOfIndependence=" + yearOfIndependence + '\n' +
-                ", population=" + population + '\n' +
-                ", surfaceArea=" + surfaceArea + '\n' +
+                ", yearOfIndependence=" + yearOfIndependence +
+                ", population=" + population +
+                ", surfaceArea=" + surfaceArea +
                 ", lifeExpectancy=" + lifeExpectancy + '\n' +
-                ", gnp=" + gnp + '\n' +
-                ", oldGNP=" + oldGNP + '\n' +
-                ", urbanPopulation=" + urbanPopulation + '\n' +
-                ", urbanPopulation(percentage)=" + urbanPopPercentage + '\n' +
-                ", districtList=" + districtList + '\n' +
-                ", languageList=" + languageList + '\n' +
-                '}';
+                ", gnp=" + gnp +
+                ", oldGNP=" + oldGNP +
+                ", urbanPopulation=" + urbanPopulation +
+                ", urbanPopulation(percentage)=" + urbanPopPercentage + '\n';
     }
 
     public String report(){

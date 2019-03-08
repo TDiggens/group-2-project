@@ -30,7 +30,7 @@ public class District {
 
     public void printCityList(){
         for(City city : this.getCityList()){
-            System.out.println(city.toString());
+            System.out.println(city.getName() + " population: " + city.getPopulation());
         }
     }
 

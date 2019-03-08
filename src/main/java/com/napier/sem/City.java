@@ -78,13 +78,13 @@ public class City {
     @Override
     public String toString() {
         return "City{" +
-                "isCapital=" + isCapital +
+                "isCapital= " + isCapital +
                 "Country: " + country.getName() +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", district='" + district + '\'' +
-                ", population=" + population +
+                ", id= " + id +
+                ", name=' " + name + '\'' +
+                ", countryCode= '" + countryCode + '\'' +
+                ", district= '" + district + '\'' +
+                ", population= " + population +
                 '}';
     }
 
