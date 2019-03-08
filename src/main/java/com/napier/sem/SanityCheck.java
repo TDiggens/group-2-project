@@ -470,10 +470,16 @@ public class SanityCheck
         System.out.println('\n' + "Regions: " +'\n');
         for(int i = 0; i < world.getRegionList().size(); i++){
             System.out.println(world.getRegionList().get(i).toString());
+            System.out.println("Countries in: " + world.getRegionList().get(i).getName() + ": ");
+            world.getRegionList().get(i).printCountryList();
+            System.out.println('\n');
         }
         System.out.println('\n' + "Continents: " +'\n');
         for(int i = 0; i < world.getContinentList().size(); i++){
             System.out.println(world.getContinentList().get(i).toString());
+            System.out.println("Regions in: " + world.getContinentList().get(i).getName() + ": ");
+            world.getContinentList().get(i).printRegionList();
+            System.out.println('\n');
         }
         System.out.println('\n' + "World: " +'\n');
         System.out.println(world.toString());
