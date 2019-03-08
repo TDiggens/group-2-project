@@ -175,7 +175,9 @@ public class SanityCheck
                     }
                     if(city.getCountryCode().equals(country.getCode())){
                         city.setCountry(country);
-                        country.getDistrictList().add(city.getDistrictObject());
+                        if(!country.getDistrictList().contains(city.getDistrictObject())) {
+                            country.getDistrictList().add(city.getDistrictObject());
+                        }
                         city.getDistrictObject().setCountry(country);
                     }
                 }

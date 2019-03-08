@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class District {
 
     private String name;
-    private int population;
+    private long population;
     private Country country;
     private ArrayList<City> cityList = new ArrayList<City>();
 
@@ -23,7 +23,7 @@ public class District {
     public void calculatePopulation(){
         int p = 0;
         for(City city : this.getCityList()){
-            p += (city.getPopulation());
+            p = p + (city.getPopulation());
         }
         setPopulation(p);
     }
@@ -45,11 +45,11 @@ public class District {
         this.name = name;
     }
 
-    public int getPopulation() {
+    public long getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(long population) {
         this.population = population;
     }
 
