@@ -24,6 +24,7 @@ public class SanityCheck
         sanity.world.setContinentList(sanity.generateContinentList());
         sanity.calculateCountryUrbanPops();
         sanity.generateCountryLanguages();
+        sanity.world.calculatePopulation();
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
 
         //Methods to actually produce reports
@@ -303,8 +304,6 @@ public class SanityCheck
                     }
                     continent.calculatePopulation();
                 }
-                /* now that all the continents and smaller areas have been set up, we can calculate the world population */
-                world.calculatePopulation();
             }
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -366,16 +365,19 @@ public class SanityCheck
              */
         }
     }
-    /* This method doesnt work :) */
+    /* Method to read every unique language from the countrylanguage table, iterate through the country list and sum the speakers of
+    each language to find the total worldwide speakers of the languages and the percentage of the global population.
+     */
     public ArrayList<WorldLanguage> generateWorldLanguages(){
         ArrayList<WorldLanguage> worldLanguageList = new ArrayList<WorldLanguage>();
         try{
             Statement stmt = con.createStatement();
             String strSelect = "SELECT DISTINCT language FROM countrylanguage";
             ResultSet rSet = stmt.executeQuery(strSelect);
+
             while(rSet.next()){
                 WorldLanguage worldLanguage = new WorldLanguage(rSet.getString("Language"));
-                world.getLanguageList().add(worldLanguage);
+                worldLanguageList.add(worldLanguage);
             }
             /* For each world language in the newly created list, iterate through every country in country list and every country language
             in the language list of each country. When a country language matches with a world language by name, add the number of speakers
