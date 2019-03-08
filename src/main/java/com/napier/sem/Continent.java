@@ -26,11 +26,13 @@ public class Continent {
     }
 
     public void printRegionList(int numberToPrint){
-        if(numberToPrint > this.getRegionList().size()){
-            numberToPrint = this.getRegionList().size();
-        }
-        for(int i = 0; i < numberToPrint; i++){
-            System.out.println(this.getRegionList().get(i).getName() + ", population: " + this.getRegionList().get(i).getPopulation());
+        if(!this.regionList.isEmpty()) {
+            if (numberToPrint > this.getRegionList().size()) {
+                numberToPrint = this.getRegionList().size();
+            }
+            for (int i = 0; i < numberToPrint; i++) {
+                System.out.println(this.getRegionList().get(i).getName() + ", population: " + this.getRegionList().get(i).getPopulation());
+            }
         }
     }
 

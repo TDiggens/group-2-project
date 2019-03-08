@@ -57,13 +57,15 @@ public class Country {
     }
 
     public void printDistrictList(int numberToPrint){
-        if(numberToPrint > this.getDistrictList().size()){
-            numberToPrint = this.getDistrictList().size();
-        }
-        System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
-        for(int i = 0; i < numberToPrint; i++){
-            System.out.println(this.getDistrictList().get(i).getName() + ", population: "
-                    + this.getDistrictList().get(i).getPopulation());
+        if(!this.districtList.isEmpty()) {
+            if (numberToPrint > this.getDistrictList().size()) {
+                numberToPrint = this.getDistrictList().size();
+            }
+            System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
+            for (int i = 0; i < numberToPrint; i++) {
+                System.out.println(this.getDistrictList().get(i).getName() + ", population: "
+                        + this.getDistrictList().get(i).getPopulation());
+            }
         }
     }
 

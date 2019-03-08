@@ -29,11 +29,13 @@ public class District {
     }
 
     public void printCityList(int numberToPrint){
-        if(numberToPrint > this.getCityList().size()){
-            numberToPrint = this.getCityList().size();
-        }
-        for(int i = 0; i < numberToPrint; i++){
-            System.out.println(this.getCityList().get(i).getName() + " population: " + this.getCityList().get(i).getPopulation());
+        if(!this.getCityList().isEmpty()) {
+            if (numberToPrint > this.getCityList().size()) {
+                numberToPrint = this.getCityList().size();
+            }
+            for (int i = 0; i < numberToPrint; i++) {
+                System.out.println(this.getCityList().get(i).getName() + " population: " + this.getCityList().get(i).getPopulation());
+            }
         }
     }
 
