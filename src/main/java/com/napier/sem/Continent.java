@@ -10,7 +10,6 @@ public class Continent {
     private long population;
     private String name;
     private ArrayList<Region> regionList = new ArrayList<Region>();
-
     public Continent(){}
 
     public Continent(String name)
@@ -26,9 +25,9 @@ public class Continent {
         setPopulation(p);
     }
 
-    public void printRegionList(){
-        for(Region region : this.getRegionList()){
-            System.out.println(region.getName() + ", population: " + region.getPopulation());
+    public void printRegionList(int numberToPrint){
+        for(int i = 0; i < numberToPrint; i++){
+            System.out.println(this.getRegionList().get(i).getName() + ", population: " + this.getRegionList().get(i).getPopulation());
         }
     }
 

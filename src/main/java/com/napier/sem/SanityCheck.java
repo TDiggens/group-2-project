@@ -454,14 +454,14 @@ public class SanityCheck
         for(int i = 0; i < 10; i++){
             System.out.println(world.getDistrictList().get(i).toString());
             System.out.println("Cities in " + world.getDistrictList().get(i).getName() + ":");
-            world.getDistrictList().get(i).printCityList();
+            world.getDistrictList().get(i).printCityList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "Countries: " + '\n');
         for(int i = 0; i < 10; i++){
             System.out.println(world.getCountryList().get(i).toString());
             System.out.println("Districts in " + world.getCountryList().get(i).getName() + ":");
-            world.getCountryList().get(i).printDistrictList();
+            world.getCountryList().get(i).printDistrictList(10);
             System.out.println('\n');
             System.out.println("Languages spoken in " + world.getCountryList().get(i).getName() + ":");
             world.getCountryList().get(i).printLanguageList();
@@ -471,14 +471,14 @@ public class SanityCheck
         for(int i = 0; i < world.getRegionList().size(); i++){
             System.out.println(world.getRegionList().get(i).toString());
             System.out.println("Countries in: " + world.getRegionList().get(i).getName() + ": ");
-            world.getRegionList().get(i).printCountryList();
+            world.getRegionList().get(i).printCountryList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "Continents: " +'\n');
         for(int i = 0; i < world.getContinentList().size(); i++){
             System.out.println(world.getContinentList().get(i).toString());
             System.out.println("Regions in: " + world.getContinentList().get(i).getName() + ": ");
-            world.getContinentList().get(i).printRegionList();
+            world.getContinentList().get(i).printRegionList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "World: " +'\n');

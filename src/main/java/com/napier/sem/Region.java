@@ -30,10 +30,10 @@ public class Region {
         setPopulation(p);
     }
 
-    public void printCountryList(){
-        for(Country country : this.getCountryList()){
-            System.out.println(country.getName() + " population: " + country.getPopulation()
-                    + " capital city: " + country.getCapital().getName());
+    public void printCountryList(int numberToPrint){
+        for(int i = 0; i < numberToPrint; i++){
+            System.out.println(this.getCountryList().get(i).getName() + " population: " + this.getCountryList().get(i).getPopulation()
+                    + " capital city: " + this.getCountryList().get(i).getCapital().getName());
         }
     }
 

@@ -56,10 +56,11 @@ public class Country {
         }
     }
 
-    public void printDistrictList(){
+    public void printDistrictList(int numberToPrint){
         System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
-        for(District district : this.getDistrictList()){
-            System.out.println(district.getName() + ", population: " + district.getPopulation());
+        for(int i = 0; i < numberToPrint; i++){
+            System.out.println(this.getDistrictList().get(i).getName() + ", population: "
+                    + this.getDistrictList().get(i).getPopulation());
         }
     }
 

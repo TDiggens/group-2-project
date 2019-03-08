@@ -28,9 +28,9 @@ public class District {
         setPopulation(p);
     }
 
-    public void printCityList(){
-        for(City city : this.getCityList()){
-            System.out.println(city.getName() + " population: " + city.getPopulation());
+    public void printCityList(int numberToPrint){
+        for(int i = 0; i < numberToPrint; i++){
+            System.out.println(this.getCityList().get(i).getName() + " population: " + this.getCityList().get(i).getPopulation());
         }
     }
 
