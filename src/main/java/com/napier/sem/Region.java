@@ -67,7 +67,7 @@ public class Region {
         return "Region{" +
                 ", name='" + name + '\'' +
                 ", population=" + population +
-                ", continent='" + continent + '\'' +
+                ", continent='" + continent.getName() + '\'' +
                 '}';
     }
 }

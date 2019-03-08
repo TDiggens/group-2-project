@@ -62,7 +62,7 @@ public class District {
     public String toString() {
         return "District: " +
                 "name='" + this.getName() + '\n' +
-                "Country: " + this.getCountry() + '\n' +
+                "Country: " + this.getCountry().getName() + '\n' +
                 ", population=" + this.getPopulation();
     }
 
