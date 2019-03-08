@@ -5,12 +5,14 @@ variables
 public class City {
 
     private boolean isCapital;
-    private String country;
+    private Country country;
     private int id;
     private String name;
     private String countryCode;
     private String district;
     private int population;
+
+    private District districtObject;
 
     public City()
     {
@@ -25,11 +27,11 @@ public class City {
         this.isCapital = isCapital;
     }
 
-    public String getCountry(){
+    public Country getCountry(){
         return country;
     }
 
-    public void setCountry(String country){
+    public void setCountry(Country country){
         this.country = country;
     }
 
@@ -95,5 +97,13 @@ public class City {
                      "Population: " + this.getPopulation();
 
         return report;
+    }
+
+    public District getDistrictObject() {
+        return districtObject;
+    }
+
+    public void setDistrictObject(District districtObject) {
+        this.districtObject = districtObject;
     }
 }

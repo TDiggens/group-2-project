@@ -8,7 +8,7 @@ public class District {
 
     private String name;
     private int population;
-    private String country;
+    private Country country;
     private ArrayList<City> cityList = new ArrayList<City>();
 
     public District(){
@@ -66,12 +66,11 @@ public class District {
                 ", population=" + this.getPopulation();
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        System.out.println("WTF?");
+    public void setCountry(Country country) {
         this.country = country;
     }
 }

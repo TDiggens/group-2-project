@@ -11,7 +11,7 @@ public class Region {
     private ArrayList<Country> countryList = new ArrayList<Country>();
     private String name;
     private long population;
-    private String continent;
+    private Continent continent;
 
     public Region(){}
 
@@ -54,11 +54,11 @@ public class Region {
         this.population = population;
     }
 
-    public String getContinent() {
+    public Continent getContinent() {
         return continent;
     }
 
-    public void setContinent(String continent) {
+    public void setContinent(Continent continent) {
         this.continent = continent;
     }
 

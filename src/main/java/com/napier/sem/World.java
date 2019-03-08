@@ -103,9 +103,8 @@ public class World {
                         "countryList contains " + countryList.size() + " countries" + '\n' +
                         "languageList contains " + languageList.size() + " global languages" + '\n' +
                 "World Population: " + population + '\n' + '\n' +
-                "Global Languages: " + '\n' //+
-                //languagesSummary.toString() +
-                ;
+                "Global Languages: " + '\n'  +
+                languagesSummary.toString();
     }
 
     public ArrayList<WorldLanguage> getLanguageList() {

@@ -25,9 +25,8 @@ public class Country {
     private double urbanPopulation;
     private double urbanPopPercentage;
 
-
-    
     private City capital;
+    private Region regionObject;
     private ArrayList<District> districtList = new ArrayList<District>();
     private ArrayList<CountryLanguage> languageList = new ArrayList<CountryLanguage>();
 
@@ -37,7 +36,7 @@ public class Country {
     }
 
     public void calculateUrbanPop(){
-        int urbanPop = 0;
+        double urbanPop = 0;
         for(District district : this.getDistrictList()){
             for(City city : district.getCityList()){
                 urbanPop += city.getPopulation();
@@ -49,7 +48,6 @@ public class Country {
         } else {
             this.setUrbanPopPercentage(0);
         }
-
     }
 
     public void printLanguageList(){
@@ -63,27 +61,7 @@ public class Country {
         System.out.println("lol");
         for(District district : this.getDistrictList()){
             System.out.println(district.toString());
-
         }
-    }
-
-    public Country(String name, String code, String continent, String region, double surfaceArea, int yearOfIndependence,
-                   int population, double lifeExpectancy, double gnp, double oldGNP, String formOfGov, String headOfState,
-                   City capital, String code2) {
-        this.setName(name);
-        this.setCode(code);
-        this.setContinent(continent);
-        this.setRegion(region);
-        this.setSurfaceArea(surfaceArea);
-        this.setYearOfIndependence(yearOfIndependence);
-        this.setPopulation(population);
-        this.setLifeExpectancy(lifeExpectancy);
-        this.setGnp(gnp);
-        this.setOldGNP(oldGNP);
-        this.setFormOfGov(formOfGov);
-        this.setHeadOfState(headOfState);
-        this.setCapital(capital);
-        this.setCode2(code2);
     }
 
     public String getName() {
@@ -241,25 +219,25 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" +
-                "name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", continent='" + continent + '\'' +
-                ", region='" + region + '\'' +
-                ", formOfGov='" + formOfGov + '\'' +
-                ", headOfState='" + headOfState + '\'' +
-                ", localName='" + localName + '\'' +
-                ", code2='" + code2 + '\'' +
-                ", capitalCode=" + capitalCode +
-                ", yearOfIndependence=" + yearOfIndependence +
-                ", population=" + population +
-                ", surfaceArea=" + surfaceArea +
-                ", lifeExpectancy=" + lifeExpectancy +
-                ", gnp=" + gnp +
-                ", oldGNP=" + oldGNP +
-                ", urbanPopulation=" + urbanPopulation +
-                ", districtList=" + districtList +
-                ", languageList=" + languageList +
+        return   name + ":" + '\n' +
+                ", code='" + code + '\'' + '\n' +
+                ", continent='" + continent + '\'' + '\n' +
+                ", region='" + region + '\'' + '\n' +
+                ", formOfGov='" + formOfGov + '\'' + '\n' +
+                ", headOfState='" + headOfState + '\'' + '\n' +
+                ", localName='" + localName + '\'' + '\n' +
+                ", code2='" + code2 + '\'' + '\n' +
+                ", capitalCode=" + capitalCode + '\n' +
+                ", yearOfIndependence=" + yearOfIndependence + '\n' +
+                ", population=" + population + '\n' +
+                ", surfaceArea=" + surfaceArea + '\n' +
+                ", lifeExpectancy=" + lifeExpectancy + '\n' +
+                ", gnp=" + gnp + '\n' +
+                ", oldGNP=" + oldGNP + '\n' +
+                ", urbanPopulation=" + urbanPopulation + '\n' +
+                ", urbanPopulation(percentage)=" + urbanPopPercentage + '\n' +
+                ", districtList=" + districtList + '\n' +
+                ", languageList=" + languageList + '\n' +
                 '}';
     }
 
@@ -290,5 +268,13 @@ public class Country {
 
     public void setUrbanPopPercentage(double urbanPopPercentage) {
         this.urbanPopPercentage = urbanPopPercentage;
+    }
+
+    public Region getRegionObject() {
+        return regionObject;
+    }
+
+    public void setRegionObject(Region regionObject) {
+        this.regionObject = regionObject;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class SanityCheck
 {
-
     /**
      * Connection to MySQL database.
      */
@@ -24,12 +23,11 @@ public class SanityCheck
         sanity.world.setRegionList(sanity.generateRegionList());
         sanity.world.setContinentList(sanity.generateContinentList());
         sanity.calculateCountryUrbanPops();
-        sanity.world.calculatePopulation();
         sanity.generateCountryLanguages();
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
 
         //Methods to actually produce reports
-       // sanity.listCountriesByPopulation();
+        //sanity.listCountriesByPopulation();
         //sanity.listCitiesInCountry();
         sanity.testData();
         sanity.disconnect();
@@ -116,9 +114,6 @@ public class SanityCheck
                 city.setPopulation(rSet.getInt("Population"));
                 cityList.add(city);
             }
-            /*for(City city : cityList){
-
-            }*/
         }
         catch(Exception e)
         {
@@ -166,8 +161,10 @@ public class SanityCheck
                 countryList.add(country);
             }
             /* Iterate through the new countries and the existing cities list,
-            match the capital cities to each country, and assign a reference to
-            each Country object to any city within that country
+            match the capital cities to each country, assign a reference to
+            each Country object to any city within that country, add the city's district object
+            to the appropriate country's district list, and assign a reference to the correct country
+            object to that district's country field.
              */
             for(Country country : countryList){
                 for(City city : world.getCityList()){
@@ -176,7 +173,9 @@ public class SanityCheck
                         city.setIsCapital(true);
                     }
                     if(city.getCountryCode().equals(country.getCode())){
-                        city.setCountry(country.getName());
+                        city.setCountry(country);
+                        country.getDistrictList().add(city.getDistrictObject());
+                        city.getDistrictObject().setCountry(country);
                     }
                 }
             }
@@ -207,48 +206,19 @@ public class SanityCheck
                 District district = new District(rSet.getString("District"));
                 districtList.add(district);
             }
-            /*Iterate through each city in the city list and each district in the new district list
-            and add appropriate cities to each district's city list, then get the appropriate country from the city
-            and set the district's country field to match it, and add the district to that country's list of districts.
-             */
-
-
+            /*Iterate through each city in the city list and each district in the new district list,
+            add appropriate cities to each district's city list, and assign the right district object to
+            the city's districtObject field
+            */
             for(City city : world.getCityList()){
                 for(District district : districtList){
+                    district.calculatePopulation();
                     if(city.getDistrict().equals(district.getName())){
-                        district.setCountry(city.getCountry());
                         district.getCityList().add(city);
+                        city.setDistrictObject(district);
                     }
                 }
             }
-
-
-
-            for(District district : districtList){
-                district.calculatePopulation();
-                for(Country country : world.getCountryList()){
-                    if(country.getName().equals(district.getCountry())){
-                        country.getDistrictList().add(district);
-                    }
-                }
-            }
-            /*
-            iterate through all countries and districts and add appropriate districts to each countries district list.
-
-            for(Country country : world.getCountryList()){
-                for(District district : districtList){
-                     check the country code for the first city in the district to figure out what country the
-                    district is in.
-
-                    if(!district.getCityList().isEmpty() &&
-                            district.getCityList().get(0).getCountryCode().equals(country.getCode())){
-                        country.getDistrictList().add(district);
-                    }
-                }
-            }
-            iterate through the district list and calculate population of each district
-             */
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -273,20 +243,17 @@ public class SanityCheck
                 Region region = new Region(rSet.getString("Region"));
                 regionList.add(region);
             }
-            /* Iterate through every country in country list and region in the new region list
-            and add the appropriate countries to each regions country list.
-             */
-            for(Country country : world.getCountryList()){
-                for(Region region : regionList){
-                    if(country.getRegion().equals(region.getName())){
-                        region.getCountryList().add(country);
-                    }
-                }
-            }
-            /* Iterate through every region in the new region list and calculate their
-            populations
+            /* For each region in the new list, iterate through country list and add the appropriate
+            countries to the region's country list, assign a reference to the appropriate region object to each country within it,
+            then calculate that region's population
              */
             for(Region region : regionList){
+                for(Country country : world.getCountryList()){
+                    if(country.getRegion().equals(region.getName())){
+                        region.getCountryList().add(country);
+                        country.setRegionObject(region);
+                    }
+                }
                 region.calculatePopulation();
             }
         }
@@ -317,11 +284,12 @@ public class SanityCheck
                 Continent continent = new Continent(rSet.getString("Continent"));
                 continentList.add(continent);
             }
-            /* Iterate through the existing region list and the newly created continent list and add the
-            appropriate regions to each Continents' region list.
+            /* For each continent in the newly created list, Iterate through the existing region list , add the appropriate
+            regions to that each continent's region list, set the continent field for each region, and calculate the
+            population of each continent.
              */
-            for(Region region : world.getRegionList()){
-                for(Continent continent : continentList){
+            for(Continent continent : continentList){
+                for(Region region : world.getRegionList()){
                     /* check that region's country list is not empty and if it isnt, use the continent
                     field of the first country in the list to establish what continent the region is in
                      */
@@ -331,13 +299,12 @@ public class SanityCheck
                         for the Region object.
                          */
                         continent.getRegionList().add(region);
-                        region.setContinent(continent.getName());
+                        region.setContinent(continent);
                     }
+                    continent.calculatePopulation();
                 }
-            }
-            /* Iterate through the new list and calculate the population of each continent */
-            for(Continent continent : continentList){
-                continent.calculatePopulation();
+                /* now that all the continents and smaller areas have been set up, we can calculate the world population */
+                world.calculatePopulation();
             }
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -346,6 +313,8 @@ public class SanityCheck
         return continentList;
     }
 
+    /* small method to loop through the country list and call each ones calculateUrbanPop method.
+     */
     public void calculateCountryUrbanPops(){
         for(Country country : world.getCountryList()){
             country.calculateUrbanPop();
@@ -400,34 +369,32 @@ public class SanityCheck
     /* This method doesnt work :) */
     public ArrayList<WorldLanguage> generateWorldLanguages(){
         ArrayList<WorldLanguage> worldLanguageList = new ArrayList<WorldLanguage>();
-        boolean exists;
-        double extraSpeakers;
-        for(Country country : world.getCountryList()){
-            extraSpeakers = 0;
-            exists = false;
-            for(CountryLanguage countryLanguage : country.getLanguageList()){
-                for(WorldLanguage worldLanguage : worldLanguageList) {
-                    if (countryLanguage.getName().equals(worldLanguage.getName())) {
-                        exists = true;
-                        extraSpeakers = countryLanguage.getNumberOfSpeakers();
-                    }
-                }
-                if(!exists){
-                    WorldLanguage worldLanguage = new WorldLanguage(countryLanguage.getName());
-                    worldLanguageList.add(worldLanguage);
-                    worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers()+extraSpeakers);
-                }
-                else{
-                    for(WorldLanguage worldLanguage : worldLanguageList){
-                        if(worldLanguage.getName().equals(countryLanguage.getName())){
-                            worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers()+extraSpeakers);
+        try{
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT DISTINCT language FROM countrylanguage";
+            ResultSet rSet = stmt.executeQuery(strSelect);
+            while(rSet.next()){
+                WorldLanguage worldLanguage = new WorldLanguage(rSet.getString("Language"));
+                world.getLanguageList().add(worldLanguage);
+            }
+            /* For each world language in the newly created list, iterate through every country in country list and every country language
+            in the language list of each country. When a country language matches with a world language by name, add the number of speakers
+            in that country to the total speakers the world language has so far. Finally, calculate the percentage of the world population
+            that speakers each language
+             */
+            for(WorldLanguage worldLanguage : worldLanguageList){
+                for(Country country : world.getCountryList()){
+                    for(CountryLanguage countryLanguage : country.getLanguageList()){
+                        if(countryLanguage.getName().equals(worldLanguage.getName())){
+                            worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers() + countryLanguage.getNumberOfSpeakers());
                         }
                     }
                 }
+                worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()/world.getPopulation()*100));
             }
         }
-        for(WorldLanguage worldLanguage : worldLanguageList){
-            worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()/world.getPopulation())*100);
+        catch(Exception e){
+            System.out.println(e.getMessage());
         }
         return worldLanguageList;
     }
@@ -440,8 +407,6 @@ public class SanityCheck
             System.out.println(country.report());
         }
     }
-
-
 
     /* Method to list all cities in a country ranked by population, implementation for
     issue #24 on github.
@@ -502,7 +467,7 @@ public class SanityCheck
             world.getCountryList().get(i).printLanguageList();
             System.out.println('\n');
         }
-       /* System.out.println('\n' + "Regions: " +'\n');
+        System.out.println('\n' + "Regions: " +'\n');
         for(int i = 0; i < world.getRegionList().size(); i++){
             System.out.println(world.getRegionList().get(i).toString());
         }
@@ -511,6 +476,6 @@ public class SanityCheck
             System.out.println(world.getContinentList().get(i).toString());
         }
         System.out.println('\n' + "World: " +'\n');
-        System.out.println(world.toString()); */
+        System.out.println(world.toString());
     }
 }
