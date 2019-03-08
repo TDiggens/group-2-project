@@ -45,7 +45,7 @@ public class SanityCheck
                 // Wait a bit for db to start
                 Thread.sleep(5000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
