@@ -6,7 +6,7 @@
 
     <groupId>com.napier.sem</groupId>
     <artifactId>semGroup2</artifactId>
-    <version>0.1.0.3</version>
+    <version>0.1.0.4</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
