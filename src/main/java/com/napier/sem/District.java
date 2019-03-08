@@ -60,10 +60,11 @@ public class District {
 
     @Override
     public String toString() {
-        return "District: " +
-                "name='" + this.getName() + '\n' +
+        return "District: "
+                + this.getName() + '\n' +
                 "Country: " + this.getCountry().getName() + '\n' +
-                ", population=" + this.getPopulation();
+                ", population: " + this.getPopulation();
+
     }
 
     public Country getCountry() {

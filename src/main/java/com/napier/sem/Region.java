@@ -71,10 +71,8 @@ public class Region {
 
     @Override
     public String toString() {
-        return "Region{" +
-                ", name='" + name + '\'' +
-                ", population=" + population +
-                ", continent='" + continent.getName() + '\'' +
-                '}';
+        return "Region: " + name +
+                ", population: " + population +
+                ", continent: " + continent.getName();
     }
 }
