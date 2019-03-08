@@ -57,7 +57,6 @@ public class Country {
     }
 
     public void printDistrictList(int numberToPrint){
-        if(!this.districtList.isEmpty()) {
             if (numberToPrint > this.getDistrictList().size()) {
                 numberToPrint = this.getDistrictList().size();
             }
@@ -66,7 +65,7 @@ public class Country {
                 System.out.println(this.getDistrictList().get(i).getName() + ", population: "
                         + this.getDistrictList().get(i).getPopulation());
             }
-        }
+
     }
 
     public String getName() {

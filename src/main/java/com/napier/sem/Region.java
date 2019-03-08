@@ -31,15 +31,16 @@ public class Region {
     }
 
     public void printCountryList(int numberToPrint){
-        if(!this.getCountryList().isEmpty()) {
-            if (numberToPrint > this.getCountryList().size()) {
+        if (numberToPrint > this.getCountryList().size()) {
                 numberToPrint = this.getCountryList().size();
             }
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.println(this.getCountryList().get(i).getName() + " population: " + this.getCountryList().get(i).getPopulation()
-                        + " capital city: " + this.getCountryList().get(i).getCapital().getName());
+                System.out.println(this.getCountryList().get(i).getName() + " population: " + this.getCountryList().get(i).getPopulation());
+                if(this.getCountryList().get(i).getCapital() != null){
+                        System.out.print(" capital city: " + this.getCountryList().get(i).getCapital().getName());
+                }
             }
-        }
+
     }
 
     public ArrayList<Country> getCountryList() {

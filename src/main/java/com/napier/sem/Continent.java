@@ -26,7 +26,6 @@ public class Continent {
     }
 
     public void printRegionList(int numberToPrint){
-        if(!this.regionList.isEmpty()) {
             if (numberToPrint > this.getRegionList().size()) {
                 numberToPrint = this.getRegionList().size();
             }
@@ -34,7 +33,7 @@ public class Continent {
                 System.out.println(this.getRegionList().get(i).getName() + ", population: " + this.getRegionList().get(i).getPopulation());
             }
         }
-    }
+
 
     public long getPopulation() {
         return population;
