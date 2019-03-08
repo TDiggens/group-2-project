@@ -44,7 +44,7 @@ public class Country {
         }
         this.setUrbanPopulation(urbanPop);
         if(this.getPopulation() != 0){
-            this.setUrbanPopPercentage((urbanPop/this.getPopulation())*100);
+            this.setUrbanPopPercentage((urbanPop*100)/(double)this.getPopulation());
         } else {
             this.setUrbanPopPercentage(0);
         }
@@ -223,6 +223,7 @@ public class Country {
 
     @Override
     public String toString() {
+        String urbanPopulationStr = String.format("%.0f", urbanPopulation);
         return   name + ":" + '\n' +
                 ", code='" + code + '\'' +
                 ", continent='" + continent + '\'' +
@@ -238,7 +239,7 @@ public class Country {
                 ", lifeExpectancy=" + lifeExpectancy + '\n' +
                 ", gnp=" + gnp +
                 ", oldGNP=" + oldGNP +
-                ", urbanPopulation=" + urbanPopulation +
+                ", urbanPopulation=" + urbanPopulationStr +
                 ", urbanPopulation(percentage)=" + urbanPopPercentage + '\n';
     }
 

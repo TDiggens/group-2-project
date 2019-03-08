@@ -392,7 +392,7 @@ public class SanityCheck
                         }
                     }
                 }
-                worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()/world.getPopulation()*100));
+                worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()*100)/world.getPopulation());
             }
         }
         catch(Exception e){
