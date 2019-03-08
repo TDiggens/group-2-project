@@ -63,8 +63,6 @@ public class Continent {
     public String toString() {
         return
                  name + ": " + '\n' +
-                "population: " + population + '\n' +
-                ", regionList: " + regionList + '\n'
-                ;
+                "population: " + population + '\n';
     }
 }

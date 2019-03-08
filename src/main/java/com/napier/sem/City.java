@@ -77,14 +77,18 @@ public class City {
 
     @Override
     public String toString() {
+        String isCapitalStr = "No.";
+        if(isCapital){
+            isCapitalStr = "Yes.";
+        }
         return "City: " + name +
-                " Capital city: " + isCapital +
-                " Country: " + country.getName() +
-                " id: " + id +
-                " name: " +
-                " countryCode= " + countryCode  +
-                " district= " + district  +
-                " population= " + population;
+                ", Capital city?: " + isCapitalStr +
+                ", Country: " + country.getName() +
+                ", id: " + id +
+                ", name: " +
+                ", countryCode= " + countryCode  +
+                ", district= " + district  +
+                ", population= " + population;
     }
 
     public String report(){
