@@ -353,7 +353,7 @@ public class SanityCheck
                     if(countryLanguage.getCountryCode().equals(country.getCode())){
                         country.getLanguageList().add(countryLanguage);
                         countryLanguage.setNumberOfSpeakers(country.getPopulation()
-                                *countryLanguage.getPercentageOfSpeakers());
+                                *(countryLanguage.getPercentageOfSpeakers()/100));
                     }
                 }
             }
