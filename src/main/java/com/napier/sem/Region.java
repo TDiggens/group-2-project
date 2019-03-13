@@ -35,9 +35,9 @@ public class Region {
                 numberToPrint = this.getCountryList().size();
             }
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.println(this.getCountryList().get(i).getName() + " population: " + this.getCountryList().get(i).getPopulation());
+                System.out.print(this.getCountryList().get(i).getName() + "- population: " + this.getCountryList().get(i).getPopulation());
                 if(this.getCountryList().get(i).getCapital() != null){
-                        System.out.print(" capital city: " + this.getCountryList().get(i).getCapital().getName());
+                        System.out.println(", capital city: " + this.getCountryList().get(i).getCapital().getName());
                 }
             }
 
