@@ -15,10 +15,56 @@ public class SanityCheckTest
     {
         sanityCheck = new SanityCheck();
     }
-
+    //test for country argument being null
     @Test
     void listCitiesInCountryNull()
     {
         sanityCheck.listCitiesInCountry(null);
+    }
+    //test for the country's district list being empty.
+    @Test
+    void listCitiesInCountryDistrictListEmpty()
+    {
+        ArrayList<District>  districtList = new ArrayList<District>();
+        Country country = new Country();
+        country.setDistrictList(districtList);
+        sanityCheck.listCitiesInCountry(country);
+    }
+    //test for the country's district list containing a null district.
+    @Test
+    void listCitiesInCountryDistrictListContainsNull()
+    {
+        ArrayList<District> districtList = new ArrayList<District>();
+        District district = null;
+        districtList.add(district);
+        Country country = new Country();
+        country.setDistrictList(districtList);
+        sanityCheck.listCitiesInCountry(country);
+    }
+    // test what happens when a district in the district list contains no cities
+    @Test
+    void listCitiesInCountryDistrictCityListEmpty()
+    {
+        ArrayList<City> cityList = new ArrayList<City>();
+        ArrayList<District> districtList = new ArrayList<District>();
+        District district = new District();
+        district.setCityList(cityList);
+        districtList.add(district);
+        Country country = new Country();
+        country.setDistrictList(districtList);
+        sanityCheck.listCitiesInCountry(country);
+    }
+
+    //Test for if one of the cities in the country's district list is null.
+    @Test
+    void listCitiesInCountryCityListContainsNull()
+    {
+        ArrayList<City> cityList = new ArrayList<City>();
+        ArrayList<District> districtList = new ArrayList<District>();
+        District district = new District();
+        district.setCityList(cityList);
+        districtList.add(district);
+        Country country = new Country();
+        country.setDistrictList(districtList);
     }
 }

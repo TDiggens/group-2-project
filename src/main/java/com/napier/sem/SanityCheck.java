@@ -1,6 +1,8 @@
 package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class SanityCheck
@@ -422,6 +424,23 @@ public class SanityCheck
         {
             System.out.println("No country found");
             return;
+        }
+        //check country's district list for null districts, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndices = new ArrayList<Integer>();
+        for(int i = 0; i < country.getDistrictList().size(); i++)
+        {
+            if(country.getDistrictList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndices.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from district List.
+        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        {
+            int index = iterator.next();
+            country.getDistrictList().remove(index);
         }
         for(District district : country.getDistrictList())
         {
