@@ -417,6 +417,12 @@ public class SanityCheck
     */
     public void listCitiesInCountry(Country country)
     {
+        //Check if country Exists
+        if(country == null)
+        {
+            System.out.println("No country found");
+            return;
+        }
         for(District district : country.getDistrictList())
         {
             for(City city : district.getCityList())
