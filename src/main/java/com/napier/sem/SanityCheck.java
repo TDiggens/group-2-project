@@ -415,34 +415,13 @@ public class SanityCheck
     /* Method to list all cities in a country ranked by population, implementation for
     issue #24 on github.
     */
-    public void listCitiesInCountry(){
-        //create booleans to control the loop
-        boolean exit = false;
-        boolean countryFound = false;
-        /* while exit is false, loop asking the user for a country name and if found in the
-        country list, iterate through the city objects in that countries' district list and call
-        report for each city.
-         */
-        while(!exit){
-            System.out.println("Enter the name of a country.");
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            for(Country country : world.getCountryList()){
-                if(input.equals(country.getName())){
-                    countryFound = true;
-                    for(District district : country.getDistrictList()){
-                        for(City city : district.getCityList()){
-                            System.out.println(city.report());
-                            exit = true;
-                        }
-                    }
-                }
-            }
-            /* if countryFound is still false then the input was either invalid or a country of that
-            name was not found in the list
-             */
-            if(!countryFound){
-                System.out.println("Country not found, please search again");
+    public void listCitiesInCountry(Country country)
+    {
+        for(District district : country.getDistrictList())
+        {
+            for(City city : district.getCityList())
+            {
+                city.toString();
             }
         }
     }
