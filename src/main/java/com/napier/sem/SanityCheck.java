@@ -428,6 +428,7 @@ public class SanityCheck
         //check country's district list for null districts, remove them if so.
         //make list of indexes where the null values occur
         List<Integer> nullIndices = new ArrayList<Integer>();
+        int index;
         for(int i = 0; i < country.getDistrictList().size(); i++)
         {
             if(country.getDistrictList().get(i) == null)
@@ -439,8 +440,25 @@ public class SanityCheck
         //go through the indexes where null values occur and remove the null objects from district List.
         for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
         {
-            int index = iterator.next();
+            index = iterator.next();
             country.getDistrictList().remove(index);
+        }
+        //using similar process, check each district in the country for null cities.
+        nullIndices = new ArrayList<Integer>();
+        for(District district : country.getDistrictList())
+        {
+            for(int i = 0; i < district.getCityList().size(); i++)
+            {
+                if(district.getCityList().get(i) == null)
+                {
+                    nullIndices.add(i);
+                }
+            }
+            for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+            {
+                index = iterator.next();
+                district.getCityList().remove(index);
+            }
         }
         for(District district : country.getDistrictList())
         {

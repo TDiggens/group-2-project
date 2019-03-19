@@ -61,10 +61,13 @@ public class SanityCheckTest
     {
         ArrayList<City> cityList = new ArrayList<City>();
         ArrayList<District> districtList = new ArrayList<District>();
+        City city = null;
+        cityList.add(city);
         District district = new District();
         district.setCityList(cityList);
         districtList.add(district);
         Country country = new Country();
         country.setDistrictList(districtList);
+        sanityCheck.listCitiesInCountry(country);
     }
 }
