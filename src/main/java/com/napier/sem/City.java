@@ -101,11 +101,13 @@ public class City {
 
     public String report(){
         String isCapitalStr = "No.";
+        String reportTitle = "City Report: ";
         if(isCapital){
             isCapitalStr = "Yes.";
+            reportTitle = "Capital City Report: ";
         }
 
-         String report = "City Report: " + this.getName() + '\n' + '\n' +
+         String report = reportTitle + this.getName() + '\n' + '\n' +
                      "Capital City: " + isCapitalStr + '\n' +
                      "Name: " + this.getName() + '\n' +
                      "Country: " + this.getCountry().getName() + '\n' +

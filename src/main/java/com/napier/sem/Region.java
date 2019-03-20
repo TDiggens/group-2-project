@@ -11,6 +11,10 @@ public class Region {
     private ArrayList<Country> countryList = new ArrayList<Country>();
     private String name;
     private long population;
+    private long urbanPopulation;
+    private long ruralPopulation;
+    private double urbanPopulationPercentage;
+    private double ruralPopulationPercentage;
     private Continent continent;
 
     public Region(){}
@@ -29,6 +33,21 @@ public class Region {
         }
         setPopulation(p);
     }
+
+    public void calculateUrbanPopulation()
+    {
+        long urbanPop = 0;
+        double urbanPopPercentage;
+        for(Country country : countryList)
+        {
+            urbanPop += country.getUrbanPopulation();
+        }
+        urbanPopulation = urbanPop;
+        ruralPopulation = population - urbanPop;
+        urbanPopulationPercentage = ((urbanPop*100)/(double)population);
+        ruralPopulationPercentage = (100-urbanPopulationPercentage);
+    }
+
 
     public void printCountryList(int numberToPrint){
         if (numberToPrint > this.getCountryList().size()) {
@@ -80,5 +99,49 @@ public class Region {
         return "Region: " + name +
                 ", population: " + population +
                 ", continent: " + continent.getName();
+    }
+
+    public String report()
+    {
+        String report = "Region Report: " +  name + '\n' + '\n' +
+                "Continent " + continent.getName() + '\n' +
+                "Largest Country " + getCountryList().get(0) + '\n' +
+                "Population: " + population + '\n' +
+                "Urban population: " + urbanPopulation + " (" + urbanPopulationPercentage + ") " + '\n' +
+                "Rural population: " + ruralPopulation + " (" + ruralPopulationPercentage + ") " + '\n';
+
+        return report;
+    }
+
+    public long getUrbanPopulation() {
+        return urbanPopulation;
+    }
+
+    public void setUrbanPopulation(long urbanPopulation) {
+        this.urbanPopulation = urbanPopulation;
+    }
+
+    public long getRuralPopulation() {
+        return ruralPopulation;
+    }
+
+    public void setRuralPopulation(long ruralPopulation) {
+        this.ruralPopulation = ruralPopulation;
+    }
+
+    public double getUrbanPopulationPercentage() {
+        return urbanPopulationPercentage;
+    }
+
+    public void setUrbanPopulationPercentage(double urbanPopulationPercentage) {
+        this.urbanPopulationPercentage = urbanPopulationPercentage;
+    }
+
+    public double getRuralPopulationPercentage() {
+        return ruralPopulationPercentage;
+    }
+
+    public void setRuralPopulationPercentage(double ruralPopulationPercentage) {
+        this.ruralPopulationPercentage = ruralPopulationPercentage;
     }
 }

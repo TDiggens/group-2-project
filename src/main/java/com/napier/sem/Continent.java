@@ -8,6 +8,10 @@ and a list of Region objects to hold the regions it contains
 public class Continent {
 
     private long population;
+    private long urbanPopulation;
+    private long ruralPopulation;
+    private double urbanPopulationPercentage;
+    private double ruralPopulationPercentage;
     private String name;
     private ArrayList<Region> regionList = new ArrayList<Region>();
     public Continent(){}
@@ -23,6 +27,20 @@ public class Continent {
             p += region.getPopulation();
         }
         setPopulation(p);
+    }
+
+    public void calculateUrbanPopulation()
+    {
+        long urbanPop = 0;
+        double urbanPopPercentage;
+        for(Region region : regionList)
+        {
+            urbanPop += region.getUrbanPopulation();
+        }
+        urbanPopulation = urbanPop;
+        ruralPopulation = population - urbanPop;
+        urbanPopulationPercentage = ((urbanPop*100)/(double)population);
+        ruralPopulationPercentage = (100-urbanPopulationPercentage);
     }
 
     public void printRegionList(int numberToPrint){

@@ -264,6 +264,7 @@ public class SanityCheck
                     }
                 }
                 region.calculatePopulation();
+                region.calculateUrbanPopulation();
             }
         }
         catch(Exception e){
@@ -311,6 +312,7 @@ public class SanityCheck
                         region.setContinent(continent);
                     }
                     continent.calculatePopulation();
+                    continent.calculateUrbanPopulation();
                 }
             }
         } catch(Exception e){
