@@ -100,12 +100,17 @@ public class City {
     }
 
     public String report(){
+        String isCapitalStr = "No.";
+        if(isCapital){
+            isCapitalStr = "Yes.";
+        }
 
          String report = "City Report: " + this.getName() + '\n' + '\n' +
+                     "Capital City: " + isCapitalStr + '\n' +
                      "Name: " + this.getName() + '\n' +
-                     "Country: " + this.getCountry() + '\n' +
+                     "Country: " + this.getCountry().getName() + '\n' +
                      "District: " +  this.getDistrict() + '\n' +
-                     "Population: " + this.getPopulation();
+                     "Population: " + this.getPopulation() + '\n';
 
         return report;
     }

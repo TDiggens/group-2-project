@@ -18,6 +18,14 @@ public class CountryLanguage {
 
     }
 
+    public CountryLanguage(String countryCode, String name, Boolean isOfficial, double percentageOfSpeakers)
+    {
+        this.countryCode = countryCode;
+        this.name = name;
+        this.isOfficial = isOfficial;
+        this.percentageOfSpeakers = percentageOfSpeakers;
+    }
+
     public boolean isOfficial() {
         return isOfficial;
     }

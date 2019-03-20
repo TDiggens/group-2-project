@@ -12,6 +12,10 @@ public class SanityCheck
      */
     private Connection con = null;
     private World world;
+    enum isOfficialLanguage {
+        T,
+        F
+    }
 
     public static void main(String[] args)
     {
@@ -28,12 +32,15 @@ public class SanityCheck
         sanity.generateCountryLanguages();
         sanity.world.calculatePopulation();
         sanity.world.setLanguageList(sanity.generateWorldLanguages());
+        sanity.disconnect();
 
         //Methods to actually produce reports
         //sanity.listCountriesByPopulation();
-        //sanity.listCitiesInCountry();
-        sanity.testData();
-        sanity.disconnect();
+
+        //sanity.listCitiesInCountry(sanity.world.getCountryList().get(1));
+        //sanity.listCountriesInContinent(sanity.world.getContinentList().get(4));
+        //sanity.testData();
+
     }
 
     /**
@@ -142,11 +149,23 @@ public class SanityCheck
             objects and appropriately assign data from each columns to its' instance variables.
              */
             while(rSet.next()) {
-                Country country = new Country(rSet.getInt("Capital"), rSet.getString("Code"), rSet.getString("Code2"), rSet.getString("Continent"),
-                        rSet.getDouble("GNP"), rSet.getDouble("GNPOld"), rSet.getString("GovernmentForm"), rSet.getString("HeadOfState"),
-                        rSet.getInt("IndepYear"), rSet.getDouble("LifeExpectancy"), rSet.getString("LocalName"), rSet.getString("Name"), rSet.getInt("Population"),
-                        rSet.getString("Region"), rSet.getDouble("SurfaceArea"));
-                countryList.add(country);
+                Country country =
+                        new Country(rSet.getInt("Capital"),
+                        rSet.getString("Code"),
+                        rSet.getString("Code2"),
+                        rSet.getString("Continent"),
+                        rSet.getDouble("GNP"),
+                        rSet.getDouble("GNPOld"),
+                        rSet.getString("GovernmentForm"),
+                        rSet.getString("HeadOfState"),
+                        rSet.getInt("IndepYear"),
+                        rSet.getDouble("LifeExpectancy"),
+                        rSet.getString("LocalName"),
+                        rSet.getString("Name"),
+                        rSet.getInt("Population"),
+                        rSet.getString("Region"),
+                        rSet.getDouble("SurfaceArea"));
+                        countryList.add(country);
             }
             /* Iterate through the new countries and the existing cities list,
             match the capital cities to each country, assign a reference to
@@ -324,11 +343,21 @@ public class SanityCheck
             /* Iterate over returned rows, create a new CountryLanguage object to represent each one,
                 set their instance variables appropriately and add them to the list
              */
-            while(rSet.next()){
+            isOfficialLanguage isOfficial;
+            while(rSet.next())
+            {
                     CountryLanguage countryLanguage = new CountryLanguage();
                     countryLanguage.setName(rSet.getString("Language"));
                     countryLanguage.setCountryCode(rSet.getString("CountryCode"));
-                    countryLanguage.setOfficial(rSet.getBoolean("IsOfficial"));
+                    isOfficial = isOfficialLanguage.valueOf(rSet.getString("IsOfficial"));
+                    if (isOfficial.name().equals('T'))
+                    {
+                        countryLanguage.setOfficial(true);
+                    }
+                    else
+                    {
+                        countryLanguage.setOfficial(false);
+                    }
                     countryLanguage.setPercentageOfSpeakers(rSet.getDouble("Percentage"));
                     countryLanguageList.add(countryLanguage);
             }
@@ -337,9 +366,13 @@ public class SanityCheck
             use the country's population and percentage field of the CountryLanguage
             to calculate the number of speakers of that language in the country.
              */
-            for(CountryLanguage countryLanguage : countryLanguageList){
-                for(Country country : world.getCountryList()){
-                    if(countryLanguage.getCountryCode().equals(country.getCode())){
+            System.out.println("Here");
+            for(CountryLanguage countryLanguage : countryLanguageList)
+            {
+                for(Country country : world.getCountryList())
+                {
+                    if(countryLanguage.getCountryCode().equals(country.getCode()))
+                    {
                         country.getLanguageList().add(countryLanguage);
                         countryLanguage.setNumberOfSpeakers(country.getPopulation()
                                 *(countryLanguage.getPercentageOfSpeakers()/100));
@@ -407,7 +440,7 @@ public class SanityCheck
         //Check if country Exists
         if(country == null)
         {
-            System.out.println("No country found");
+            System.out.println("No country found" + '\n');
             return;
         }
         //check country's district list for null districts, remove them if so.
@@ -449,7 +482,8 @@ public class SanityCheck
         {
             for(City city : district.getCityList())
             {
-                city.toString();
+                System.out.println(city.report());
+
             }
         }
     }
@@ -462,7 +496,7 @@ public class SanityCheck
         //Check if continent Exists
         if(continent == null)
         {
-            System.out.println("No continent found");
+            System.out.println("No continent found" + '\n');
             return;
         }
         //check continent's region list for null regions, remove them if so.
@@ -504,7 +538,7 @@ public class SanityCheck
         {
             for(Country country : region.getCountryList())
             {
-                country.toString();
+                System.out.println(country.report());
             }
         }
     }
