@@ -70,4 +70,25 @@ public class SanityCheckTest
         country.setDistrictList(districtList);
         sanityCheck.listCitiesInCountry(country);
     }
+
+    @Test
+    //Test how the method runs under normal conditions with appropriate test data.
+    void listCitiesInCountry()
+    {
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Fife", 002, "Kirkcaldy", 60000);
+        District district1 = new District("Midlothian");
+        District district2 = new District("Fife");
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        city1.setCountry(country);
+        city2.setCountry(country);
+        district1.setCountry(country);
+        district2.setCountry(country);
+        district1.getCityList().add(city1);
+        district2.getCityList().add(city2);
+        country.getDistrictList().add(district1);
+        country.getDistrictList().add(district2);
+        sanityCheck.listCitiesInCountry(country);
+    }
 }

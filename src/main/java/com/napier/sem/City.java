@@ -14,9 +14,17 @@ public class City {
 
     private District districtObject;
 
+    public City(String countryCode, String district, int id, String name, int population)
+    {
+        this.setCountryCode(countryCode);
+        this.setDistrict(district);
+        this.setId(id);
+        this.setName(name);
+        this.setPopulation(population);
+    }
     public City()
     {
-
+        
     }
 
     public boolean getIsCapital(){

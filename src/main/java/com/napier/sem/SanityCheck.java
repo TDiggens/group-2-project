@@ -109,12 +109,9 @@ public class SanityCheck
             ResultSet rSet = stmt.executeQuery(strSelect);
             while(rSet.next())
             {
-                City city = new City();
-                city.setCountryCode(rSet.getString("CountryCode"));
-                city.setDistrict(rSet.getString("District"));
-                city.setId(rSet.getInt("ID"));
-                city.setName(rSet.getString("Name"));
-                city.setPopulation(rSet.getInt("Population"));
+                City city = new City(rSet.getString("CountryCode"), rSet.getString("District"), rSet.getInt("ID"),
+                        rSet.getString("Name"), rSet.getInt("Population"));
+
                 cityList.add(city);
             }
         }
@@ -145,22 +142,10 @@ public class SanityCheck
             objects and appropriately assign data from each columns to its' instance variables.
              */
             while(rSet.next()) {
-                Country country = new Country();
-                country.setCapitalCode(rSet.getInt("Capital"));
-                country.setCode(rSet.getString("Code"));
-                country.setCode2(rSet.getString("Code2"));
-                country.setContinent(rSet.getString("Continent"));
-                country.setGnp(rSet.getDouble("GNP"));
-                country.setOldGNP(rSet.getDouble("GNPOld"));
-                country.setFormOfGov(rSet.getString("GovernmentForm"));
-                country.setHeadOfState(rSet.getString("HeadOfState"));
-                country.setYearOfIndependence(rSet.getInt("IndepYear"));
-                country.setLifeExpectancy(rSet.getDouble("LifeExpectancy"));
-                country.setLocalName(rSet.getString("LocalName"));
-                country.setName(rSet.getString("Name"));
-                country.setPopulation(rSet.getInt("Population"));
-                country.setRegion(rSet.getString("Region"));
-                country.setSurfaceArea(rSet.getDouble("SurfaceArea"));
+                Country country = new Country(rSet.getInt("Capital"), rSet.getString("Code"), rSet.getString("Code2"), rSet.getString("Continent"),
+                        rSet.getDouble("GNP"), rSet.getDouble("GNPOld"), rSet.getString("GovernmentForm"), rSet.getString("HeadOfState"),
+                        rSet.getInt("IndepYear"), rSet.getDouble("LifeExpectancy"), rSet.getString("LocalName"), rSet.getString("Name"), rSet.getInt("Population"),
+                        rSet.getString("Region"), rSet.getDouble("SurfaceArea"));
                 countryList.add(country);
             }
             /* Iterate through the new countries and the existing cities list,

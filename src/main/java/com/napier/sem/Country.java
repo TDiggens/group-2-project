@@ -35,6 +35,27 @@ public class Country {
 
     }
 
+    public Country(int capitalCode, String code, String code2, String continent, double gnp, double oldGNP,
+                   String formOfGov, String headOfState, int yearOfIndependence, double lifeExpectancy, String localName,
+                   String name, int population, String region, double surfaceArea)
+    {
+        this.setCapitalCode(capitalCode);
+        this.setCode(code);
+        this.setCode2(code2);
+        this.setContinent(continent);
+        this.setGnp(gnp);
+        this.setOldGNP(oldGNP);
+        this.setFormOfGov(formOfGov);
+        this.setHeadOfState(headOfState);
+        this.setYearOfIndependence(yearOfIndependence);
+        this.setLifeExpectancy(lifeExpectancy);
+        this.setLocalName(localName);
+        this.setName(name);
+        this.setPopulation(population);
+        this.setRegion(region);
+        this.setSurfaceArea(surfaceArea);
+    }
+
     public void calculateUrbanPop(){
         double urbanPop = 0;
         for(District district : this.getDistrictList()){
