@@ -17,7 +17,7 @@ public class SanityCheck
     {
         //Setup
         SanityCheck sanity = new SanityCheck();
-        sanity.connect();
+        sanity.connect("localhost:33060");
         sanity.world = new World();
         sanity.world.setCityList(sanity.generateCityList());
         sanity.world.setDistrictList(sanity.generateDistrictList());
@@ -36,15 +36,15 @@ public class SanityCheck
         sanity.disconnect();
     }
 
-    /**
-     * Connect to the MySQL database.
+    /*
+         Connect to the MySQL database.
      */
-    public void connect()
+    public void connect(String location)
     {
         try
         {
             // Load database driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
@@ -59,9 +59,9 @@ public class SanityCheck
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(5000);
+                Thread.sleep(50000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
