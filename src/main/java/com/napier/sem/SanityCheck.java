@@ -454,6 +454,61 @@ public class SanityCheck
         }
     }
 
+    /* Method to list all countries in a continent ranked by population, implementation for
+    issue #6 on github.
+    */
+    public void listCountriesInContinent(Continent continent)
+    {
+        //Check if continent Exists
+        if(continent == null)
+        {
+            System.out.println("No continent found");
+            return;
+        }
+        //check continent's region list for null regions, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndices = new ArrayList<Integer>();
+        int index;
+        for(int i = 0; i < continent.getRegionList().size(); i++)
+        {
+            if(continent.getRegionList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndices.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from region List.
+        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        {
+            index = iterator.next();
+            continent.getRegionList().remove(index);
+        }
+        //using similar process, check each region in the continent for null countries.
+        nullIndices = new ArrayList<Integer>();
+        for(Region region : continent.getRegionList())
+        {
+            for(int i = 0; i < region.getCountryList().size(); i++)
+            {
+                if(region.getCountryList().get(i) == null)
+                {
+                    nullIndices.add(i);
+                }
+            }
+            for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+            {
+                index = iterator.next();
+                region.getCountryList().remove(index);
+            }
+        }
+        for(Region region : continent.getRegionList())
+        {
+            for(Country country : region.getCountryList())
+            {
+                country.toString();
+            }
+        }
+    }
+
     /* method to test that the data has been loaded correctly by printing out a sampling of it
      */
     public void testData(){
