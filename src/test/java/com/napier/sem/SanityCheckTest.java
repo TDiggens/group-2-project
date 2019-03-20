@@ -148,5 +148,39 @@ public class SanityCheckTest
         sanityCheck.listCountriesInContinent(continent);
     }
 
-
+    //Test for normal conditions using appropriate test data.
+    @Test
+    void listCountriesInContinent()
+    {
+        Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
+                1709, 79, "England", "England", 55600000, "Western Europe", 130395);
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Fife", 002, "Kirkcaldy", 60000);
+        City city3 = new City("GBR", "Greater London", 003, "London", 9000000);
+        City city4 = new City("GBR", "Tyne and Wear", 004, "Newcastle", 295800);
+        city1.setCountry(country1);
+        city2.setCountry(country1);
+        city3.setCountry(country2);
+        city4.setCountry(country2);
+        District district1 = new District("Midlothian");
+        District district2 = new District("Fife");
+        District district3 = new District("Greater London");
+        District district4 = new District("Tyne and Wear");
+        district1.getCityList().add(city1);
+        district2.getCityList().add(city2);
+        district3.getCityList().add(city3);
+        district4.getCityList().add(city4);
+        country1.getDistrictList().add(district1);
+        country1.getDistrictList().add(district2);
+        Region region = new Region("Western Europe");
+        region.getCountryList().add(country1);
+        region.getCountryList().add(country2);
+        country1.setRegionObject(region);
+        country2.setRegionObject(region);
+        Continent continent = new Continent("Europe");
+        continent.getRegionList().add(region);
+        sanityCheck.listCountriesInContinent(continent);
+    }
 }
