@@ -3,7 +3,7 @@ package com.napier.sem;
 import java.util.ArrayList;
 /* A Class designed to represent a Country with appropriate instance variables
 and a list of City objects to hold the Cities it contains */
-public class Country {
+public class Country implements Comparable< Country > {
 
     private String name;
     private String code;
@@ -16,7 +16,7 @@ public class Country {
 
     private int capitalCode;
     private int yearOfIndependence;
-    private int population;
+    private Integer population;
 
     private double surfaceArea;
     private double lifeExpectancy;
@@ -243,6 +243,38 @@ public class Country {
         this.languageList = languageList;
     }
 
+    public double getUrbanPopPercentage() {
+        return urbanPopPercentage;
+    }
+
+    public void setUrbanPopPercentage(double urbanPopPercentage) {
+        this.urbanPopPercentage = urbanPopPercentage;
+    }
+
+    public Region getRegionObject() {
+        return regionObject;
+    }
+
+    public void setRegionObject(Region regionObject) {
+        this.regionObject = regionObject;
+    }
+
+    public double getRuralPopulation() {
+        return ruralPopulation;
+    }
+
+    public void setRuralPopulation(double ruralPopulation) {
+        this.ruralPopulation = ruralPopulation;
+    }
+
+    public double getRuralPopulationPercentage() {
+        return ruralPopulationPercentage;
+    }
+
+    public void setRuralPopulationPercentage(double ruralPopulationPercentage) {
+        this.ruralPopulationPercentage = ruralPopulationPercentage;
+    }
+
     @Override
     public String toString() {
         String urbanPopulationStr = String.format("%.0f", urbanPopulation);
@@ -296,35 +328,11 @@ public class Country {
         }
     }
 
-    public double getUrbanPopPercentage() {
-        return urbanPopPercentage;
+    @Override
+    public int compareTo(Country country)
+    {
+        return population.compareTo(country.getPopulation());
     }
 
-    public void setUrbanPopPercentage(double urbanPopPercentage) {
-        this.urbanPopPercentage = urbanPopPercentage;
-    }
 
-    public Region getRegionObject() {
-        return regionObject;
-    }
-
-    public void setRegionObject(Region regionObject) {
-        this.regionObject = regionObject;
-    }
-
-    public double getRuralPopulation() {
-        return ruralPopulation;
-    }
-
-    public void setRuralPopulation(double ruralPopulation) {
-        this.ruralPopulation = ruralPopulation;
-    }
-
-    public double getRuralPopulationPercentage() {
-        return ruralPopulationPercentage;
-    }
-
-    public void setRuralPopulationPercentage(double ruralPopulationPercentage) {
-        this.ruralPopulationPercentage = ruralPopulationPercentage;
-    }
 }

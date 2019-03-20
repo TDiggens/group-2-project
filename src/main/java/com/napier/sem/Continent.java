@@ -5,15 +5,22 @@ import java.util.ArrayList;
 /* A Class designed to represent a Continent with appropriate instance variables
 and a list of Region objects to hold the regions it contains
  */
-public class Continent {
+public class Continent implements Comparable < Continent >{
 
-    private long population;
+    private Long population;
     private long urbanPopulation;
     private long ruralPopulation;
     private double urbanPopulationPercentage;
     private double ruralPopulationPercentage;
     private String name;
     private ArrayList<Region> regionList = new ArrayList<Region>();
+
+    @Override
+    public int compareTo(Continent otherContinent)
+    {
+        return population.compareTo(otherContinent.getPopulation());
+    }
+
     public Continent(){}
 
     public Continent(String name)

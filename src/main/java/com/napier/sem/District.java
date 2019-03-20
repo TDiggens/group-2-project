@@ -4,20 +4,21 @@ import java.util.ArrayList;
 /* Class to represent a district within a country, with the list of cities it contains
 
  */
-public class District {
+public class District implements Comparable < District > {
 
     private String name;
-    private int population;
+    private Integer population;
     private Country country;
     private ArrayList<City> cityList = new ArrayList<City>();
 
-    public District(){
+    public District()
+    {
 
     }
 
-    public District(String name) {
+    public District(String name)
+    {
         this.name = name;
-
     }
 
     public void calculatePopulation(){
@@ -61,6 +62,14 @@ public class District {
         this.cityList = cityList;
     }
 
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "District: "
@@ -70,11 +79,11 @@ public class District {
 
     }
 
-    public Country getCountry() {
-        return country;
+    @Override
+    public int compareTo(District otherDistrict)
+    {
+        return population.compareTo(otherDistrict.getPopulation());
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+
 }

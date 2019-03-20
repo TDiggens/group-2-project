@@ -6,16 +6,22 @@ import java.util.ArrayList;
 /* Class to represent a region of the world, with appropriate instance variables and a list
 of countries it contains.
  */
-public class Region {
+public class Region implements Comparable < Region >{
 
     private ArrayList<Country> countryList = new ArrayList<Country>();
     private String name;
-    private long population;
+    private Long population;
     private long urbanPopulation;
     private long ruralPopulation;
     private double urbanPopulationPercentage;
     private double ruralPopulationPercentage;
     private Continent continent;
+
+    @Override
+    public int compareTo(Region otherRegion)
+    {
+        return population.compareTo(otherRegion.getPopulation());
+    }
 
     public Region(){}
 
@@ -112,6 +118,8 @@ public class Region {
 
         return report;
     }
+
+
 
     public long getUrbanPopulation() {
         return urbanPopulation;

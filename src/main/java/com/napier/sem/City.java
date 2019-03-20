@@ -2,7 +2,7 @@ package com.napier.sem;
 /* A simple class to represent a City record from the database, featuring apropriate instance
 variables
  */
-public class City {
+public class City implements Comparable < City >{
 
     private boolean isCapital;
     private Country country;
@@ -10,9 +10,13 @@ public class City {
     private String name;
     private String countryCode;
     private String district;
-    private int population;
-
+    private Integer population;
     private District districtObject;
+
+    public City()
+    {
+
+    }
 
     public City(String countryCode, String district, int id, String name, int population)
     {
@@ -21,10 +25,6 @@ public class City {
         this.setId(id);
         this.setName(name);
         this.setPopulation(population);
-    }
-    public City()
-    {
-        
     }
 
     public boolean getIsCapital(){
@@ -83,6 +83,14 @@ public class City {
         this.population = population;
     }
 
+    public District getDistrictObject() {
+        return districtObject;
+    }
+
+    public void setDistrictObject(District districtObject) {
+        this.districtObject = districtObject;
+    }
+
     @Override
     public String toString() {
         String isCapitalStr = "No.";
@@ -117,11 +125,11 @@ public class City {
         return report;
     }
 
-    public District getDistrictObject() {
-        return districtObject;
+    @Override
+    public int compareTo(City otherCity)
+    {
+        return population.compareTo(otherCity.getPopulation());
     }
 
-    public void setDistrictObject(District districtObject) {
-        this.districtObject = districtObject;
-    }
+
 }

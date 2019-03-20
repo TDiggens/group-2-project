@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -190,5 +191,56 @@ public class SanityCheckTest
         Continent continent = new Continent("Europe");
         continent.getRegionList().add(region);
         sanityCheck.listCountriesInContinent(continent);
+    }
+
+    /* --------Tests for listCountriesInRegion()----------------
+     */
+
+    @Test
+    void listCountriesInRegionNull()
+    {
+        sanityCheck.listCountriesInRegion(null);
+    }
+
+    @Test
+    void listCountriesInRegionCountryListEmpty()
+    {
+        ArrayList<Country> countryList = new ArrayList<Country>();
+        Region region = new Region();
+        region.setCountryList(countryList);
+        sanityCheck.listCountriesInRegion(region);
+    }
+
+    @Test
+    void listCountriesInRegionCountryListNull()
+    {
+
+        Region region = new Region();
+        region.setCountryList(null);
+        sanityCheck.listCountriesInRegion(region);
+    }
+
+    @Test
+    void listCountriesInRegionCountryListContainsNull()
+    {
+        Region region = new Region();
+        ArrayList<Country> countryList = new ArrayList<Country>();
+        countryList.add(null);
+        region.setCountryList(countryList);
+        sanityCheck.listCountriesInRegion(region);
+    }
+
+    @Test
+    void listCountriesInRegion()
+    {
+        Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
+                1709, 79, "England", "England", 55600000, "Western Europe", 130395);
+        Region region = new Region("Western Europe");
+        region.getCountryList().add(country1);
+        region.getCountryList().add(country2);
+        Collections.sort(region.getCountryList(), Collections.reverseOrder());
+        System.out.println(sanityCheck.listCountriesInRegion(region));
     }
 }

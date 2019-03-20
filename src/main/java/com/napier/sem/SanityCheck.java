@@ -1,9 +1,6 @@
 package com.napier.sem;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class SanityCheck
 {
@@ -39,7 +36,7 @@ public class SanityCheck
 
         //sanity.listCitiesInCountry(sanity.world.getCountryList().get(1));
         //sanity.listCountriesInContinent(sanity.world.getContinentList().get(4));
-        //sanity.testData();
+        sanity.testData();
 
     }
 
@@ -352,7 +349,7 @@ public class SanityCheck
                     countryLanguage.setName(rSet.getString("Language"));
                     countryLanguage.setCountryCode(rSet.getString("CountryCode"));
                     isOfficial = isOfficialLanguage.valueOf(rSet.getString("IsOfficial"));
-                    if (isOfficial.name().equals('T'))
+                    if (isOfficial.name().equals("T"))
                     {
                         countryLanguage.setOfficial(true);
                     }
@@ -379,6 +376,7 @@ public class SanityCheck
                         countryLanguage.setNumberOfSpeakers(country.getPopulation()
                                 *(countryLanguage.getPercentageOfSpeakers()/100));
                     }
+                    Collections.sort(country.getLanguageList(), Collections.reverseOrder());
                 }
             }
         }
@@ -418,6 +416,7 @@ public class SanityCheck
                 }
                 worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()*100)/world.getPopulation());
             }
+            Collections.sort(worldLanguageList, Collections.reverseOrder());
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -543,6 +542,51 @@ public class SanityCheck
                 System.out.println(country.report());
             }
         }
+    }
+
+    /*
+    Method to list all countries in a region, sorted by population
+     */
+    String listCountriesInRegion(Region region)
+    {
+
+        //Check if region Exists
+        if(region == null)
+        {
+            System.out.println("No region found" + '\n');
+            return null;
+        }
+        //Check that region's countryList is not null.
+        if(region.getCountryList() == null)
+        {
+            System.out.println("Region has no/invalid country list");
+            return null;
+        }
+        //check region's country list for null countries, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndices = new ArrayList<Integer>();
+        int index;
+        for(int i = 0; i < region.getCountryList().size(); i++)
+        {
+            if(region.getCountryList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndices.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from country List.
+        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        {
+            index = iterator.next();
+            region.getCountryList().remove(index);
+        }
+        StringBuilder countryList = new StringBuilder("Countries in " + region.getName() + ": " + '\n' + '\n');
+        for(Country country : region.getCountryList())
+        {
+            countryList.append(country.getName() + ", population: " + country.getPopulation() + '\n');
+        }
+
+        return countryList.toString();
     }
 
     /* method to test that the data has been loaded correctly by printing out a sampling of it
