@@ -165,6 +165,7 @@ class SanityCheckTest
     @Test
     void listCountriesInContinent()
     {
+
         System.out.println("Output for test listCountriesInContinent: " + '\n');
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
