@@ -27,9 +27,7 @@ class SanityCheckTest
     @Test
     void listCitiesInCountryDistrictListEmpty()
     {
-        ArrayList<District>  districtList = new ArrayList<District>();
         Country country = new Country();
-        country.setDistrictList(districtList);
         sanityCheck.listCitiesInCountry(country);
     }
     //test for the country's district list containing a null district.
@@ -37,24 +35,17 @@ class SanityCheckTest
     void listCitiesInCountryDistrictListContainsNull()
     {
         System.out.println("Output for test listCitiesInCountryDistrictListContainsNull: " + '\n');
-        ArrayList<District> districtList = new ArrayList<District>();
-        District district = null;
-        districtList.add(district);
         Country country = new Country();
-        country.setDistrictList(districtList);
+        country.getDistrictList().add(null);
         sanityCheck.listCitiesInCountry(country);
     }
     // test what happens when a district in the district list contains no cities
     @Test
     void listCitiesInCountryDistrictCityListEmpty()
     {
-        ArrayList<City> cityList = new ArrayList<>();
-        ArrayList<District> districtList = new ArrayList<>();
         District district = new District();
-        district.setCityList(cityList);
-        districtList.add(district);
         Country country = new Country();
-        country.setDistrictList(districtList);
+        country.getDistrictList().add(district);
         sanityCheck.listCitiesInCountry(country);
     }
 
@@ -63,15 +54,10 @@ class SanityCheckTest
     void listCitiesInCountryCityListContainsNull()
     {
         System.out.println("Output for test listCitiesInCountryCityListContainsNull: " + '\n');
-        ArrayList<City> cityList = new ArrayList<>();
-        ArrayList<District> districtList = new ArrayList<>();
-        City city = null;
-        cityList.add(city);
         District district = new District();
-        district.setCityList(cityList);
-        districtList.add(district);
+        district.getCityList().add(null);
         Country country = new Country();
-        country.setDistrictList(districtList);
+        country.getDistrictList().add(district);
         sanityCheck.listCitiesInCountry(country);
     }
 
@@ -86,14 +72,10 @@ class SanityCheckTest
         District district2 = new District("Fife");
         Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
-        city1.setCountry(country);
-        city2.setCountry(country);
-        district1.setCountry(country);
-        district2.setCountry(country);
-        district1.getCityList().add(city1);
-        district2.getCityList().add(city2);
-        country.getDistrictList().add(district1);
-        country.getDistrictList().add(district2);
+        city1.setCountry(country); city2.setCountry(country);
+        district1.setCountry(country); district2.setCountry(country);
+        district1.getCityList().add(city1); district2.getCityList().add(city2);
+        country.getDistrictList().add(district1); country.getDistrictList().add(district2);
         sanityCheck.listCitiesInCountry(country);
     }
 
@@ -109,9 +91,7 @@ class SanityCheckTest
     @Test
     void listCountriesInContinentListEmpty()
     {
-        ArrayList<Region>  regionList = new ArrayList<>();
         Continent continent = new Continent();
-        continent.setRegionList(regionList);
         sanityCheck.listCountriesInContinent(continent);
         System.out.println('\n');
     }
@@ -120,11 +100,8 @@ class SanityCheckTest
     void listCountriesInContinentListContainsNull()
     {
         System.out.println("Output for test listCountriesInContinentListContainsNull: " + '\n');
-        ArrayList<Region> regionList = new ArrayList<>();
-        Region region = null;
-        regionList.add(region);
         Continent continent = new Continent();
-        continent.setRegionList(regionList);
+        continent.getRegionList().add(null);
         sanityCheck.listCountriesInContinent(continent);
         System.out.println('\n');
     }
@@ -132,14 +109,9 @@ class SanityCheckTest
     @Test
     void listCountriesInContinentRegionCountryListEmpty()
     {
-
-        ArrayList<Country> countryList = new ArrayList<>();
-        ArrayList<Region> regionList = new ArrayList<>();
         Region region = new Region();
-        region.setCountryList(countryList);
-        regionList.add(region);
         Continent continent = new Continent();
-        continent.setRegionList(regionList);
+        continent.getRegionList().add(region);
         sanityCheck.listCountriesInContinent(continent);
         System.out.println('\n');
     }
@@ -148,15 +120,10 @@ class SanityCheckTest
     @Test
     void listCountriesInContinentCountryListContainsNull() {
         System.out.println("Output for test listCountriesInContinentCountryListContainsNull: " + '\n');
-        ArrayList<Country> countryList = new ArrayList<>();
-        ArrayList<Region> regionList = new ArrayList<>();
-        Country country = null;
-        countryList.add(country);
         Region region = new Region();
-        region.setCountryList(countryList);
-        regionList.add(region);
+        region.getCountryList().add(null);
         Continent continent = new Continent();
-        continent.setRegionList(regionList);
+        continent.getRegionList().add(region);
         sanityCheck.listCountriesInContinent(continent);
         System.out.println('\n');
     }
@@ -165,7 +132,6 @@ class SanityCheckTest
     @Test
     void listCountriesInContinent()
     {
-
         System.out.println("Output for test listCountriesInContinent: " + '\n');
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
@@ -175,33 +141,16 @@ class SanityCheckTest
         City city2 = new City("GBR", "Fife", 002, "Kirkcaldy", 60000);
         City city3 = new City("GBR", "Greater London", 003, "London", 9000000);
         City city4 = new City("GBR", "Tyne and Wear", 004, "Newcastle", 295800);
-        city1.setCountry(country1);
-        city2.setCountry(country1);
-        city3.setCountry(country2);
-        city4.setCountry(country2);
-        District district1 = new District("Midlothian");
-        District district2 = new District("Fife");
-        District district3 = new District("Greater London");
-        District district4 = new District("Tyne and Wear");
-        district1.getCityList().add(city1);
-        district2.getCityList().add(city2);
-        district3.getCityList().add(city3);
-        district4.getCityList().add(city4);
-        district1.calculatePopulation();
-        district2.calculatePopulation();
-        district3.calculatePopulation();
-        district4.calculatePopulation();
-        country1.getDistrictList().add(district1);
-        country1.getDistrictList().add(district2);
-        country2.getDistrictList().add(district3);
-        country2.getDistrictList().add(district4);
+        city1.setCountry(country1); city2.setCountry(country1); city3.setCountry(country2); city4.setCountry(country2);
+        District district1 = new District("Midlothian"); District district2 = new District("Fife");
+        District district3 = new District("Greater London"); District district4 = new District("Tyne and Wear");
+        district1.getCityList().add(city1); district2.getCityList().add(city2); district3.getCityList().add(city3); district4.getCityList().add(city4);
+        district1.calculatePopulation(); district2.calculatePopulation(); district3.calculatePopulation(); district4.calculatePopulation();
+        country1.getDistrictList().add(district1); country1.getDistrictList().add(district2); country2.getDistrictList().add(district3); country2.getDistrictList().add(district4);
         Region region = new Region("Western Europe");
-        region.getCountryList().add(country1);
-        region.getCountryList().add(country2);
-        country1.setRegionObject(region);
-        country2.setRegionObject(region);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
+        region.getCountryList().add(country1); region.getCountryList().add(country2);
+        country1.setRegionObject(region); country2.setRegionObject(region);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         Continent continent = new Continent("Europe");
         continent.getRegionList().add(region);
         sanityCheck.listCountriesInContinent(continent);
@@ -222,9 +171,7 @@ class SanityCheckTest
     @Test
     void listCountriesInRegionCountryListEmpty()
     {
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Region region = new Region();
-        region.setCountryList(countryList);
         sanityCheck.listCountriesInRegion(region);
         System.out.println('\n');
     }
@@ -244,9 +191,7 @@ class SanityCheckTest
     {
         System.out.println("Output for test listCountriesInRegionCountryListContainsNull: " + '\n');
         Region region = new Region();
-        ArrayList<Country> countryList = new ArrayList<Country>();
-        countryList.add(null);
-        region.setCountryList(countryList);
+        region.getCountryList().add(null);
         sanityCheck.listCountriesInRegion(region);
         System.out.println('\n');
     }
@@ -260,10 +205,8 @@ class SanityCheckTest
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         Region region = new Region("Western Europe");
-        region.getCountryList().add(country1);
-        region.getCountryList().add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
+        region.getCountryList().add(country1); region.getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         Collections.sort(region.getCountryList(), Collections.reverseOrder());
         sanityCheck.listCountriesInRegion(region);
         System.out.println('\n');
@@ -286,9 +229,7 @@ class SanityCheckTest
     void listNCountriesInRegionCountryListEmpty()
     {
         System.out.println("Output for test listNCountriesInRegionCountryListEmpty: " + '\n');
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Region region = new Region();
-        region.setCountryList(countryList);
         sanityCheck.listNCountriesInRegion(region,2);
         System.out.println('\n');
     }
@@ -308,9 +249,7 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInRegionCountryListContainsNull: " + '\n');
         Region region = new Region();
-        ArrayList<Country> countryList = new ArrayList<Country>();
-        countryList.add(null);
-        region.setCountryList(countryList);
+        region.getCountryList().add(null);
         sanityCheck.listNCountriesInRegion(region,2);
         System.out.println('\n');
     }
@@ -324,10 +263,8 @@ class SanityCheckTest
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         Region region = new Region("Western Europe");
-        region.getCountryList().add(country1);
-        region.getCountryList().add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
+        region.getCountryList().add(country1); region.getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         Collections.sort(region.getCountryList(), Collections.reverseOrder());
         sanityCheck.listNCountriesInRegion(region,-1);
         System.out.println('\n');
@@ -342,10 +279,8 @@ class SanityCheckTest
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         Region region = new Region("Western Europe");
-        region.getCountryList().add(country1);
-        region.getCountryList().add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
+        region.getCountryList().add(country1); region.getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         Collections.sort(region.getCountryList(), Collections.reverseOrder());
         sanityCheck.listNCountriesInRegion(region, 3);
         System.out.println('\n');
@@ -360,10 +295,8 @@ class SanityCheckTest
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         Region region = new Region("Western Europe");
-        region.getCountryList().add(country1);
-        region.getCountryList().add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
+        region.getCountryList().add(country1); region.getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         Collections.sort(region.getCountryList(), Collections.reverseOrder());
         sanityCheck.listNCountriesInRegion(region, 2);
         System.out.println('\n');
@@ -390,7 +323,6 @@ class SanityCheckTest
         System.out.println("Output for test listNCountriesInWorldCountryListEmpty: " + '\n');
         World world = new World();
         sanityCheck.setWorld(world);
-        world.setCountryList(new ArrayList<Country>());
         sanityCheck.listNCountriesInWorld(2);
         System.out.println('\n');
     }
@@ -400,9 +332,7 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInWorldCountryListContainsNull:" + '\n');
         sanityCheck.setWorld(new World());
-        ArrayList<Country> countryList = new ArrayList<Country>();
-        countryList.add(null);
-        sanityCheck.getWorld().setCountryList(countryList);
+        sanityCheck.getWorld().getCountryList().add(null);
         sanityCheck.listNCountriesInWorld(2);
         System.out.println('\n');
     }
@@ -412,28 +342,19 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInWorldNGreaterThanCountryList:" + '\n');
         sanityCheck.setWorld(new World());
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
         City city3 = new City("GBR", "Greater London", 003, "London", 9000000);
-        District district1 = new District("Midlothian");
-        District district2 = new District("Greater London");
-        district1.getCityList().add(city1);
-        district2.getCityList().add(city3);
-        district1.calculatePopulation();
-        district2.calculatePopulation();
-        country1.setCapital(city1);
-        country2.setCapital(city3);
-        country1.getDistrictList().add(district1);
-        country2.getDistrictList().add(district2);
-        countryList.add(country1);
-        countryList.add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
-        sanityCheck.getWorld().setCountryList(countryList);
+        District district1 = new District("Midlothian"); District district2 = new District("Greater London");
+        district1.getCityList().add(city1); district2.getCityList().add(city3);
+        district1.calculatePopulation(); district2.calculatePopulation();
+        country1.setCapital(city1); country2.setCapital(city3);
+        country1.getDistrictList().add(district1); country2.getDistrictList().add(district2);
+        sanityCheck.getWorld().getCountryList().add(country1); sanityCheck.getWorld().getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         sanityCheck.listNCountriesInWorld(-1);
         System.out.println('\n');
     }
@@ -443,28 +364,19 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInWorldNGreaterThanCountryList:" + '\n');
         sanityCheck.setWorld(new World());
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
                 1709, 79, "England", "England", 55600000, "Western Europe", 130395);
         City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
         City city3 = new City("GBR", "Greater London", 003, "London", 9000000);
-        District district1 = new District("Midlothian");
-        District district2 = new District("Greater London");
-        district1.getCityList().add(city1);
-        district2.getCityList().add(city3);
-        district1.calculatePopulation();
-        district2.calculatePopulation();
-        country1.setCapital(city1);
-        country2.setCapital(city3);
-        country1.getDistrictList().add(district1);
-        country2.getDistrictList().add(district2);
-        countryList.add(country1);
-        countryList.add(country2);
-        country1.calculateUrbanPop();
-        country2.calculateUrbanPop();
-        sanityCheck.getWorld().setCountryList(countryList);
+        District district1 = new District("Midlothian"); District district2 = new District("Greater London");
+        district1.getCityList().add(city1); district2.getCityList().add(city3);
+        district1.calculatePopulation(); district2.calculatePopulation();
+        country1.setCapital(city1); country2.setCapital(city3);
+        country1.getDistrictList().add(district1); country2.getDistrictList().add(district2);
+        sanityCheck.getWorld().getCountryList().add(country1); sanityCheck.getWorld().getCountryList().add(country2);
+        country1.calculateUrbanPop(); country2.calculateUrbanPop();
         sanityCheck.listNCountriesInWorld(3);
         System.out.println('\n');
 
@@ -475,7 +387,6 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInWorldNGreaterThanCountryList:" + '\n');
         sanityCheck.setWorld(new World());
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
@@ -488,9 +399,8 @@ class SanityCheckTest
         district1.calculatePopulation(); district2.calculatePopulation();
         country1.setCapital(city1);country2.setCapital(city3);
         country1.getDistrictList().add(district1); country2.getDistrictList().add(district2);
-        countryList.add(country1); countryList.add(country2);
+        sanityCheck.getWorld().getCountryList().add(country1); sanityCheck.getWorld().getCountryList().add(country2);
         country1.calculateUrbanPop(); country2.calculateUrbanPop();
-        sanityCheck.getWorld().setCountryList(countryList);
         sanityCheck.listNCountriesInWorld(2);
         System.out.println('\n');
     }
@@ -500,7 +410,6 @@ class SanityCheckTest
     {
         System.out.println("Output for test listNCountriesInWorldNGreaterThanCountryList:" + '\n');
         sanityCheck.setWorld(new World());
-        ArrayList<Country> countryList = new ArrayList<Country>();
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
@@ -512,11 +421,107 @@ class SanityCheckTest
         district1.calculatePopulation(); district2.calculatePopulation();
         country1.setCapital(city1); country2.setCapital(city3);
         country1.getDistrictList().add(district1); country2.getDistrictList().add(district2);
-        countryList.add(country1); countryList.add(country2);
+        sanityCheck.getWorld().getCountryList().add(country1); sanityCheck.getWorld().getCountryList().add(country2);
         country1.calculateUrbanPop(); country2.calculateUrbanPop();
-        sanityCheck.getWorld().setCountryList(countryList);
         sanityCheck.listNCountriesInWorld(1);
         System.out.println('\n');
     }
+
+    /*
+    Tests for issue #25, listCitiesInDistrict
+     */
+    @Test
+    void listCitiesInDistrictNull()
+    {
+        sanityCheck.listCitiesInDistrict(null);
+    }
+
+    @Test
+    void listCitiesInDistrictCityListNull()
+    {
+        District district = new District();
+        district.setCityList(null);
+        sanityCheck.listCitiesInDistrict(district);
+    }
+
+    @Test
+    void listCitiesInDistrictCityListEmpty()
+    {
+        District district = new District();
+        sanityCheck.listCitiesInDistrict(district);
+    }
+
+    @Test
+    void listCitiesInDistrictCityListContainsNull()
+    {
+        District district = new District();
+        district.getCityList().add(null);
+        sanityCheck.listCitiesInDistrict(district);
+    }
+
+    @Test
+    void listCitiesInDistrict()
+    {
+        District district = new District();
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Midlothian", 003, "Musselburgh", 9000000);
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        city1.setCountry(country); city2.setCountry(country);
+        city1.setIsCapital(true);
+        district.getCityList().add(city1); district.getCityList().add(city2);
+        sanityCheck.listCitiesInDistrict(district);
+    }
+
+    /*
+    Tests for listNCitiesInDistrict, issue #30, covering cases where n < number of cities in district.
+     */
+
+    @Test
+    void listNCitiesInDistrictNLessThan1()
+    {
+        District district = new District();
+
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Midlothian", 003, "Musselburgh", 9000000);
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        city1.setCountry(country); city2.setCountry(country);
+        city1.setIsCapital(true);
+        district.getCityList().add(city1); district.getCityList().add(city2);
+        sanityCheck.listNCitiesInDistrict(district, -1);
+    }
+
+    @Test
+    void listNCitiesInDistrictNGreaterThanCityList()
+    {
+        District district = new District();
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Midlothian", 003, "Musselburgh", 9000000);
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        city1.setCountry(country); city2.setCountry(country);
+        city1.setIsCapital(true);
+        district.getCityList().add(city1); district.getCityList().add(city2);
+        sanityCheck.listNCitiesInDistrict(district,3);
+    }
+
+    @Test
+    void listNCitiesInDistrict()
+    {
+        District district = new District();
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        City city2 = new City("GBR", "Midlothian", 003, "Musselburgh", 9000000);
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        city1.setCountry(country); city2.setCountry(country);
+        city1.setIsCapital(true);
+        district.getCityList().add(city1); district.getCityList().add(city2);
+        sanityCheck.listNCitiesInDistrict(district,1);
+    }
+
+
+
+
 
 }

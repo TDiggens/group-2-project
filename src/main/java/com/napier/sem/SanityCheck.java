@@ -789,11 +789,16 @@ public class SanityCheck
         region.printCountryList(n);
         return countryList;
     }
-
+    /*
+    Method to return a list of all cities in a district ordered by population, implementation for issue #25 on github
+     */
     public void listCitiesInDistrict(District district){
         listNCitiesInDistrict(district, district.getCityList().size());
     }
-
+    /*
+    Method to return a list of the top N most populous cities in a district, implementation for issue
+    #30 on github
+     */
     public ArrayList<City> listNCitiesInDistrict(District district, int n)
     {
         //check that district exists

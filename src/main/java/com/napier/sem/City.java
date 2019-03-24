@@ -114,6 +114,17 @@ public class City implements Comparable < City >{
             isCapitalStr = "Yes.";
             reportTitle = "Capital City Report: ";
         }
+        if(country == null)
+        {
+            String report = reportTitle + this.getName() + '\n' + '\n' +
+                    "Capital City: " + isCapitalStr + '\n' +
+                    "Name: " + this.getName() + '\n' +
+                    "Country: " + " country not found" + '\n' +
+                    "District: " +  this.getDistrict() + '\n' +
+                    "Population: " + this.getPopulation() + '\n';
+
+            return report;
+        }
 
          String report = reportTitle + this.getName() + '\n' + '\n' +
                      "Capital City: " + isCapitalStr + '\n' +
