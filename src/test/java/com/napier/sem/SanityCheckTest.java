@@ -20,6 +20,7 @@ public class SanityCheckTest
     @Test
     void listCitiesInCountryNull()
     {
+        System.out.println("Output for test listCitiesInCountryNull: " + '\n');
         sanityCheck.listCitiesInCountry(null);
     }
     //test for the country's district list being empty.
@@ -35,6 +36,7 @@ public class SanityCheckTest
     @Test
     void listCitiesInCountryDistrictListContainsNull()
     {
+        System.out.println("Output for test listCitiesInCountryDistrictListContainsNull: " + '\n');
         ArrayList<District> districtList = new ArrayList<District>();
         District district = null;
         districtList.add(district);
@@ -60,6 +62,7 @@ public class SanityCheckTest
     @Test
     void listCitiesInCountryCityListContainsNull()
     {
+        System.out.println("Output for test listCitiesInCountryCityListContainsNull: " + '\n');
         ArrayList<City> cityList = new ArrayList<>();
         ArrayList<District> districtList = new ArrayList<>();
         City city = null;
@@ -76,6 +79,7 @@ public class SanityCheckTest
     //Test how the method runs under normal conditions with appropriate test data.
     void listCitiesInCountry()
     {
+        System.out.println("Output for test listCitiesInCountry: " + '\n');
         City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
         City city2 = new City("GBR", "Fife", 002, "Kirkcaldy", 60000);
         District district1 = new District("Midlothian");
@@ -98,6 +102,7 @@ public class SanityCheckTest
     @Test
     void listCountriesInContinentNull()
     {
+        System.out.println("Output for test listCountriesInContinentNull: " + '\n');
         sanityCheck.listCountriesInContinent(null);
     }
     // test for the continent's region list being empty.
@@ -108,22 +113,26 @@ public class SanityCheckTest
         Continent continent = new Continent();
         continent.setRegionList(regionList);
         sanityCheck.listCountriesInContinent(continent);
+        System.out.println('\n');
     }
     // test for the continent's region list containing a null region.
     @Test
     void listCountriesInContinentListContainsNull()
     {
+        System.out.println("Output for test listCountriesInContinentListContainsNull: " + '\n');
         ArrayList<Region> regionList = new ArrayList<>();
         Region region = null;
         regionList.add(region);
         Continent continent = new Continent();
         continent.setRegionList(regionList);
         sanityCheck.listCountriesInContinent(continent);
+        System.out.println('\n');
     }
     // test what happens when a district in the district list contains no cities
     @Test
     void listCountriesInContinentRegionCountryListEmpty()
     {
+
         ArrayList<Country> countryList = new ArrayList<>();
         ArrayList<Region> regionList = new ArrayList<>();
         Region region = new Region();
@@ -132,11 +141,13 @@ public class SanityCheckTest
         Continent continent = new Continent();
         continent.setRegionList(regionList);
         sanityCheck.listCountriesInContinent(continent);
+        System.out.println('\n');
     }
 
     // Test for if one of the countries in the continent's region list is null.
     @Test
     void listCountriesInContinentCountryListContainsNull() {
+        System.out.println("Output for test listCountriesInContinentCountryListContainsNull: " + '\n');
         ArrayList<Country> countryList = new ArrayList<>();
         ArrayList<Region> regionList = new ArrayList<>();
         Country country = null;
@@ -147,12 +158,14 @@ public class SanityCheckTest
         Continent continent = new Continent();
         continent.setRegionList(regionList);
         sanityCheck.listCountriesInContinent(continent);
+        System.out.println('\n');
     }
 
     //Test for normal conditions using appropriate test data.
     @Test
     void listCountriesInContinent()
     {
+        System.out.println("Output for test listCountriesInContinent: " + '\n');
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
@@ -191,6 +204,7 @@ public class SanityCheckTest
         Continent continent = new Continent("Europe");
         continent.getRegionList().add(region);
         sanityCheck.listCountriesInContinent(continent);
+        System.out.println('\n');
     }
 
     /* --------Tests for listCountriesInRegion()----------------
@@ -199,7 +213,9 @@ public class SanityCheckTest
     @Test
     void listCountriesInRegionNull()
     {
+        System.out.println("Output for test listCountriesInRegionNull: " + '\n');
         sanityCheck.listCountriesInRegion(null);
+        System.out.println('\n');
     }
 
     @Test
@@ -209,30 +225,35 @@ public class SanityCheckTest
         Region region = new Region();
         region.setCountryList(countryList);
         sanityCheck.listCountriesInRegion(region);
+        System.out.println('\n');
     }
 
     @Test
     void listCountriesInRegionCountryListNull()
     {
-
+        System.out.println("Output for test listCountriesInRegionCountryListNull: " + '\n');
         Region region = new Region();
         region.setCountryList(null);
         sanityCheck.listCountriesInRegion(region);
+        System.out.println('\n');
     }
 
     @Test
     void listCountriesInRegionCountryListContainsNull()
     {
+        System.out.println("Output for test listCountriesInRegionCountryListContainsNull: " + '\n');
         Region region = new Region();
         ArrayList<Country> countryList = new ArrayList<Country>();
         countryList.add(null);
         region.setCountryList(countryList);
         sanityCheck.listCountriesInRegion(region);
+        System.out.println('\n');
     }
 
     @Test
     void listCountriesInRegion()
     {
+        System.out.println("Output for test listCountriesInRegion: " + '\n');
         Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
                 "Scotland", 6000000, "Western Europe", 80077);
         Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
@@ -240,7 +261,110 @@ public class SanityCheckTest
         Region region = new Region("Western Europe");
         region.getCountryList().add(country1);
         region.getCountryList().add(country2);
+        country1.calculateUrbanPop();
+        country2.calculateUrbanPop();
         Collections.sort(region.getCountryList(), Collections.reverseOrder());
-        System.out.println(sanityCheck.listCountriesInRegion(region));
+        sanityCheck.listCountriesInRegion(region);
+        System.out.println('\n');
+    }
+
+    /*
+    Tests for listNCountriesInRegion().
+     */
+
+    @Test
+    void listNCountriesInRegionNull()
+    {
+        System.out.println("Output for test listNCountriesInRegionNull: " + '\n');
+        System.out.println("Test listNCountriesInRegionNull:");
+        sanityCheck.listNCountriesInRegion(2, null);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegionCountryListEmpty()
+    {
+        System.out.println("Output for test listNCountriesInRegionCountryListEmpty: " + '\n');
+        ArrayList<Country> countryList = new ArrayList<Country>();
+        Region region = new Region();
+        region.setCountryList(countryList);
+        sanityCheck.listNCountriesInRegion(2, region);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegionCountryListNull()
+    {
+        System.out.println("Output for test listNCountriesInRegionCountryListNull: " + '\n');
+        Region region = new Region();
+        region.setCountryList(null);
+        sanityCheck.listNCountriesInRegion(2, region);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegionCountryListContainsNull()
+    {
+        System.out.println("Output for test listNCountriesInRegionCountryListContainsNull: " + '\n');
+        Region region = new Region();
+        ArrayList<Country> countryList = new ArrayList<Country>();
+        countryList.add(null);
+        region.setCountryList(countryList);
+        sanityCheck.listNCountriesInRegion(2, region);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegionNLessThan1()
+    {
+        System.out.println("Output for test listNCountriesInRegionNLessThan1: " + '\n');
+        Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
+                1709, 79, "England", "England", 55600000, "Western Europe", 130395);
+        Region region = new Region("Western Europe");
+        region.getCountryList().add(country1);
+        region.getCountryList().add(country2);
+        country1.calculateUrbanPop();
+        country2.calculateUrbanPop();
+        Collections.sort(region.getCountryList(), Collections.reverseOrder());
+        sanityCheck.listNCountriesInRegion(-1, region);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegionNGreaterThanCountries()
+    {
+        System.out.println("Output for test listNCountriesInRegionNGreaterThanCountries: " + '\n');
+        Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
+                1709, 79, "England", "England", 55600000, "Western Europe", 130395);
+        Region region = new Region("Western Europe");
+        region.getCountryList().add(country1);
+        region.getCountryList().add(country2);
+        country1.calculateUrbanPop();
+        country2.calculateUrbanPop();
+        Collections.sort(region.getCountryList(), Collections.reverseOrder());
+        sanityCheck.listNCountriesInRegion(3, region);
+        System.out.println('\n');
+    }
+
+    @Test
+    void listNCountriesInRegion()
+    {
+        System.out.println("Output for test listNCountriesInRegion: " + '\n');
+        Country country1 = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        Country country2 = new Country(001, "GBR", "GB", "Europe", 25000, 23000, "Constitutional Monarchy", "Queen Elizabeth II",
+                1709, 79, "England", "England", 55600000, "Western Europe", 130395);
+        Region region = new Region("Western Europe");
+        region.getCountryList().add(country1);
+        region.getCountryList().add(country2);
+        country1.calculateUrbanPop();
+        country2.calculateUrbanPop();
+        Collections.sort(region.getCountryList(), Collections.reverseOrder());
+        sanityCheck.listNCountriesInRegion(2, region);
+        System.out.println('\n');
     }
 }

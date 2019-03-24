@@ -492,14 +492,22 @@ public class SanityCheck
     /* Method to list all countries in a continent ranked by population, implementation for
     issue #6 on github.
     */
-    public void listCountriesInContinent(Continent continent)
+    public ArrayList<Country> listCountriesInContinent(Continent continent)
     {
+        ArrayList<Country> countryList = new ArrayList<>();
         //Check if continent Exists
         if(continent == null)
         {
             System.out.println("No continent found" + '\n');
-            return;
+            return null;
         }
+        StringBuilder countryReports = new StringBuilder("Countries in " + continent.getName() + ": " + '\n' + '\n');
+        //Check if Continent's region list is empty
+        if(continent.getRegionList().size() == 0)
+        {
+            System.out.println("No countries found in " + continent.getName() + '\n');
+        }
+
         //check continent's region list for null regions, remove them if so.
         //make list of indexes where the null values occur
         List<Integer> nullIndices = new ArrayList<Integer>();
@@ -535,19 +543,36 @@ public class SanityCheck
                 region.getCountryList().remove(index);
             }
         }
+        //check if all regions in continent have empty city lists
+        boolean allRegionsEmpty = true;
+        for(Region region : continent.getRegionList())
+        {
+            if(region.getCountryList().size() > 0)
+            {
+                allRegionsEmpty = false;
+                break;
+            }
+        }
+        if(allRegionsEmpty)
+        {
+            System.out.println("All regions in " + continent.getName() + " have no countries in them");
+        }
         for(Region region : continent.getRegionList())
         {
             for(Country country : region.getCountryList())
             {
-                System.out.println(country.report());
+                countryList.add(country);
+                countryReports.append(country.report());
             }
         }
+        System.out.println(countryReports.toString());
+        return countryList;
     }
 
     /*
     Method to list all countries in a region, sorted by population
      */
-    String listCountriesInRegion(Region region)
+    ArrayList<Country> listCountriesInRegion(Region region)
     {
 
         //Check if region Exists
@@ -580,13 +605,78 @@ public class SanityCheck
             index = iterator.next();
             region.getCountryList().remove(index);
         }
-        StringBuilder countryList = new StringBuilder("Countries in " + region.getName() + ": " + '\n' + '\n');
         for(Country country : region.getCountryList())
         {
-            countryList.append(country.getName() + ", population: " + country.getPopulation() + '\n');
+            System.out.println(country.report());
+        }
+        return region.getCountryList();
+    }
+
+    /*
+    Method to return the top N counties ranked by population in a region and print their reports, implementation for
+    issue #5
+     */
+    ArrayList<Country> listNCountriesInRegion(int n, Region region)
+    {
+
+        //Check if region Exists
+        if(region == null)
+        {
+            System.out.println("No region found" + '\n');
+            return null;
+        }
+        //Check that region's countryList is not null.
+        if(region.getCountryList() == null)
+        {
+            System.out.println("Region has no/invalid country list");
+            return null;
+        }
+        //check region's country list for null countries, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndices = new ArrayList<Integer>();
+        int index;
+        for(int i = 0; i < region.getCountryList().size(); i++)
+        {
+            if(region.getCountryList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndices.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from country List.
+        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        {
+            index = iterator.next();
+            region.getCountryList().remove(index);
         }
 
-        return countryList.toString();
+        ArrayList<Country> countryList = new ArrayList<>();
+        StringBuilder countryReports = new StringBuilder("Top " + n + " populated countries in " + region.getName() +
+                ": " + '\n' + '\n');
+        //check that n is a positive integer
+        if(n < 1)
+        {
+            System.out.println("Please enter a positive integer");
+            return null;
+        }
+        //check that n is not larger than the number of countries in the region
+        if(n > region.getCountryList().size())
+        {
+            countryReports = new StringBuilder("Fewer than " + n + " countries in " + region.getName()
+                    + " full country list returned:");
+            n = region.getCountryList().size();
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            countryList.add(region.getCountryList().get(i));
+            countryReports.append(region.getCountryList().get(i));
+        }
+        for(Country country : countryList)
+        {
+            System.out.println(country.report());
+        }
+        return countryList;
     }
 
     /* method to test that the data has been loaded correctly by printing out a sampling of it
