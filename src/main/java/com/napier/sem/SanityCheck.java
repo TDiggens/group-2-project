@@ -793,6 +793,18 @@ public class SanityCheck
     Method to return a list of all cities in a district ordered by population, implementation for issue #25 on github
      */
     public void listCitiesInDistrict(District district){
+        //check that district exists
+        if(district == null)
+        {
+            System.out.println("No district found");
+            return;
+        }
+        //check that district has city list
+        if(district.getCityList() == null)
+        {
+            System.out.println("District has no/invalid city list");
+            return;
+        }
         listNCitiesInDistrict(district, district.getCityList().size());
     }
     /*
@@ -823,7 +835,7 @@ public class SanityCheck
         }
         for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
         {
-            district.getCityList().remove(iterator.next());
+            district.getCityList().remove((int)iterator.next());
         }
         //ensure n is positive integer
         if(n<1)
