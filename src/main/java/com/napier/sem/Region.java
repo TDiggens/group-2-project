@@ -60,10 +60,7 @@ public class Region implements Comparable < Region >{
                 numberToPrint = this.getCountryList().size();
             }
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.print(this.getCountryList().get(i).getName() + "- population: " + this.getCountryList().get(i).getPopulation());
-                if(this.getCountryList().get(i).getCapital() != null){
-                        System.out.println(", capital city: " + this.getCountryList().get(i).getCapital().getName());
-                }
+                System.out.print(this.getCountryList().get(i).report());
             }
 
     }

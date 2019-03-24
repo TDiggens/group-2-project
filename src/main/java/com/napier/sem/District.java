@@ -34,7 +34,7 @@ public class District implements Comparable < District > {
                 numberToPrint = this.getCityList().size();
             }
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.println(this.getCityList().get(i).getName() + " population: " + this.getCityList().get(i).getPopulation());
+                System.out.println(this.getCityList().get(i).report());
             }
     }
 
@@ -77,6 +77,24 @@ public class District implements Comparable < District > {
                 "Country: " + this.getCountry().getName() + '\n' +
                 ", population: " + this.getPopulation();
 
+    }
+
+    public String report()
+    {
+        if(!cityList.isEmpty()) {
+            String report = "District Report: " + name + '\n' + '\n' +
+                    "Country: " + country.getName() + '\n' +
+                    "Population: " + population + '\n' +
+                    "Largest City " + cityList.get(0) + '\n' + '\n';
+            return report;
+        }
+        else
+        {
+            String report = "District Report: " + name + '\n' + '\n' +
+                "Country: " + country.getName() + '\n' +
+                "Population: " + population + '\n';
+            return report;
+        }
     }
 
     @Override

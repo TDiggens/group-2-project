@@ -77,6 +77,7 @@ public class Country implements Comparable< Country > {
         for(CountryLanguage countryLanguage : this.getLanguageList()){
             System.out.println(countryLanguage.toString());
         }
+        System.out.println('\n');
     }
 
     public void printDistrictList(int numberToPrint){
@@ -85,8 +86,7 @@ public class Country implements Comparable< Country > {
             }
             System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.println(this.getDistrictList().get(i).getName() + ", population: "
-                        + this.getDistrictList().get(i).getPopulation());
+                System.out.println(this.getDistrictList().get(i).report());
             }
 
     }
@@ -311,7 +311,7 @@ public class Country implements Comparable< Country > {
                     "Continent: " + continent + '\n' +
                     "Population: " + population + '\n' +
                     "Urban population: " + urbanPopulationStr + " (" + urbanPopPercentage + "%) " + '\n' +
-                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + ") " + '\n';
+                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + ") " + '\n' + '\n';
             return report;
         }
         else
@@ -323,7 +323,7 @@ public class Country implements Comparable< Country > {
                     "Continent: " + continent + '\n' +
                     "Population: " + population + '\n' +
                     "Urban population: " + urbanPopulationStr + " (" + urbanPopPercentage + "%) " + '\n' +
-                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + "%) " + '\n';
+                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + "%) " + '\n' + '\n';
             return report;
         }
     }

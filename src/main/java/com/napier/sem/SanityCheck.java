@@ -9,6 +9,15 @@ public class SanityCheck
      */
     private Connection con = null;
     private World world;
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
     enum isOfficialLanguage {
         T,
         F
@@ -19,16 +28,16 @@ public class SanityCheck
         //Setup
         SanityCheck sanity = new SanityCheck();
         sanity.connect();
-        sanity.world = new World();
-        sanity.world.setCityList(sanity.generateCityList());
-        sanity.world.setDistrictList(sanity.generateDistrictList());
-        sanity.world.setCountryList(sanity.generateCountryList());
-        sanity.world.setRegionList(sanity.generateRegionList());
-        sanity.world.setContinentList(sanity.generateContinentList());
+        sanity.setWorld(new World());
+        sanity.getWorld().setCityList(sanity.generateCityList());
+        sanity.getWorld().setDistrictList(sanity.generateDistrictList());
+        sanity.getWorld().setCountryList(sanity.generateCountryList());
+        sanity.getWorld().setRegionList(sanity.generateRegionList());
+        sanity.getWorld().setContinentList(sanity.generateContinentList());
         sanity.calculateCountryUrbanPops();
         sanity.generateCountryLanguages();
-        sanity.world.calculatePopulation();
-        sanity.world.setLanguageList(sanity.generateWorldLanguages());
+        sanity.getWorld().calculatePopulation();
+        sanity.getWorld().setLanguageList(sanity.generateWorldLanguages());
         sanity.disconnect();
 
         //Methods to actually produce reports
@@ -171,7 +180,7 @@ public class SanityCheck
             object to that district's country field.
              */
             for(Country country : countryList){
-                for(City city : world.getCityList()){
+                for(City city : getWorld().getCityList()){
                     if(city.getId() == country.getCapitalCode()){
                         country.setCapital(city);
                         city.setIsCapital(true);
@@ -216,7 +225,7 @@ public class SanityCheck
             add appropriate cities to each district's city list, and assign the right district object to
             the city's districtObject field
             */
-            for(City city : world.getCityList()){
+            for(City city : getWorld().getCityList()){
                 for(District district : districtList){
                     district.calculatePopulation();
                     if(city.getDistrict().equals(district.getName())){
@@ -254,7 +263,7 @@ public class SanityCheck
             then calculate that region's population
              */
             for(Region region : regionList){
-                for(Country country : world.getCountryList()){
+                for(Country country : getWorld().getCountryList()){
                     if(country.getRegion().equals(region.getName())){
                         region.getCountryList().add(country);
                         country.setRegionObject(region);
@@ -296,7 +305,7 @@ public class SanityCheck
             population of each continent.
              */
             for(Continent continent : continentList){
-                for(Region region : world.getRegionList()){
+                for(Region region : getWorld().getRegionList()){
                     /* check that region's country list is not empty and if it isnt, use the continent
                     field of the first country in the list to establish what continent the region is in
                      */
@@ -322,7 +331,7 @@ public class SanityCheck
     /* small method to loop through the country list and call each ones calculateUrbanPop method.
      */
     public void calculateCountryUrbanPops(){
-        for(Country country : world.getCountryList()){
+        for(Country country : getWorld().getCountryList()){
             country.calculateUrbanPop();
         }
     }
@@ -368,7 +377,7 @@ public class SanityCheck
             System.out.println("Here");
             for(CountryLanguage countryLanguage : countryLanguageList)
             {
-                for(Country country : world.getCountryList())
+                for(Country country : getWorld().getCountryList())
                 {
                     if(countryLanguage.getCountryCode().equals(country.getCode()))
                     {
@@ -407,14 +416,14 @@ public class SanityCheck
             that speakers each language
              */
             for(WorldLanguage worldLanguage : worldLanguageList){
-                for(Country country : world.getCountryList()){
+                for(Country country : getWorld().getCountryList()){
                     for(CountryLanguage countryLanguage : country.getLanguageList()){
                         if(countryLanguage.getName().equals(worldLanguage.getName())){
                             worldLanguage.setNumberOfSpeakers(worldLanguage.getNumberOfSpeakers() + countryLanguage.getNumberOfSpeakers());
                         }
                     }
                 }
-                worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()*100)/world.getPopulation());
+                worldLanguage.setPercentageOfSpeakers((worldLanguage.getNumberOfSpeakers()*100)/ getWorld().getPopulation());
             }
             Collections.sort(worldLanguageList, Collections.reverseOrder());
         }
@@ -424,14 +433,7 @@ public class SanityCheck
         return worldLanguageList;
     }
 
-    /* Method to list all countries in world ranked by population, implementation for
-    issue #2 on github. Simply iterates over the country list and calls report() for each one.
-    */
-    public void listCountriesByPopulation(){
-        for(Country country : world.getCountryList()){
-            System.out.println(country.report());
-        }
-    }
+
 
     /* Method to list all cities in a country ranked by population, implementation for
     issue #24 on github.
@@ -481,18 +483,144 @@ public class SanityCheck
         }
         for(District district : country.getDistrictList())
         {
-            for(City city : district.getCityList())
-            {
-                System.out.println(city.report());
-
-            }
+            district.printCityList(district.getCityList().size());
         }
     }
 
+    /*
+    Method to return the top N countries by population in the world and print their reports, implementation for issue
+    #5 on github
+     */
+    public List<Country> listNCountriesInWorld(int n)
+    {
+        //Check that world country list exists
+        if(getWorld().getCountryList() == null)
+        {
+            System.out.println("No country list found.");
+            return null;
+        }
+        //Check that n is a positive integer lesser than the number of countries in world
+        if(n < 1)
+        {
+            System.out.println("Please enter a positive integer");
+            return null;
+        }
+        //ensure n is smaller than number of countries in world country list
+        if(n > getWorld().getCountryList().size())
+        {
+            n = getWorld().getCountryList().size();
+        }
+
+        System.out.println(world.getCountryList().size());
+        //Check that the portion of the world country list does not contain null values, and if it does, remove them
+        List<Integer> nullIndicies = new ArrayList<>();
+        for(int i = 0; i < world.getCountryList().size(); i++)
+        {
+            if(getWorld().getCountryList().get(i) == null)
+            {
+                nullIndicies.add(i);
+            }
+        }
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
+        {
+
+            getWorld().getCountryList().remove((int)iterator.next());
+        }
+        System.out.println(world.getCountryList().size());
+
+
+
+        //Check that world country list is not empty
+        if(getWorld().getCountryList().size() == 0)
+        {
+            System.out.println("Country list is empty");
+            return null;
+        }
+
+        //ensure n is still smaller than number of countries in list after possible null values removed.
+        if(n > getWorld().getCountryList().size())
+        {
+            n = world.getCountryList().size();
+        }
+
+        if(n == 1)
+        {
+            System.out.println("Most populous country in the world: " + '\n' + '\n');
+        }
+        else
+        {
+            System.out.println("Most populous " + n + " countries in the world:" + '\n' + '\n');
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            System.out.println(world.getCountryList().get(i).report());
+        }
+        List<Country> countryList = world.getCountryList().subList(0,n);
+        return countryList;
+    }
+
+    /* Method to list all countries in world ranked by population, implementation for
+   issue #2 on github. Simply iterates over the country list and calls report() for each one.
+   */
+    public void listCountriesInWorld(){
+        listNCountriesInWorld(world.getCountryList().size());
+    }
+
     /* Method to list all countries in a continent ranked by population, implementation for
-    issue #6 on github.
+    issue #3 on github.
     */
-    public ArrayList<Country> listCountriesInContinent(Continent continent)
+    void listCountriesInContinent(Continent continent)
+    {
+        //check continent exists
+        if(continent == null)
+        {
+            System.out.println("Continent not found");
+            return;
+        }
+        //check continent has valid region list
+        if(continent.getRegionList() == null)
+        {
+            System.out.println("Continent has invalid/no region list");
+            return;
+        }
+        //check region list not empty
+        if(continent.getRegionList().isEmpty())
+        {
+            System.out.println("Continent's region list is empty");
+            return;
+        }
+        //check continent's region list for null regions, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndices = new ArrayList<Integer>();
+        int index;
+        for(int i = 0; i < continent.getRegionList().size(); i++)
+        {
+            if(continent.getRegionList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndices.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from region List.
+        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        {
+            index = iterator.next();
+            continent.getRegionList().remove(index);
+        }
+        int n = 0;
+        for(Region region : continent.getRegionList())
+        {
+            n += region.getCountryList().size();
+        }
+        listNCountriesInContinent(continent, n);
+    }
+
+    /*
+    Method to return a list of and print the reports of the top N countries by population in a continent. Implementation
+    for issue #6 on github
+     */
+    public ArrayList<Country> listNCountriesInContinent(Continent continent, int n)
     {
         ArrayList<Country> countryList = new ArrayList<>();
         //Check if continent Exists
@@ -501,7 +629,6 @@ public class SanityCheck
             System.out.println("No continent found" + '\n');
             return null;
         }
-        StringBuilder countryReports = new StringBuilder("Countries in " + continent.getName() + ": " + '\n' + '\n');
         //Check if Continent's region list is empty
         if(continent.getRegionList().size() == 0)
         {
@@ -543,7 +670,7 @@ public class SanityCheck
                 region.getCountryList().remove(index);
             }
         }
-        //check if all regions in continent have empty city lists
+        //check if all regions in continent have empty country lists
         boolean allRegionsEmpty = true;
         for(Region region : continent.getRegionList())
         {
@@ -559,66 +686,60 @@ public class SanityCheck
         }
         for(Region region : continent.getRegionList())
         {
-            for(Country country : region.getCountryList())
-            {
-                countryList.add(country);
-                countryReports.append(country.report());
-            }
+            countryList.addAll(region.getCountryList());
         }
-        System.out.println(countryReports.toString());
+        countryList.sort(Collections.reverseOrder());
+        //ensure n is positive and not greater than number of contries
+        if(n < 1)
+        {
+            System.out.println("Please enter a positive integer");
+            return null;
+        }
+        if(n > countryList.size())
+        {
+            n = countryList.size();
+        }
+
+        System.out.println("Top " + n + " most populous countries in " + continent.getName() + '\n');
+        for(int i = 0; i < n; i++)
+        {
+            countryList.get(i).report();
+        }
         return countryList;
     }
 
     /*
-    Method to list all countries in a region, sorted by population
+    Method to list all countries in a region, sorted by population, implementation for issue #4
      */
-    ArrayList<Country> listCountriesInRegion(Region region)
+    void listCountriesInRegion(Region region)
     {
-
-        //Check if region Exists
+        //check that region exists
         if(region == null)
         {
-            System.out.println("No region found" + '\n');
-            return null;
+            System.out.println("Region not found");
+            return;
         }
-        //Check that region's countryList is not null.
+        //check countryList not null
         if(region.getCountryList() == null)
         {
-            System.out.println("Region has no/invalid country list");
-            return null;
+            System.out.println("Region has invalid/no country list");
+            return;
         }
-        //check region's country list for null countries, remove them if so.
-        //make list of indexes where the null values occur
-        List<Integer> nullIndices = new ArrayList<Integer>();
-        int index;
-        for(int i = 0; i < region.getCountryList().size(); i++)
+        //check country list not empty
+        if(region.getCountryList().isEmpty())
         {
-            if(region.getCountryList().get(i) == null)
-            {
-                //add index of the found null value to index list
-                nullIndices.add(i);
-            }
+            System.out.println("Region's country list empty");
+            return;
         }
-        //go through the indexes where null values occur and remove the null objects from country List.
-        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
-        {
-            index = iterator.next();
-            region.getCountryList().remove(index);
-        }
-        for(Country country : region.getCountryList())
-        {
-            System.out.println(country.report());
-        }
-        return region.getCountryList();
+        listNCountriesInRegion(region, region.getCountryList().size());
     }
 
     /*
     Method to return the top N counties ranked by population in a region and print their reports, implementation for
-    issue #5
+    issue #7
      */
-    ArrayList<Country> listNCountriesInRegion(int n, Region region)
+    public ArrayList<Country> listNCountriesInRegion(Region region, int n)
     {
-
         //Check if region Exists
         if(region == null)
         {
@@ -649,10 +770,7 @@ public class SanityCheck
             index = iterator.next();
             region.getCountryList().remove(index);
         }
-
         ArrayList<Country> countryList = new ArrayList<>();
-        StringBuilder countryReports = new StringBuilder("Top " + n + " populated countries in " + region.getName() +
-                ": " + '\n' + '\n');
         //check that n is a positive integer
         if(n < 1)
         {
@@ -662,21 +780,58 @@ public class SanityCheck
         //check that n is not larger than the number of countries in the region
         if(n > region.getCountryList().size())
         {
-            countryReports = new StringBuilder("Fewer than " + n + " countries in " + region.getName()
-                    + " full country list returned:");
             n = region.getCountryList().size();
         }
-
         for(int i = 0; i < n; i++)
         {
             countryList.add(region.getCountryList().get(i));
-            countryReports.append(region.getCountryList().get(i));
         }
-        for(Country country : countryList)
-        {
-            System.out.println(country.report());
-        }
+        region.printCountryList(n);
         return countryList;
+    }
+
+    public void listCitiesInDistrict(District district){
+        listNCitiesInDistrict(district, district.getCityList().size());
+    }
+
+    public ArrayList<City> listNCitiesInDistrict(District district, int n)
+    {
+        //check that district exists
+        if(district == null)
+        {
+            System.out.println("No district found");
+            return null;
+        }
+        //check that district has city list
+        if(district.getCityList() == null)
+        {
+            System.out.println("District has no/invalid city list");
+        }
+        //check that district's city list doesnt contain null values and remove them if it does
+        List<Integer> nullIndicies = new ArrayList<>();
+        for(int i = 0; i < district.getCityList().size(); i++)
+        {
+            if(district.getCityList().get(i) == null)
+            {
+                nullIndicies.add(i);
+            }
+        }
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
+        {
+            district.getCityList().remove(iterator.next());
+        }
+        //ensure n is positive integer
+        if(n<1)
+        {
+            System.out.println("Please enter a positive integer.");
+        }
+        //ensure n < number of cities in district
+        if(n > district.getCityList().size())
+        {
+            n = district.getCityList().size();
+        }
+        district.printCityList(n);
+        return district.getCityList();
     }
 
     /* method to test that the data has been loaded correctly by printing out a sampling of it
@@ -684,40 +839,40 @@ public class SanityCheck
     public void testData(){
         System.out.println('\n' + "Cities: " +'\n');
         for(int i = 0; i < 10; i++){
-            System.out.println(world.getCityList().get(i).toString());
+            System.out.println(getWorld().getCityList().get(i).toString());
         }
         System.out.println('\n' + "Districts: " +'\n');
         for(int i = 0; i < 10; i++){
-            System.out.println(world.getDistrictList().get(i).toString());
-            System.out.println("Cities in " + world.getDistrictList().get(i).getName() + ":");
-            world.getDistrictList().get(i).printCityList(10);
+            System.out.println(getWorld().getDistrictList().get(i).toString());
+            System.out.println("Cities in " + getWorld().getDistrictList().get(i).getName() + ":");
+            getWorld().getDistrictList().get(i).printCityList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "Countries: " + '\n');
         for(int i = 0; i < 10; i++){
-            System.out.println(world.getCountryList().get(i).toString());
-            System.out.println("Districts in " + world.getCountryList().get(i).getName() + ":");
-            world.getCountryList().get(i).printDistrictList(10);
+            System.out.println(getWorld().getCountryList().get(i).toString());
+            System.out.println("Districts in " + getWorld().getCountryList().get(i).getName() + ":");
+            getWorld().getCountryList().get(i).printDistrictList(10);
             System.out.println('\n');
-            System.out.println("Languages spoken in " + world.getCountryList().get(i).getName() + ":");
-            world.getCountryList().get(i).printLanguageList();
+            System.out.println("Languages spoken in " + getWorld().getCountryList().get(i).getName() + ":");
+            getWorld().getCountryList().get(i).printLanguageList();
             System.out.println('\n');
         }
         System.out.println('\n' + "Regions: " +'\n');
-        for(int i = 0; i < world.getRegionList().size(); i++){
-            System.out.println(world.getRegionList().get(i).toString());
-            System.out.println("Countries in: " + world.getRegionList().get(i).getName() + ": ");
-            world.getRegionList().get(i).printCountryList(10);
+        for(int i = 0; i < getWorld().getRegionList().size(); i++){
+            System.out.println(getWorld().getRegionList().get(i).toString());
+            System.out.println("Countries in: " + getWorld().getRegionList().get(i).getName() + ": ");
+            getWorld().getRegionList().get(i).printCountryList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "Continents: " +'\n');
-        for(int i = 0; i < world.getContinentList().size(); i++){
-            System.out.println(world.getContinentList().get(i).toString());
-            System.out.println("Regions in: " + world.getContinentList().get(i).getName() + ": ");
-            world.getContinentList().get(i).printRegionList(10);
+        for(int i = 0; i < getWorld().getContinentList().size(); i++){
+            System.out.println(getWorld().getContinentList().get(i).toString());
+            System.out.println("Regions in: " + getWorld().getContinentList().get(i).getName() + ": ");
+            getWorld().getContinentList().get(i).printRegionList(10);
             System.out.println('\n');
         }
         System.out.println('\n' + "World: " +'\n');
-        System.out.println(world.toString());
+        System.out.println(getWorld().toString());
     }
 }
