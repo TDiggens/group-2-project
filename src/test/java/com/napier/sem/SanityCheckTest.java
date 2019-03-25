@@ -79,6 +79,38 @@ class SanityCheckTest
         sanityCheck.listCitiesInCountry(country);
     }
 
+    /*
+    Tests for listNCitiesInCountry, covering different values of n (other possibilities covered above)
+     */
+    @Test
+    void listNCitiesInCountryNNegative()
+    {
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        District district1 = new District("Midlothian");
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        district1.getCityList().add(city1);
+        country.getDistrictList().add(district1);
+        city1.setIsCapital(true);
+        city1.setCountry(country);
+        sanityCheck.listNCitiesInCountry(country, -1);
+    }
+
+    @Test
+    void listNCitiesInCountryNGreaterThanCities()
+    {
+        City city1 = new City("GBR", "Midlothian", 001, "Edinburgh", 500000);
+        District district1 = new District("Midlothian");
+        Country country = new Country(001, "GBR", "GB", "Europe", 10000, 20000, "Constitutional Monarchy", "Queen Elizabeth II", 2020, 74, "Alba",
+                "Scotland", 6000000, "Western Europe", 80077);
+        district1.getCityList().add(city1);
+        country.getDistrictList().add(district1);
+        city1.setIsCapital(true);
+        city1.setCountry(country);
+        sanityCheck.listNCitiesInCountry(country, 3);
+    }
+
+
     //Tests for listCountriesInContinent
     // test for continent argument being null
     @Test

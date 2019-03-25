@@ -448,44 +448,141 @@ public class SanityCheck
         }
         //check country's district list for null districts, remove them if so.
         //make list of indexes where the null values occur
-        List<Integer> nullIndices = new ArrayList<Integer>();
+        List<Integer> nullIndicies = new ArrayList<Integer>();
         int index;
         for(int i = 0; i < country.getDistrictList().size(); i++)
         {
             if(country.getDistrictList().get(i) == null)
             {
                 //add index of the found null value to index list
-                nullIndices.add(i);
+                nullIndicies.add(i);
             }
         }
         //go through the indexes where null values occur and remove the null objects from district List.
-        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
         {
             index = iterator.next();
             country.getDistrictList().remove(index);
         }
         //using similar process, check each district in the country for null cities.
-        nullIndices = new ArrayList<Integer>();
+        nullIndicies = new ArrayList<Integer>();
         for(District district : country.getDistrictList())
         {
             for(int i = 0; i < district.getCityList().size(); i++)
             {
                 if(district.getCityList().get(i) == null)
                 {
-                    nullIndices.add(i);
+                    nullIndicies.add(i);
                 }
             }
-            for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+            for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
             {
                 index = iterator.next();
                 district.getCityList().remove(index);
             }
         }
+        int nCities = 0;
+        for(District district : country.getDistrictList())
+        {
+            nCities += district.getCityList().size();
+        }
+        listNCitiesInCountry(country, nCities);
+    }
+
+    /*
+    Method to return the top N populated cities in a country and print their reports, implementation for issue #29 on github
+     */
+    public ArrayList<City> listNCitiesInCountry(Country country, int n)
+    {
+        if(n < 0)
+        {
+            System.out.println("Please enter a positive integer.");
+            return null;
+        }
+        //Check if country Exists
+        if(country == null)
+        {
+            System.out.println("No country found" + '\n');
+            return null;
+        }
+        //Check if country has valid district list
+        if(country.getDistrictList() == null)
+        {
+            System.out.println("Country has invalid/no district list");
+            return null;
+        }
+        //check country's district list for null districts, remove them if so.
+        //make list of indexes where the null values occur
+        List<Integer> nullIndicies = new ArrayList<Integer>();
+        int index;
+        for(int i = 0; i < country.getDistrictList().size(); i++)
+        {
+            if(country.getDistrictList().get(i) == null)
+            {
+                //add index of the found null value to index list
+                nullIndicies.add(i);
+            }
+        }
+        //go through the indexes where null values occur and remove the null objects from district List.
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
+        {
+            index = iterator.next();
+            country.getDistrictList().remove(index);
+        }
+        //Check if each district has valid city list, remove null lists
+        nullIndicies.removeAll(nullIndicies);
+        for(int i = 0; i < country.getDistrictList().size(); i++)
+        {
+            {
+                if(country.getDistrictList().get(i).getCityList() == null)
+                    nullIndicies.add(i);
+            }
+        }
+        if(nullIndicies.size() > 0)
+        {
+            System.out.println("Invalid city lists removed from " + country.getName() + "'s district list" + '\n');
+        }
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
+        {
+            country.getDistrictList().remove((int)iterator.next());
+        }
+        //using similar process, check each district in the country for null cities.
+        nullIndicies.removeAll(nullIndicies);
+        for(District district : country.getDistrictList())
+        {
+            for(int i = 0; i < district.getCityList().size(); i++)
+            {
+                if(district.getCityList().get(i) == null)
+                {
+                    nullIndicies.add(i);
+                }
+            }
+            for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
+            {
+                index = iterator.next();
+                district.getCityList().remove((int)iterator.next());
+            }
+        }
+        //Check if n > number of cities in the country
+        int nCountries = 0;
+        for(District district : country.getDistrictList())
+        {
+            nCountries += district.getCityList().size();
+        }
+        if(n>nCountries)
+        {
+            n = nCountries;
+        }
+        ArrayList<City> cityList = new ArrayList<>();
+        System.out.println("Top " + n + " most populous cities in " + country.getName() + ": " + '\n');
         for(District district : country.getDistrictList())
         {
             district.printCityList(district.getCityList().size());
+            cityList.addAll(district.getCityList());
         }
+        return cityList;
     }
+
 
     /*
     Method to return the top N countries by population in the world and print their reports, implementation for issue
@@ -592,18 +689,18 @@ public class SanityCheck
         }
         //check continent's region list for null regions, remove them if so.
         //make list of indexes where the null values occur
-        List<Integer> nullIndices = new ArrayList<Integer>();
+        List<Integer> nullIndicies = new ArrayList<Integer>();
         int index;
         for(int i = 0; i < continent.getRegionList().size(); i++)
         {
             if(continent.getRegionList().get(i) == null)
             {
                 //add index of the found null value to index list
-                nullIndices.add(i);
+                nullIndicies.add(i);
             }
         }
         //go through the indexes where null values occur and remove the null objects from region List.
-        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
         {
             index = iterator.next();
             continent.getRegionList().remove(index);
@@ -637,34 +734,34 @@ public class SanityCheck
 
         //check continent's region list for null regions, remove them if so.
         //make list of indexes where the null values occur
-        List<Integer> nullIndices = new ArrayList<Integer>();
+        List<Integer> nullIndicies = new ArrayList<Integer>();
         int index;
         for(int i = 0; i < continent.getRegionList().size(); i++)
         {
             if(continent.getRegionList().get(i) == null)
             {
                 //add index of the found null value to index list
-                nullIndices.add(i);
+                nullIndicies.add(i);
             }
         }
         //go through the indexes where null values occur and remove the null objects from region List.
-        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
         {
             index = iterator.next();
             continent.getRegionList().remove(index);
         }
         //using similar process, check each region in the continent for null countries.
-        nullIndices = new ArrayList<Integer>();
+        nullIndicies = new ArrayList<Integer>();
         for(Region region : continent.getRegionList())
         {
             for(int i = 0; i < region.getCountryList().size(); i++)
             {
                 if(region.getCountryList().get(i) == null)
                 {
-                    nullIndices.add(i);
+                    nullIndicies.add(i);
                 }
             }
-            for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+            for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
             {
                 index = iterator.next();
                 region.getCountryList().remove(index);
@@ -754,18 +851,18 @@ public class SanityCheck
         }
         //check region's country list for null countries, remove them if so.
         //make list of indexes where the null values occur
-        List<Integer> nullIndices = new ArrayList<Integer>();
+        List<Integer> nullIndicies = new ArrayList<Integer>();
         int index;
         for(int i = 0; i < region.getCountryList().size(); i++)
         {
             if(region.getCountryList().get(i) == null)
             {
                 //add index of the found null value to index list
-                nullIndices.add(i);
+                nullIndicies.add(i);
             }
         }
         //go through the indexes where null values occur and remove the null objects from country List.
-        for(Iterator<Integer> iterator = nullIndices.iterator(); iterator.hasNext();)
+        for(Iterator<Integer> iterator = nullIndicies.iterator(); iterator.hasNext();)
         {
             index = iterator.next();
             region.getCountryList().remove(index);
