@@ -552,6 +552,23 @@ class SanityCheckTest
         sanityCheck.listNCitiesInDistrict(district,1);
     }
 
+    @Test
+    void worldLanguageReportNull()
+    {
+        sanityCheck.worldLanguageReport(null);
+    }
+
+    @Test
+    void worldLanguageReport()
+    {
+        WorldLanguage worldLanguage = new WorldLanguage("Arabic");
+        worldLanguage.setNumberOfSpeakers(100);
+        worldLanguage.setPercentageOfSpeakers(10);
+        System.out.println(sanityCheck.worldLanguageReport(worldLanguage));
+    }
+
+
+
 
 
 

@@ -45,7 +45,7 @@ public class SanityCheck
 
         //sanity.listCitiesInCountry(sanity.world.getCountryList().get(1));
         //sanity.listCountriesInContinent(sanity.world.getContinentList().get(4));
-        sanity.testData();
+        //sanity.testData();
 
     }
 
@@ -225,8 +225,10 @@ public class SanityCheck
             add appropriate cities to each district's city list, and assign the right district object to
             the city's districtObject field
             */
-            for(City city : getWorld().getCityList()){
-                for(District district : districtList){
+            for(City city : getWorld().getCityList())
+            {
+                for(District district : districtList)
+                {
                     district.calculatePopulation();
                     if(city.getDistrict().equals(district.getName())){
                         district.getCityList().add(city);
@@ -432,8 +434,6 @@ public class SanityCheck
         }
         return worldLanguageList;
     }
-
-
 
     /* Method to list all cities in a country ranked by population, implementation for
     issue #24 on github.
@@ -892,6 +892,20 @@ public class SanityCheck
         }
         district.printCityList(n);
         return district.getCityList();
+    }
+
+    public String worldLanguageReport(WorldLanguage worldLanguage)
+    {
+        //check language exists
+        if(worldLanguage == null)
+        {
+            System.out.println("Language not found.");
+            return null;
+        }
+        String report = "Language report: " + worldLanguage.getName() + '\n' + '\n' + "Number of speakers: "
+                + worldLanguage.getNumberOfSpeakers() + '\n' + "Percentage of global population: "
+                + worldLanguage.getPercentageOfSpeakers() + '\n';
+        return report;
     }
 
     /* method to test that the data has been loaded correctly by printing out a sampling of it
