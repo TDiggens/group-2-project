@@ -908,6 +908,34 @@ public class SanityCheck
         return report;
     }
 
+    //Method to processs user input and generate correct type of report..
+    public void getReportFromInput(String inputStr, int n, String type)
+    {
+        switch(type)
+        {
+            case "languageReport":
+            {
+                for(WorldLanguage worldLanguage : world.getLanguageList())
+                {
+                    if(worldLanguage.getName().equals(inputStr))
+                    {
+                        worldLanguageReport(worldLanguage);
+                    }
+                }
+            }
+            case "listNCitiesInCountry":
+            {
+                for(Country country : world.getCountryList())
+                {
+                    if(country.getName().equals(inputStr))
+                    {
+                        listNCitiesInCountry(country, n);
+                    }
+                }
+            }
+        }
+    }
+
     /* method to test that the data has been loaded correctly by printing out a sampling of it
      */
     public void testData(){
