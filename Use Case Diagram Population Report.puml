@@ -1,0 +1,20 @@
+@startuml
+
+actor DA as "Data Analyst"
+
+rectangle Database
+
+rectangle "Population Report" {
+    usecase UC1 as "Generate Country Report"
+
+    usecase UC2 as "Generate City Report"
+
+    usecase UCa as "Print salaries"
+
+    DA - UC1
+    UC1 ..>UC2 : include
+    UC2 ..>UCa : include
+    UC1 - Database
+}
+
+@enduml
