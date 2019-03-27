@@ -1,6 +1,10 @@
 @startuml
 
 actor DA as "Data Analyst"
+actor SR as "Senior Research Associates"
+actor RA as "Research Associates"
+
+actor PT as "Print Team"
 
 rectangle Database
 
@@ -13,15 +17,28 @@ rectangle "Population Report" {
     usecase UCa as "Print pdf"
 
     DA - UC1
-    UC1 ..>UC2 : include
-    UC2 ..>UC3 : include
-    UC3 ..>UC4 : include
-    UC4 ..>UC5 : include
-    UC1 ..>UCa : include
-    UC2 ..>UCa : include
-    UC3 ..>UCa : include
-    UC4 ..>UCa : include
-    UC5 ..>UCa : include
+    DA - UC2
+    DA - UC3
+    DA - UC4
+    DA - UC5
+
+    SR - UC1
+    SR - UC2
+    SR - UC3
+    SR - UC4
+    SR - UC5
+
+    RA - UC1
+    RA - UC2
+    RA - UC3
+    RA - UC4
+    RA - UC5
+
+    UC1 ..>UCa : extends
+    UC2 ..>UCa : extends
+    UC3 ..>UCa : extends
+    UC4 ..>UCa : extends
+    UC5 ..>UCa : extends
     UC1 - Database
 }
 
