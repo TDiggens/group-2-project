@@ -6,20 +6,22 @@ rectangle Database
 
 rectangle "Population Report" {
     usecase UC1 as "Generate Country Report"
-
     usecase UC2 as "Generate City Report"
-
     usecase UC3 as "Generate Capital City Report"
-
     usecase UC4 as "Generate City or Rural Report"
-
     usecase UC5 as "Generate Language Report"
-
     usecase UCa as "Print pdf"
 
     DA - UC1
     UC1 ..>UC2 : include
+    UC2 ..>UC3 : include
+    UC3 ..>UC4 : include
+    UC4 ..>UC5 : include
+    UC1 ..>UCa : include
     UC2 ..>UCa : include
+    UC3 ..>UCa : include
+    UC4 ..>UCa : include
+    UC5 ..>UCa : include
     UC1 - Database
 }
 
