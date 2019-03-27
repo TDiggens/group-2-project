@@ -9,7 +9,13 @@ rectangle "Population Report" {
 
     usecase UC2 as "Generate City Report"
 
-    usecase UCa as "Print salaries"
+    usecase UC3 as "Generate Capital City Report"
+
+    usecase UC4 as "Generate City or Rural Report"
+
+    usecase UC5 as "Generate Language Report"
+
+    usecase UCa as "Print pdf"
 
     DA - UC1
     UC1 ..>UC2 : include
