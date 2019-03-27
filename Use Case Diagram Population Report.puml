@@ -34,6 +34,8 @@ rectangle "Population Report" {
     RA - UC4
     RA - UC5
 
+    PT - UCa
+
     UC1 ..>UCa : extends
     UC2 ..>UCa : extends
     UC3 ..>UCa : extends
