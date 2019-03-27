@@ -36,11 +36,11 @@ rectangle "Population Report" {
 
     PT - UCa
 
-    UC1 ..>UCa : extends
-    UC2 ..>UCa : extends
-    UC3 ..>UCa : extends
-    UC4 ..>UCa : extends
-    UC5 ..>UCa : extends
+    UCa ..>UC1 : extends
+    UCa ..>UC2 : extends
+    UCa ..>UC3 : extends
+    UCa ..>UC4 : extends
+    UCa ..>UC5 : extends
     UC1 - Database
 }
 
