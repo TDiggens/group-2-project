@@ -24,4 +24,5 @@
 * 
 
 ## Reporting A Bug
- 
+
+* Offer a s much information as you can when reporting a bug
