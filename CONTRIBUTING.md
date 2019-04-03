@@ -4,7 +4,9 @@
 
 [Code of Conduct](#code-of-conduct)
 
-[Coding Convensions] (#coding-convensions)
+[Coding Convensions](#coding-convensions)
+
+[Reporting A Bug](#reporting-a-bug)
 
 ## Code of Conduct
 
@@ -21,5 +23,5 @@
 * Code should be well commented to make it easy to follow and understand.
 * 
 
-
+## Reporting A Bug
  
