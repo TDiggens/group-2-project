@@ -8,12 +8,13 @@
 
 [Reporting A Bug](#reporting-a-bug)
 
-## Code of Conduct
+## Code of Conduct 
+### To see full code of conduct document click the link [HERE](https://github.com/TDiggens/group-2-project/blob/master/CODE_OF_CONDUCT.md)
 
 * Use welcoming and inclusive language
 * Be respectful of differing view points and experiences
 * Gracefully accept constructiuve critism
-* 
+
 
 
 ## Coding Convensions 
