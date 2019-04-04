@@ -14,6 +14,8 @@
 * Use welcoming and inclusive language
 * Be respectful of differing view points and experiences
 * Gracefully accept constructiuve critism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
 
 
@@ -26,4 +28,12 @@
 
 ## Reporting A Bug
 
-* Offer a s much information as you can when reporting a bug
+### Offer as much information as you can when reporting a bug
+
+Did you find a bug
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/TDiggens/group-2-project/issues/new/choose).
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/TDiggens/group-2-project/issues/new?assignees=8e6&labels=bug&template=bug_report.md&title=BUG+in+the+system). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
+* The hope in reporting a bug is that others with the same problem will be able to collaborate with you on solving it. Creating an bug issue like this is mostly to help yourself start on the path of fixing the problem and for others to confirm it with an "I'm having this problem too" comment. Unless it is a "CODE RED, system crashing" type of bug in which case the core members of this group will jump straight on it.
+
+
+
