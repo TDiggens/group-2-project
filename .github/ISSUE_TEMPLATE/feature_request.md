@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: duplicate, enhancement, help wanted
+assignees: 8e6
 
 ---
 
