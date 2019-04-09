@@ -20,9 +20,10 @@ public class SanityIntegrationCheckTest
     }
 
     @Test
-    void testGetCountry()
+    void listCitiesInCountryNull()
     {
-        Country country = sanityCheck.generateCountryList();
-        assertEquals(country.name, "China");
+        System.out.println("Output for test listCitiesInCountryNull: " + '\n');
+        sanityCheck.listCitiesInCountry(null);
     }
+
 }
