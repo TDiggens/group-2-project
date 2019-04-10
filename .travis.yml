@@ -4,13 +4,13 @@ sudo: false
 
 addons:
   hosts:
-    - db
+    - data
 
 services:
   - docker
 
 install:
-  - docker build -t database db/.
+  - docker build -t database data/.
   - docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
@@ -25,7 +25,7 @@ jobs:
       script: mvn test -Dtest=com.napier.sem.SanityCheckTest
     - stage: integration tests
       jdk: oraclejdk11
-      script: mvn test -Dtest=com.napier.sem.SanityIntegrationCheckTest
+      script: mvn test -Dtest=com.napier.sem.SanityIntegrationCheckTests
     - stage: GitHub Release
       install: skip
       jdk: oraclejdk11
@@ -46,6 +46,9 @@ jobs:
         # Copy built JAR file.  JAR built in $TRAVIS_BUILD_DIR/
         file: $TRAVIS_BUILD_DIR/target/group-2-project.jar
         skip_cleanup: true
+        script:
+        - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+        - docker-compose up --abort-on-container-exit
 
 stages:
   - unit tests
