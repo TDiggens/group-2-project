@@ -90,7 +90,7 @@ public class World {
     public String toString() {
         StringBuilder languagesSummary = new StringBuilder();
         for(WorldLanguage worldLanguage : languageList){
-            String numberOfSpeakersStr = String.format("%.0f", worldLanguage.getNumberOfSpeakers());
+            String numberOfSpeakersStr = String.format("%.0f", (double)worldLanguage.getNumberOfSpeakers());
             languagesSummary.append(worldLanguage.getName() + ": Number of speakers: " + numberOfSpeakersStr + "" +
                     " Percentage of global population: " + worldLanguage.getPercentageOfSpeakers() + '\n');
         }

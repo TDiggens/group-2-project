@@ -4,32 +4,54 @@ sudo: false
 
 addons:
   hosts:
-  - data
+    - db
 
 services:
-- docker
+  - docker
 
 install:
-- docker build -t database data/.
-- docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - docker build -t database db/.
+  - docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 before_script:
-- mvn clean
+  - mvn clean
 
 jobs:
   include:
-  - stage: unit tests
-    install: skip
-    jdk: oraclejdk11
-    script: mvn test -Dtest=com.napier.sem.SanityCheckTest
-  - stage: integration tests
-    jdk: oraclejdk11
-    script: echo "Integration Tests"
-  - stage: deploy
-    install: skip
-    jdk: oraclejdk11
-    script: echo "Deploy"
+    - stage: unit tests
+      install: skip
+      jdk: oraclejdk11
+      script: mvn test -Dtest=com.napier.sem.SanityCheckTest
+    - stage: integration tests
+      jdk: oraclejdk11
+      script: mvn test -Dtest=com.napier.sem.SanityIntegrationCheckTest
+    - stage: GitHub Release
+      install: skip
+      jdk: oraclejdk11
+      script:
+        - echo "Deploying to GitHub Releases"
+        - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+      before_deploy:
+        # Set up git user name and tag this commit
+        - git config --local user.name "TDiggens"
+        - git config --local user.email "40203272@live.napier.ac.uk"
+        # Create temporary tag from date and Git log.
+        - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
+        # Set tag
+        - git tag $TRAVIS_TAG
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        # Copy built JAR file.  JAR built in $TRAVIS_BUILD_DIR/
+        file: $TRAVIS_BUILD_DIR/target/group-2-project.jar
+        skip_cleanup: true
 
-script:
-- mvn test -Dtest=com.napier.sem.AppTeston-container-exit
+stages:
+  - unit tests
+  - integration tests
+  - name: GitHub Release
+    if: branch = add-feature-deployment
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

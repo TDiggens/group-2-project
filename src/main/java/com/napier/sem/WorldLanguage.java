@@ -1,13 +1,19 @@
 package com.napier.sem;
 
-public class WorldLanguage {
+public class WorldLanguage implements Comparable < WorldLanguage > {
     private String name;
-    private double numberOfSpeakers;
+    private Double numberOfSpeakers;
     private double percentageOfSpeakers;
 
     public WorldLanguage(String name)
     {
         setName(name);
+    }
+
+    @Override
+    public int compareTo(WorldLanguage otherWorldLanguage)
+    {
+        return numberOfSpeakers.compareTo(otherWorldLanguage.getNumberOfSpeakers());
     }
 
     public String getName() {

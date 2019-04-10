@@ -1,0 +1,47 @@
+@startuml
+
+actor DA as "Data Analyst"
+actor SR as "Senior Research Associates"
+actor RA as "Research Associates"
+
+actor PT as "Print Team"
+
+rectangle Database
+
+rectangle "Population Report" {
+    usecase UC1 as "Generate **Country** Report"
+    usecase UC2 as "Generate **City** Report"
+    usecase UC3 as "Generate **Capital City** Report"
+    usecase UC4 as "Generate **City** or Rural Report"
+    usecase UC5 as "Generate **Language** Report"
+    usecase UCa as "Print pdf"
+
+    DA - UC1
+    DA - UC2
+    DA - UC3
+    DA - UC4
+    DA - UC5
+
+    SR - UC1
+    SR - UC2
+    SR - UC3
+    SR - UC4
+    SR - UC5
+
+    RA - UC1
+    RA - UC2
+    RA - UC3
+    RA - UC4
+    RA - UC5
+
+    PT - UCa
+
+    UCa ..>UC1 : extends
+    UCa ..>UC2 : extends
+    UCa ..>UC3 : extends
+    UCa ..>UC4 : extends
+    UCa ..>UC5 : extends
+    UC1 - Database
+}
+
+@enduml

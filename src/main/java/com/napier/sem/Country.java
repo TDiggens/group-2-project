@@ -3,7 +3,7 @@ package com.napier.sem;
 import java.util.ArrayList;
 /* A Class designed to represent a Country with appropriate instance variables
 and a list of City objects to hold the Cities it contains */
-public class Country {
+public class Country implements Comparable< Country > {
 
     private String name;
     private String code;
@@ -16,7 +16,7 @@ public class Country {
 
     private int capitalCode;
     private int yearOfIndependence;
-    private int population;
+    private Integer population;
 
     private double surfaceArea;
     private double lifeExpectancy;
@@ -24,6 +24,8 @@ public class Country {
     private double oldGNP;
     private double urbanPopulation;
     private double urbanPopPercentage;
+    private double ruralPopulation;
+    private double ruralPopulationPercentage;
 
     private City capital;
     private Region regionObject;
@@ -62,8 +64,10 @@ public class Country {
             urbanPop = urbanPop + district.getPopulation();
         }
         this.setUrbanPopulation(urbanPop);
+        this.setRuralPopulation(population - urbanPopulation);
         if(this.getPopulation() != 0){
             this.setUrbanPopPercentage((urbanPop*100)/(double)this.getPopulation());
+            this.setRuralPopulationPercentage(100-urbanPopPercentage);
         } else {
             this.setUrbanPopPercentage(0);
         }
@@ -73,6 +77,7 @@ public class Country {
         for(CountryLanguage countryLanguage : this.getLanguageList()){
             System.out.println(countryLanguage.toString());
         }
+        System.out.println('\n');
     }
 
     public void printDistrictList(int numberToPrint){
@@ -81,8 +86,7 @@ public class Country {
             }
             System.out.println(this.getDistrictList().size() + " districts in " + this.getName());
             for (int i = 0; i < numberToPrint; i++) {
-                System.out.println(this.getDistrictList().get(i).getName() + ", population: "
-                        + this.getDistrictList().get(i).getPopulation());
+                System.out.println(this.getDistrictList().get(i).report());
             }
 
     }
@@ -102,7 +106,6 @@ public class Country {
     public void setCode(String code) {
         this.code = code;
     }
-
 
     public String getContinent() {
         return continent;
@@ -240,6 +243,38 @@ public class Country {
         this.languageList = languageList;
     }
 
+    public double getUrbanPopPercentage() {
+        return urbanPopPercentage;
+    }
+
+    public void setUrbanPopPercentage(double urbanPopPercentage) {
+        this.urbanPopPercentage = urbanPopPercentage;
+    }
+
+    public Region getRegionObject() {
+        return regionObject;
+    }
+
+    public void setRegionObject(Region regionObject) {
+        this.regionObject = regionObject;
+    }
+
+    public double getRuralPopulation() {
+        return ruralPopulation;
+    }
+
+    public void setRuralPopulation(double ruralPopulation) {
+        this.ruralPopulation = ruralPopulation;
+    }
+
+    public double getRuralPopulationPercentage() {
+        return ruralPopulationPercentage;
+    }
+
+    public void setRuralPopulationPercentage(double ruralPopulationPercentage) {
+        this.ruralPopulationPercentage = ruralPopulationPercentage;
+    }
+
     @Override
     public String toString() {
         String urbanPopulationStr = String.format("%.0f", urbanPopulation);
@@ -262,40 +297,42 @@ public class Country {
                 ", urbanPopulation(percentage)=" + urbanPopPercentage + '\n';
     }
 
-    public String report(){
-        if(!(capital == null)){
+    public String report()
+    {
+        String urbanPopulationStr = String.format("%.0f", urbanPopulation);
+        String ruralPopulationStr = String.format("%.0f", ruralPopulation);
+
+        if(!(capital == null))
+        {
             String report = "Country Report: " + name + '\n' + '\n' +
                     "Country Code: " + code + '\n' +
-                    "Continent: " + continent + '\n' +
+                    "Capital City: " + capital.getName() + '\n' +
                     "Region: " + region + '\n' +
-                    "Population: " + population + '\n' +
-                    "Capital: " + capital.getName() + '\n';
-            return report;
-        } else{
-            String report = "Country Report: " + name + '\n' + '\n' +
-                    "Country Code: " + code + '\n' +
                     "Continent: " + continent + '\n' +
-                    "Region: " + region + '\n' +
                     "Population: " + population + '\n' +
-                    "Capital: No capital city" + '\n';
+                    "Urban population: " + urbanPopulationStr + " (" + urbanPopPercentage + "%) " + '\n' +
+                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + ") " + '\n' + '\n';
             return report;
         }
-
+        else
+        {
+            String report = "Country Report: " + name + '\n' + '\n' +
+                    "Country Code: " + code + '\n' +
+                    "Capital City: " + "no capital city. " + '\n' +
+                    "Region: " + region + '\n' +
+                    "Continent: " + continent + '\n' +
+                    "Population: " + population + '\n' +
+                    "Urban population: " + urbanPopulationStr + " (" + urbanPopPercentage + "%) " + '\n' +
+                    "Rural population: " + ruralPopulationStr + " (" + ruralPopulationPercentage + "%) " + '\n' + '\n';
+            return report;
+        }
     }
 
-    public double getUrbanPopPercentage() {
-        return urbanPopPercentage;
+    @Override
+    public int compareTo(Country country)
+    {
+        return population.compareTo(country.getPopulation());
     }
 
-    public void setUrbanPopPercentage(double urbanPopPercentage) {
-        this.urbanPopPercentage = urbanPopPercentage;
-    }
 
-    public Region getRegionObject() {
-        return regionObject;
-    }
-
-    public void setRegionObject(Region regionObject) {
-        this.regionObject = regionObject;
-    }
 }

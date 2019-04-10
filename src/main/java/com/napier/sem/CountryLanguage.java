@@ -1,12 +1,12 @@
 package com.napier.sem;
 
 /* Class to represent a language as spoken in a specific country */
-public class CountryLanguage {
+public class CountryLanguage implements Comparable < CountryLanguage >{
 
     private boolean isOfficial;
     private String name;
     private String countryCode;
-    private double numberOfSpeakers;
+    private Double numberOfSpeakers;
     private double percentageOfSpeakers;
 
     public CountryLanguage(String name)
@@ -14,8 +14,22 @@ public class CountryLanguage {
         setName(name);
     }
 
+    @Override
+    public int compareTo(CountryLanguage otherCountryLanguage)
+    {
+        return numberOfSpeakers.compareTo(otherCountryLanguage.getNumberOfSpeakers());
+    }
+
     public CountryLanguage(){
 
+    }
+
+    public CountryLanguage(String countryCode, String name, Boolean isOfficial, double percentageOfSpeakers)
+    {
+        this.countryCode = countryCode;
+        this.name = name;
+        this.isOfficial = isOfficial;
+        this.percentageOfSpeakers = percentageOfSpeakers;
     }
 
     public boolean isOfficial() {
