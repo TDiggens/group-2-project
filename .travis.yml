@@ -67,3 +67,20 @@ before_install:
 # Decrypts the credentials file.
   - openssl aes-256-cbc -K $encrypted_5e677d24309c_key -iv $encrypted_5e677d24309c_iv
     - in client-secret.json.enc -out client-secret.json -d
+
+script: "mvn cobertura:cobertura"
+
+<plugin>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>cobertura-maven-plugin</artifactId>
+  <version>2.7</version>
+  <configuration>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+    </formats>
+   <check />
+  </configuration>
+</plugin>
+
+

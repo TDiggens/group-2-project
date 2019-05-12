@@ -52,7 +52,7 @@ The users of the application will mainly be the Research team consisting of Data
 | 29    |The population of a country.                                                                             | Yes   |            |
 | 30    |The population of a district.                                                                            | Yes   |            |
 | 31    |The population of a city.                                                                                | Yes   |            |
-| 32    |number of people who speak Chinese, English, Hindi, Spanish, Arabic                                      | Yes   |            |
+| 32    |number of people who speak Chinese, English, Hindi, Spanish, Arabic from greatest number to smallest, including the percentage of the world population                                      | Yes   |            |
 
 
 
