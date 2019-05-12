@@ -15,6 +15,15 @@ The application will provide a front-end to the population information database 
 The users of the application will mainly be the Research team consisting of Data Analysts, Research Associates and Senior Research Associates who have limited technical knowledge and require various population data reports to be produced. The population data reports with be able to be subdivided into worldwide data reports, continent data reports, regional data reports, country data reports, district data reports, city and capital city data reports.   The Research team currently work via web interfaces, although a desktop application is a possible work-around.
 ## Features
 
+## Reqirements Met
+
+| ID    |Name                                                                           | Met   | Screenshot |
+| --- | --- | --- | --- |        
+| 1     |All the countries in the world organised by largest population to smallest.    | Yes   |            |
+| 2     |All the countries in a continent organised by largest population to smallest.  | Yes   |            |
+| 3     |All the countries in a region organised by largest population to smallest.     | Yes   |            |
+| 4     |The top N populated countries in the world where N is provided by the user.    | Yes   |            |
+
 ### Produce Population Reports 
 
 The Application will allow Data Analysts, Research Associates and Senior Research Associates to generate various population reports. Generating individual reports on the world and refined to reports the population of every continent, region, country, district and city.
