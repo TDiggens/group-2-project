@@ -3,7 +3,7 @@ Project repository for Software Engineering Methods Group 2.
 
 - Master Build Status [![Build Status](https://travis-ci.org/TDiggens/group-2-project.svg?branch=master)](https://travis-ci.org/TDiggens/group-2-project)
 - Develop Build Status [![Build Status](https://travis-ci.org/TDiggens/group-2-project.svg?branch=develop)](https://travis-ci.org/TDiggens/group-2-project)
-- Test/Code Coverage - [![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/gh/8e6/group-2-project.svg?)](https://codecov.io/github/gh/8e6/group-2-project.svg?branch=master)
+- Test/Code Coverage - [![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/gh/TDiggens/group-2-project.svg?)](https://codecov.io/github/gh/TDiggens/group-2-project.svg?branch=master)
 - License [![LICENSE](https://img.shields.io/github/license/TDiggens/group-2-project.svg?style=flat-square)](https://github.com/TDiggens/group-2-project/blob/master/LICENSE)
 - Release [![Releases](https://img.shields.io/github/release/TDiggens/group-2-project/all.svg?style=flat-square)](https://github.com/TDiggens/group-2-project/releases)
 
@@ -34,16 +34,16 @@ The users of the application will mainly be the Research team consisting of Data
 | 10    |All the cities in a country organised by largest population to smallest.                                 | Yes   |            |
 | 11    |All the cities in a district organised by largest population to smallest.                                | Yes   |            |
 | 12    |The top N populated cities in the world where N is provided by the user.                                 | Yes   |            |
-| 13    |The top N populated cities in a continent where N is provided by the user.                               | Yes   |            |
-| 14    |The top N populated cities in a region where N is provided by the user.                                  | Yes   |            |
-| 15    |The top N populated cities in a country where N is provided by the user.                                 | Yes   |            |
-| 16    |The top N populated cities in a district where N is provided by the user.                                | Yes   |            |
+| 13    |The top N populated cities in a continent where N is provided by the user.                               | No    |            |
+| 14    |The top N populated cities in a region where N is provided by the user.                                  | No    |            |
+| 15    |The top N populated cities in a country where N is provided by the user.                                 | No    |            |
+| 16    |The top N populated cities in a district where N is provided by the user.                                | No    |            |
 | 17    |All the capital cities in the world organised by largest population to smallest.                         | Yes   |            |
 | 18    |All the capital cities in a continent organised by largest population to smallest.                       | Yes   |            |
-| 19    |All the capital cities in a region organised by largest to smallest.                                     | Yes   |            |
-| 20    |The top N populated capital cities in the world where N is provided by the user.                         | Yes   |            |
-| 21    |The top N populated capital cities in a continent where N is provided by the user.                       | Yes   |            |
-| 22    |The top N populated capital cities in a region where N is provided by the user.                          | Yes   |            |
+| 19    |All the capital cities in a region organised by largest to smallest.                                     | No    |            |
+| 20    |The top N populated capital cities in the world where N is provided by the user.                         | No    |            |
+| 21    |The top N populated capital cities in a continent where N is provided by the user.                       | No    |            |
+| 22    |The top N populated capital cities in a region where N is provided by the user.                          | No    |            |
 | 23    |The population of people, people living in cities, and people not living in cities in each continent.    | Yes   |            |
 | 24    |The population of people, people living in cities, and people not living in cities in each region.       | Yes   |            |
 | 25    |The population of people, people living in cities, and people not living in cities in each country.      | Yes   |            |
